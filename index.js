@@ -1,45 +1,6 @@
 "use strict";
 
-// disclaimer: AI was only used to do rapid prototyping in speeding of the process writing code that I (ryan) already knew how to implement but would be tedious to do, i.e. component generation.
-
 (function() {
-
-  const COLORS = {
-    "Crimson": "#ad1c42",
-    "Golden Yellow": "#cb8f16",
-    "Emerald": "#009877",
-    "Navy Blue": "#403f6f",
-    "Lavender": "#b2a4d4",
-    "Burnt Orange": "#c7632c",
-    "Charcoal Gray": "#6a6a6a",
-    "Blue Turquoise": "#52b0ae",
-    "Crystal Rose": "#fdc4c7"
-  }
-
-  const TEXTURES = {
-    "Smooth": "Even, polished surface with no roughness",
-    "Rough": "Coarse, uneven surface with bumps or ridges",
-    "Fuzzy": "Soft, slightly hairy or fluffy texture",
-    "Bumpy": "Raised areas creating an irregular surface",
-    "Slippery": "Slick, hard to grip, often glossy or wet",
-    "Gritty": "Small, grainy particles creating a sandy feel",
-    "Sticky": "Tacky, adhesive surface that clings to touch",
-    "Soft": "Gentle, cushion-like feel, easy to press into",
-    "Hard": "Firm, unyielding surface with no give"
-  };
-
-  const MATERIALS = {
-    "Aluminum Foil": "Malleable, lightweight, good for beginners",
-    "Air-Dry Clay": "Easy to shape, lightweight, good for beginners",
-    "Foam Sheets": "Soft, lightweight, easy to cut, good for beginners",
-    "Metal Wire": "Flexible, thin, ideal for intricate shapes",
-    "Felt": "Soft, versatile fabric for layering and stitching",
-    "Oil Paints": "Rich, smooth texture, great for adding colors and blending",
-    "Acrylic Paint": "Fast-drying, versatile, vibrant colors",
-    "Pipe Cleaners": "Fuzzy, flexible, easy to bend, good for shaping",
-    "Beads": "Small, textured, perfect for adding detail",
-    "Papier-Mâché": "Layered, hardened paper with a slightly rough, sculptable texture. Lightweight yet sturdy."
-  };
 
   window.addEventListener("load", init);
 
@@ -60,10 +21,6 @@
     generateTextures();
   }
 
-  /**
-   * Shows the specified page and hides all other pages.
-   * @param {string} pageId - The ID of the page to show.
-   */
   function showPage(pageId) {
     const pages = document.querySelectorAll(".page");
 
@@ -76,7 +33,6 @@
 
   function generateColors() {
     generateColorCards();
-    // generateColorDetailPage() // ignore
   }
 
   function generateColorCards() {
@@ -85,7 +41,7 @@
 
     for (const colorName in COLORS) {
       if (COLORS.hasOwnProperty(colorName)) {
-        const colorValue = COLORS[colorName];
+        const colorData = COLORS[colorName];
         const listItem = document.createElement('li');
         const article = document.createElement('article');
         const h2 = document.createElement('h2');
@@ -94,9 +50,13 @@
 
         const colorSwatch = document.createElement('span');
         colorSwatch.classList.add('color-swatch');
-        colorSwatch.style.backgroundColor = colorValue;
+        colorSwatch.style.backgroundColor = colorData.hex;
 
         article.classList.add("selectable");
+        article.dataset.itemType = "color";
+        article.dataset.itemName = colorName;
+
+        article.addEventListener("click", showDetailPage);
 
         article.appendChild(h2);
         article.appendChild(colorSwatch);
@@ -111,24 +71,27 @@
   }
 
   function generateMaterialsCards() {
-    const materialsList = id('materials-list'); // Make sure you have <ul id="materials-list"> in your HTML
-    materialsList.innerHTML = ''; // Clear existing items
+    const materialsList = id('materials-list');
+    materialsList.innerHTML = '';
 
     for (const materialName in MATERIALS) {
       if (MATERIALS.hasOwnProperty(materialName)) {
-        const materialDescription = MATERIALS[materialName];
+        const materialData = MATERIALS[materialName];
         const listItem = document.createElement('li');
         const article = document.createElement('article');
         const h2 = document.createElement('h2');
-        const p = document.createElement('p'); // Add paragraph for description
+        const p = document.createElement('p');
 
         h2.textContent = materialName;
-        p.textContent = materialDescription;
+        p.textContent = materialData.blurb;
 
-        article.classList.add("selectable"); // Add selectable class if needed
+        article.classList.add("selectable");
+        article.dataset.itemType = "material";
+        article.dataset.itemName = materialName;
+        article.addEventListener("click", showDetailPage);
 
         article.appendChild(h2);
-        article.appendChild(p); // Append the description
+        article.appendChild(p);
         listItem.appendChild(article);
         materialsList.appendChild(listItem);
       }
@@ -140,36 +103,120 @@
   }
 
   function generateTextureCards() {
-    const texturesList = id('textures-list'); // Make sure you have <ul id="textures-list"> in your HTML
-    texturesList.innerHTML = ''; // Clear existing items
+    const texturesList = id('textures-list');
+    texturesList.innerHTML = '';
 
     for (const textureName in TEXTURES) {
       if (TEXTURES.hasOwnProperty(textureName)) {
-        const textureDescription = TEXTURES[textureName];
+        const textureData = TEXTURES[textureName];
         const listItem = document.createElement('li');
         const article = document.createElement('article');
         const h2 = document.createElement('h2');
-        const p = document.createElement('p'); // Add paragraph for description
+        const p = document.createElement('p');
 
         h2.textContent = textureName;
-        p.textContent = textureDescription;
+        p.textContent = textureData.blurb;
 
-        article.classList.add("selectable"); // Add selectable class if needed
+        article.classList.add("selectable");
+        article.dataset.itemType = "texture";
+        article.dataset.itemName = textureName;
+        article.addEventListener("click", showDetailPage);
 
         article.appendChild(h2);
-        article.appendChild(p); // Append the description
+        article.appendChild(p);
         listItem.appendChild(article);
         texturesList.appendChild(listItem);
       }
     }
   }
 
+  function showDetailPage(event) {
+    const article = event.currentTarget;
+    const itemType = article.dataset.itemType;
+    const itemName = article.dataset.itemName;
 
-  /**
-   * Returns the element that has the ID attribute with the specified value.
-   * @param {string} idName - element ID
-   * @returns {object} DOM object associated with id.
-   */
+    let data;
+
+    switch (itemType) {
+      case "color":
+        data = COLORS[itemName];
+        generateColorDetailPage(data);
+        break;
+      case "material":
+        data = MATERIALS[itemName];
+        generateMaterialDetailPage(data);
+        break;
+      case "texture":
+        data = TEXTURES[itemName];
+        generateTextureDetailPage(data);
+        break;
+    }
+
+    showPage("detail-page");
+  }
+
+  function generateColorDetailPage(colorData) {
+    const detailPage = id("detail-page");
+    detailPage.innerHTML = "";
+
+    const h1 = document.createElement("h1");
+    h1.textContent = Object.keys(COLORS).find(key => COLORS[key] === colorData);
+    detailPage.appendChild(h1);
+
+    const swatch = document.createElement("div");
+    swatch.classList.add("color-swatch");
+    swatch.style.backgroundColor = colorData.hex;
+    detailPage.appendChild(swatch);
+
+    const p = document.createElement("p");
+    p.textContent = `Hex: ${colorData.hex}`; // Example additional detail
+    detailPage.appendChild(p);
+
+    const backButton = document.createElement("button");
+    backButton.classList.add("back-button");
+    backButton.textContent = "Back to Colors";
+    backButton.addEventListener("click", () => showPage("colors-page"));
+    detailPage.appendChild(backButton);
+  }
+
+  function generateMaterialDetailPage(materialData) {
+    const detailPage = id("detail-page");
+    detailPage.innerHTML = "";
+
+    const h1 = document.createElement("h1");
+    h1.textContent = Object.keys(MATERIALS).find(key => MATERIALS[key] === materialData);
+    detailPage.appendChild(h1);
+
+    const p = document.createElement("p");
+    p.textContent = materialData.blurb;
+    detailPage.appendChild(p);
+
+    const backButton = document.createElement("button");
+    backButton.classList.add("back-button");
+    backButton.textContent = "Back to Materials";
+    backButton.addEventListener("click", () => showPage("material-page"));
+    detailPage.appendChild(backButton);
+  }
+
+  function generateTextureDetailPage(textureData) {
+    const detailPage = id("detail-page");
+    detailPage.innerHTML = "";
+
+    const h1 = document.createElement("h1");
+    h1.textContent = Object.keys(TEXTURES).find(key => TEXTURES[key] === textureData);
+    detailPage.appendChild(h1);
+
+    const p = document.createElement("p");
+    p.textContent = textureData.blurb;
+    detailPage.appendChild(p);
+
+    const backButton = document.createElement("button");
+    backButton.classList.add("back-button");
+    backButton.textContent = "Back to Textures";
+    backButton.addEventListener("click", () => showPage("texture-page"));
+    detailPage.appendChild(backButton);
+  }
+
   function id(idName) {
     return document.getElementById(idName);
   }
