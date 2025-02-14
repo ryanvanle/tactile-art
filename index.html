@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quando&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/materials-page.css">
+    <link rel="stylesheet" href="styles/textures-page.css">
     <link rel="stylesheet" href="styles/colors-page.css">
     <script src="index.js"></script>
     <title>tactile art</title>
@@ -34,7 +36,7 @@
         </section>
     </section>
 
-    <section id="colors-page" class="page">
+    <section id="colors-page" class="page hidden">
         <h1>Colors</h1>
         <p>Explore hues of color here. Color names are from Pantone</p>
         <button class="back-button">Back to Home</button>
@@ -55,11 +57,26 @@
     <section id="material-page" class="page hidden">
         <h1>Materials</h1>
         <button class="back-button">Back to Home</button>
+
+        <ul id="materials-list">
+        </ul>
+
+
     </section>
 
-    <section id="texture-page" class="page hidden">
+    <section id="texture-page" class="page">
         <h1>Textures</h1>
         <button class="back-button">Back to Home</button>
+
+        <ul id="textures-list">
+          <li>
+            <article>
+              <h2>Smooth</h2>
+              <p>Even, polished surface with no roughness</p>
+            </article>
+          </li>
+
+        </ul>
     </section>
 
     <section id="favorite-page" class="page hidden">
