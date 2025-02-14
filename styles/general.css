@@ -1,11 +1,13 @@
 html {
   font-size: 16pt;
+  font-family: "Quando", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .hidden {
   display: none !important;
 }
-
 
 header {
   width: 100%;
@@ -23,6 +25,15 @@ header {
   width: 100%;
 }
 
+.selectable:hover, button:hover {
+  cursor: pointer;
+  background-color: lightgray;
+}
+
+.selectable:active, button:active {
+  background-color: gray;
+}
+
 button {
   background-color: white;
   border-radius: 12px;
@@ -33,13 +44,6 @@ button {
   padding-bottom: 1dvh;
 }
 
-button:hover {
-  background-color: lightgray;
-}
-
-button:active {
-  background-color: gray;
-}
 
 #attributes-container {
   background-color: red;
