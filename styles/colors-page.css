@@ -25,15 +25,6 @@
   min-width: 500px;
 }
 
-.color-swatch {
-  display: block; /* Makes it sit inline with the text */
-  width: 100%; /* Make swatch fill article width */
-  height: 3.25rem;
-  border: 1px solid #ccc; /* Optional border */
-  margin-left: 5px; /* Add some spacing */
-  background-color: red;
-}
-
 /* Media query for portrait orientation */
 @media (orientation: portrait) {
   #colors-list li article {

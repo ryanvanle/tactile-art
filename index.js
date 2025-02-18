@@ -21,7 +21,7 @@
 
     // Event listener for save to favorites buttons (delegation)
     document.addEventListener('click', function(event) {
-      if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") { // IMPORTANT: Check for BOTH states.
+      if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") {
         saveToFavorites(event);
       }
     });
@@ -30,6 +30,7 @@
     generateColors();
     generateMaterials();
     generateTextures();
+    generateFavoritesPage();
   }
 
   function showPage(pageId) {
@@ -44,10 +45,9 @@
     id(pageId).classList.remove("hidden");
   }
 
-  // --- Card Generation Functions ---
   function generateColors() {
     const colorsList = id('colors-list');
-    colorsList.innerHTML = ''; // Clear existing cards
+    colorsList.innerHTML = '';
 
     for (const colorName in COLORS) {
       const colorData = COLORS[colorName];
@@ -127,12 +127,13 @@
     }
   }
 
-  // --- Detail Page Handling ---
   function showDetailPage(event) {
     const article = event.currentTarget;
     const itemType = article.dataset.itemType;
     const itemName = article.dataset.itemName;
     const pageId = article.dataset.pageId;
+
+    console.log(itemType, itemName, pageId);
 
     const detailPage = id(pageId);
 
@@ -147,7 +148,6 @@
         generateTextureDetailPageContent(detailPage, TEXTURES[itemName], itemName);
         break;
     }
-    // Check and set favorite button state *after* generating content
     checkFavoriteButtonState(detailPage, itemType, itemName);
     showPage(pageId);
   }
@@ -172,13 +172,13 @@
   function generateMaterialDetailPageContent(detailPage, materialData, materialName) {
     const title = detailPage.querySelector("h1");
     const blurb = detailPage.querySelector("p");
-    const description = detailPage.querySelectorAll("p"); // Select the second <p>
+    const description = detailPage.querySelectorAll("p");
     const techniquesList = detailPage.querySelector("ul");
     const availability = detailPage.querySelector("#material-detail-page > section:nth-of-type(3) > p");
 
     title.textContent = materialName;
     blurb.textContent = materialData.blurb;
-    description.textContent = materialData.description; // Set the content of the second <p>
+    description.textContent = materialData.description;
 
     techniquesList.innerHTML = "";
     materialData.techniques.forEach(technique => {
@@ -221,7 +221,7 @@
       } else if (item in MATERIALS) {
         article = createSmallTextCard(item, MATERIALS[item], "material");
       } else {
-        return; // Item not found
+        return;
       }
 
       listItem.appendChild(article);
@@ -229,7 +229,6 @@
     });
   }
 
-  // --- Image Gallery Handling ---
   function populateGallery() {
     const gallery = id('gallery');
     if (!gallery) {
@@ -237,7 +236,7 @@
       return;
     }
 
-    gallery.innerHTML = ''; // Clear existing images
+    gallery.innerHTML = '';
 
     for (const artworkName in ARTWORK) {
       const artworkData = ARTWORK[artworkName];
@@ -250,7 +249,6 @@
     }
   }
 
-  // --- Artwork Detail Page Handling ---
   function showArtworkDetailPage(event) {
     const img = event.currentTarget;
     const artworkName = img.dataset.itemName;
@@ -258,7 +256,7 @@
 
     const detailPage = id("artwork-detail-page");
     generateArtworkDetailPageContent(detailPage, artworkData, artworkName);
-    checkFavoriteButtonState(detailPage, "artwork", artworkName); // Check favorite state
+    checkFavoriteButtonState(detailPage, "artwork", artworkName);
     showPage("artwork-detail-page");
   }
 
@@ -293,14 +291,18 @@
     generateExploreFurtherList(exploreList, artworkData.explore);
   }
 
-  // --- Favorites Handling ---
-
   function checkFavoriteButtonState(detailPage, itemType, itemName) {
       const button = detailPage.querySelector(".favorites-button");
       if (!button) return;
 
+
       const isFavorite = favorites.some(fav => fav.name === itemName && fav.type === itemType);
-      button.textContent = isFavorite ? "Remove from Favorites" : "Save to Favorites";
+
+      // console.log("checkFavoriteButtonState");
+      // console.log(favorites);
+      // console.log(isFavorite, detailPage, itemType, itemName);
+
+      button.textContent = isFavorite? "Remove from Favorites": "Save to Favorites";
   }
 
 
@@ -316,7 +318,7 @@
         itemData = COLORS[itemName];
         break;
       case "material":
-        itemData = MATERIALS[itemName]; // This was missing
+        itemData = MATERIALS[itemName];
         break;
       case "texture":
         itemData = TEXTURES[itemName];
@@ -342,31 +344,52 @@
     const favoritesList = id("favorite-page").querySelector("ul");
     favoritesList.innerHTML = "";
 
+
     favorites.forEach(favorite => {
-      const listItem = document.createElement("li");
       let article;
 
       switch (favorite.type) {
         case "color":
-          article = createSmallColorCard(favorite.name, favorite.data);
+          article = createFavoriteColorCard(favorite.name, COLORS[favorite.name]);
           break;
         case "material":
+          article = createFavoriteTextCard(favorite.name,  MATERIALS[favorite.name], favorite.type);
+          break;
         case "texture":
-          article = createSmallTextCard(favorite.name, favorite.data, favorite.type);
+          article = createFavoriteTextCard(favorite.name,  TEXTURES[favorite.name], favorite.type);
           break;
         case "artwork":
-          article = createSmallArtworkCard(favorite.name, favorite.data);
+          article = createSmallArtworkCard(favorite.name, ARTWORK[favorite.name]);
           break;
       }
 
       if (article) {
-        listItem.appendChild(article);
-        favoritesList.appendChild(listItem);
+        favoritesList.appendChild(article);
       }
+    });
+
+    addFavoriteCardEventListeners();
+  }
+
+  function addFavoriteCardEventListeners() {
+    const favoriteCards = document.querySelectorAll("#favorite-page.selectable");
+    favoriteCards.forEach(card => {
+      card.addEventListener("click", handleFavoriteCardClick);
     });
   }
 
-  // Helper functions to create small cards
+  function handleFavoriteCardClick(event) {
+    const card = event.currentTarget;
+    const itemType = card.dataset.itemType;
+    const itemName = card.dataset.itemName;
+
+    if (itemType === "artwork") {
+      showArtworkDetailPage(event);
+    } else {
+      showDetailPage(event);
+    }
+  }
+
   function createSmallColorCard(colorName, colorData) {
     const article = document.createElement("article");
     article.classList.add("small-color-card", "selectable");
@@ -406,25 +429,59 @@
     return article;
   }
 
-  function createSmallArtworkCard(artworkName, artworkData) {
-    const article = document.createElement("article");
-    article.classList.add("small-artwork-card", "selectable"); // You might want to style this differently
-    article.dataset.itemName = artworkName;
-    article.addEventListener("click", showArtworkDetailPage);
 
-    const img = document.createElement('img');
-    img.src = `img/${artworkData.image}`;
-    img.alt = artworkData.alt;
-    article.appendChild(img);
+  function createFavoriteColorCard(colorName, colorData) {
+    const article = document.createElement("article");
+    article.classList.add("favorite-small-color-card", "selectable");
+    article.dataset.itemType = "color";
+    article.dataset.itemName = colorName;
+    article.dataset.pageId = "color-detail-page";
+    article.addEventListener("click", showDetailPage);
 
     const h3 = document.createElement("h3");
-    h3.textContent = artworkName;
+    h3.textContent = colorName;
     article.appendChild(h3);
+
+    const swatch = document.createElement("span");
+    swatch.classList.add("small-color-swatch");
+    swatch.style.backgroundColor = colorData.hex;
+    article.appendChild(swatch);
 
     return article;
   }
 
-  // Helper Function
+  function createFavoriteTextCard(itemName, itemData, itemType) {
+    const article = document.createElement("article");
+    article.classList.add("favorite-small-text-card", "selectable");
+    article.dataset.itemType = itemType;
+    article.dataset.itemName = itemName;
+    article.dataset.pageId = `${itemType}-detail-page`;
+
+    console.log("HERE", itemType, itemName, article.dataset.pageId);
+
+    article.addEventListener("click", showDetailPage);
+
+    const h3 = document.createElement("h3");
+    h3.textContent = itemName;
+    article.appendChild(h3);
+
+    const blurb = document.createElement("p");
+    blurb.textContent = itemData.blurb;
+    article.appendChild(blurb);
+
+    return article;
+  }
+
+  function createSmallArtworkCard(artworkName, artworkData) {
+    const img = document.createElement('img');
+    img.classList.add("selectable");
+    img.dataset.itemName = artworkName;
+    img.addEventListener("click", showArtworkDetailPage);
+    img.src = `img/${artworkData.image}`;
+    img.alt = artworkData.alt;
+    return img;
+  }
+
   function id(idName) {
     return document.getElementById(idName);
   }

@@ -156,15 +156,40 @@ button {
   width: 100%;
 }
 
-#gallery img {
+#favorite-page ul {
+  columns: 1 12rem;
+  gap: 1rem;
+  width: 100%;
+  padding: 0;
+}
+
+#gallery img, #favorite-page img {
   width: 100%;
   margin-bottom: 1rem;
   display: block;
 }
 
-#gallery img:hover {
+#gallery img:hover, #favorite-page img:hover {
   cursor: pointer;
   filter: brightness(50%);
+}
+
+.favorite-small-color-card, .favorite-small-text-card {
+  /* columns: 1; */
+  padding-top: 1rem;
+  border: solid 3px black;
+  border-radius: 10px;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  margin-bottom: 1rem;
+  overflow: visible;
+}
+
+.favorite-small-color-card h3, .favorite-small-text-card h3 {
+  height: 50%;
+  font-size: 24pt;
+  margin: 0;
 }
 
 .artwork-content-wrapper {
@@ -284,9 +309,19 @@ button {
 .color-swatch {
   display: block; /* Makes it sit inline with the text */
   width: 100%; /* Make swatch fill article width */
-  height: 3.25rem;
+  height: 2.5rem;
   border: 1px solid #ccc; /* Optional border */
-  margin-left: 5px; /* Add some spacing */
+  background-color: red;
+}
+
+.small-color-swatch {
+  display: block; /* Makes it sit inline with the text */
+  width: 90%; /* Make swatch fill article width */
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 1rem;
+  height: 1rem;
+  border: 1px solid #ccc; /* Optional border */
   background-color: red;
 }
 
@@ -333,14 +368,6 @@ button {
   min-width: 500px;
 }
 
-.color-swatch {
-  display: block; /* Makes it sit inline with the text */
-  width: 100%; /* Make swatch fill article width */
-  height: 3.25rem;
-  border: 1px solid #ccc; /* Optional border */
-  margin-left: 5px; /* Add some spacing */
-  background-color: red;
-}
 
 /* Media query for portrait orientation */
 @media (orientation: portrait) {
@@ -358,4 +385,3 @@ button {
     margin: 0;
   }
 }
-
