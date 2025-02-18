@@ -21,37 +21,37 @@ const COLORS = {
     hex: "#403f6f",
     description: "",
     seen:"",
-    explore:"",
+    explore: [],
   },
   "Lavender": {
     hex: "#b2a4d4",
     description: "",
     seen:"",
-    explore:"",
+    explore: [],
   },
   "Burnt Orange": {
     hex: "#c7632c",
     description: "",
     seen:"",
-    explore:"",
+    explore: [],
   },
   "Charcoal Gray": {
     hex: "#6a6a6a",
     description: "",
     seen:"",
-    explore:"",
+    explore: [],
   },
   "Blue Turquoise": {
     hex: "#52b0ae",
     description: "",
     seen:"",
-    explore:"",
+    explore: [],
   },
   "Crystal Rose": {
     hex: "#fdc4c7",
     description: "",
     seen:"",
-    explore:"",
+    explore: [],
   }
 };
 

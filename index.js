@@ -217,6 +217,10 @@
         const colorData = COLORS[item];
         article = document.createElement("article");
         article.classList.add("small-color-card", "selectable");
+        article.dataset.itemType = "color";
+        article.dataset.itemName = item;
+        article.dataset.pageId = "color-detail-page";
+        article.addEventListener("click", showDetailPage); // Add event listener for navigation
 
         const h3 = document.createElement("h3");
         h3.textContent = item;
@@ -231,6 +235,10 @@
         const textureData = TEXTURES[item];
         article = document.createElement("article");
         article.classList.add("small-text-card", "selectable");
+        article.dataset.itemType = "texture";
+        article.dataset.itemName = item;
+        article.dataset.pageId = "texture-detail-page";
+        article.addEventListener("click", showDetailPage); // Add event listener for navigation
 
         const h3 = document.createElement("h3");
         h3.textContent = item;
@@ -244,6 +252,10 @@
         const materialData = MATERIALS[item];
         article = document.createElement("article");
         article.classList.add("small-text-card", "selectable");
+        article.dataset.itemType = "material";
+        article.dataset.itemName = item;
+        article.dataset.pageId = "material-detail-page";
+        article.addEventListener("click", showDetailPage); // Add event listener for navigation
 
         const h3 = document.createElement("h3");
         h3.textContent = item;
@@ -254,13 +266,12 @@
         article.appendChild(blurb);
 
       } else {
-        // Handle cases where the item is not found in any data object
-        console.log("Item not found:", item);
+        // Item not found in any data, so don't render it
         return;
       }
 
       listItem.appendChild(article);
-      exploreList.appendChild(listItem); // Append to the provided exploreList
+      exploreList.appendChild(listItem);
     });
   }
 
