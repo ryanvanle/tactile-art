@@ -13,18 +13,54 @@
     id("favorites-button").addEventListener("click", () => showPage("favorite-page"));
 
     // Event listeners for back buttons (delegation)
-    document.addEventListener('click', function(event) {
-      if (event.target.classList.contains('back-button')) {
+    const backButtons = document.querySelectorAll('.back-button');
+    backButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        console.log("back button pressed");
         showPage("home-page");
-      }
+      });
     });
+
+    // Event listener for selectable elements (delegation) - ONLY for detail page navigation
+    document.addEventListener('click', function(event) {
+      handleSelectableClick(event);
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Enter" || event.key === " ") { // Space or Enter
+            handleSelectableClick(event);
+        }
+    });
+
+    function handleSelectableClick(event){
+        const selectable = event.target.closest('.selectable');
+        console.log(event, event.target);
+        if (selectable && !event.target.closest('.back-button')) { // Check if it's selectable AND NOT a close button
+          showDetailPage(selectable);
+        }
+    }
 
     // Event listener for save to favorites buttons (delegation)
     document.addEventListener('click', function(event) {
-      if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") {
-        saveToFavorites(event);
-      }
+      handleFavoritesClick(event);
     });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Enter" || event.key === " ") { // Space or Enter
+            handleFavoritesClick(event);
+        }
+    });
+
+    id("favorite-page").addEventListener("click", function(event) {
+      generateFavoritesPage();
+      showPage("favorite-page");
+    })
+
+    function handleFavoritesClick(event){
+        if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") {
+            saveToFavorites(event);
+          }
+    }
 
     populateGallery();
     generateColors();
@@ -34,15 +70,22 @@
   }
 
   function showPage(pageId) {
-    const audio = document.querySelector("#artwork-detail-audio > audio");
+    const audio = document.querySelector("audio");
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
     }
 
     const pages = document.querySelectorAll(".page");
-    pages.forEach(page => page.classList.add("hidden"));
-    id(pageId).classList.remove("hidden");
+    pages.forEach(page => {
+      page.classList.add("hidden");
+      // page.setAttribute('aria-hidden', 'true');
+    });
+
+    const currentPage = id(pageId);
+    // currentPage.setAttribute('aria-hidden', 'false');
+    currentPage.classList.remove("hidden");
+
   }
 
   function generateColors() {
@@ -57,6 +100,8 @@
       article.dataset.itemType = "color";
       article.dataset.itemName = colorName;
       article.dataset.pageId = "color-detail-page";
+      article.setAttribute("role","button");
+      article.setAttribute("tabindex", "0");
       article.addEventListener("click", showDetailPage);
 
       const h2 = document.createElement('h2');
@@ -85,6 +130,8 @@
       article.dataset.itemType = "material";
       article.dataset.itemName = materialName;
       article.dataset.pageId = "material-detail-page";
+      article.setAttribute("role","button");
+      article.setAttribute("tabindex","0");
       article.addEventListener("click", showDetailPage);
 
       const h2 = document.createElement('h2');
@@ -112,6 +159,8 @@
       article.dataset.itemType = "texture";
       article.dataset.itemName = textureName;
       article.dataset.pageId = "texture-detail-page";
+      article.setAttribute("role","button");
+      article.setAttribute("tabindex","0");
       article.addEventListener("click", showDetailPage);
 
       const h2 = document.createElement('h2');
@@ -128,12 +177,11 @@
   }
 
   function showDetailPage(event) {
+
     const article = event.currentTarget;
     const itemType = article.dataset.itemType;
     const itemName = article.dataset.itemName;
     const pageId = article.dataset.pageId;
-
-    console.log(itemType, itemName, pageId);
 
     const detailPage = id(pageId);
 
@@ -244,6 +292,8 @@
       img.src = `img/${artworkData.image}`;
       img.alt = artworkData.alt;
       img.dataset.itemName = artworkName;
+      img.setAttribute("role", "button");
+      img.setAttribute("tabindex", "0");
       img.addEventListener("click", showArtworkDetailPage);
       gallery.appendChild(img);
     }
@@ -336,14 +386,11 @@
       favorites.push({ type: itemType, name: itemName, data: itemData });
       button.textContent = "Remove from Favorites";
     }
-
-    generateFavoritesPage();
   }
 
   function generateFavoritesPage() {
     const favoritesList = id("favorite-page").querySelector("ul");
     favoritesList.innerHTML = "";
-
 
     favorites.forEach(favorite => {
       let article;
@@ -397,6 +444,9 @@
     article.dataset.itemName = colorName;
     article.dataset.pageId = "color-detail-page";
     article.addEventListener("click", showDetailPage);
+    article.setAttribute("role","button");
+    article.setAttribute("tabindex","0");
+
 
     const h3 = document.createElement("h3");
     h3.textContent = colorName;
@@ -417,6 +467,9 @@
     article.dataset.itemName = itemName;
     article.dataset.pageId = `${itemType}-detail-page`;
     article.addEventListener("click", showDetailPage);
+    article.setAttribute("role","button");
+    article.setAttribute("tabindex","0");
+
 
     const h3 = document.createElement("h3");
     h3.textContent = itemName;
@@ -437,6 +490,9 @@
     article.dataset.itemName = colorName;
     article.dataset.pageId = "color-detail-page";
     article.addEventListener("click", showDetailPage);
+    article.setAttribute("role","button");
+    article.setAttribute("tabindex","0");
+
 
     const h3 = document.createElement("h3");
     h3.textContent = colorName;
@@ -456,6 +512,10 @@
     article.dataset.itemType = itemType;
     article.dataset.itemName = itemName;
     article.dataset.pageId = `${itemType}-detail-page`;
+    article.setAttribute("role","button");
+    article.setAttribute("tabindex","0");
+
+
 
     console.log("HERE", itemType, itemName, article.dataset.pageId);
 
@@ -475,10 +535,15 @@
   function createSmallArtworkCard(artworkName, artworkData) {
     const img = document.createElement('img');
     img.classList.add("selectable");
+    img.setAttribute("role","button");
+    article.setAttribute("tabindex","0");
+
+
     img.dataset.itemName = artworkName;
     img.addEventListener("click", showArtworkDetailPage);
     img.src = `img/${artworkData.image}`;
     img.alt = artworkData.alt;
+
     return img;
   }
 
