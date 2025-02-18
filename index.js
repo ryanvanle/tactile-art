@@ -16,7 +16,7 @@
     const backButtons = document.querySelectorAll('.back-button');
     backButtons.forEach(button => {
       button.addEventListener('click', (event) => {
-        console.log("back button pressed");
+        console.log("back button")
         showPage("home-page");
       });
     });
@@ -34,7 +34,7 @@
 
     function handleSelectableClick(event){
         const selectable = event.target.closest('.selectable');
-        console.log(event, event.target);
+        // console.log(event, event.target);
         if (selectable && !event.target.closest('.back-button')) { // Check if it's selectable AND NOT a close button
           showDetailPage(selectable);
         }
@@ -51,10 +51,6 @@
         }
     });
 
-    id("favorite-page").addEventListener("click", function(event) {
-      generateFavoritesPage();
-      showPage("favorite-page");
-    })
 
     function handleFavoritesClick(event){
         if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") {
@@ -81,6 +77,8 @@
       page.classList.add("hidden");
       // page.setAttribute('aria-hidden', 'true');
     });
+
+
 
     const currentPage = id(pageId);
     // currentPage.setAttribute('aria-hidden', 'false');
@@ -386,6 +384,8 @@
       favorites.push({ type: itemType, name: itemName, data: itemData });
       button.textContent = "Remove from Favorites";
     }
+
+    generateFavoritesPage();
   }
 
   function generateFavoritesPage() {
@@ -517,7 +517,7 @@
 
 
 
-    console.log("HERE", itemType, itemName, article.dataset.pageId);
+    // console.log("HERE", itemType, itemName, article.dataset.pageId);
 
     article.addEventListener("click", showDetailPage);
 
@@ -536,7 +536,7 @@
     const img = document.createElement('img');
     img.classList.add("selectable");
     img.setAttribute("role","button");
-    article.setAttribute("tabindex","0");
+    img.setAttribute("tabindex","0");
 
 
     img.dataset.itemName = artworkName;
