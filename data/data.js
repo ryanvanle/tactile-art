@@ -289,7 +289,7 @@ As his preparatory studies reveal, Picasso initially conceived of the figure at 
     explore: ["Rough", "Gritty", "Hard", "Air-Dry Clay", "Oil Paints"]
   },
   "The Starry Night": {
-    image: "The Starry Night.jpg",
+    image: "The Starry NIght.jpg",
     alt: "PLACEHOLDER",
     audio: "Van Gogh Final Description and Interpretation.mp3",
     credit: "Museum of Modern Art (MoMA)",
