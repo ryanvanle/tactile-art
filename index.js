@@ -1,6 +1,8 @@
 "use strict";
 
 (function() {
+  let favorites = []; // Initialize an empty array to store favorites
+
   window.addEventListener("load", init);
 
   function init() {
@@ -17,6 +19,13 @@
       }
     });
 
+    // Event listener for save to favorites buttons (delegation)
+    document.addEventListener('click', function(event) {
+      if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") { // IMPORTANT: Check for BOTH states.
+        saveToFavorites(event);
+      }
+    });
+
     populateGallery();
     generateColors();
     generateMaterials();
@@ -24,7 +33,6 @@
   }
 
   function showPage(pageId) {
-
     const audio = document.querySelector("#artwork-detail-audio > audio");
     if (audio) {
       audio.pause();
@@ -38,18 +46,6 @@
 
   // --- Card Generation Functions ---
   function generateColors() {
-    generateColorCards();
-  }
-
-  function generateMaterials() {
-    generateMaterialsCards();
-  }
-
-  function generateTextures() {
-    generateTexturesCards();
-  }
-
-  function generateColorCards() {
     const colorsList = id('colors-list');
     colorsList.innerHTML = ''; // Clear existing cards
 
@@ -77,7 +73,7 @@
     }
   }
 
-  function generateMaterialsCards() {
+  function generateMaterials() {
     const materialsList = id('materials-list');
     materialsList.innerHTML = '';
 
@@ -104,7 +100,7 @@
     }
   }
 
-  function generateTexturesCards() {
+  function generateTextures() {
     const texturesList = id('textures-list');
     texturesList.innerHTML = '';
 
@@ -138,10 +134,8 @@
     const itemName = article.dataset.itemName;
     const pageId = article.dataset.pageId;
 
-    // Get the detail page element
     const detailPage = id(pageId);
 
-    // Call the appropriate function to update the template content
     switch (itemType) {
       case "color":
         generateColorDetailPageContent(detailPage, COLORS[itemName], itemName);
@@ -153,20 +147,18 @@
         generateTextureDetailPageContent(detailPage, TEXTURES[itemName], itemName);
         break;
     }
-
-    // Show the detail page
+    // Check and set favorite button state *after* generating content
+    checkFavoriteButtonState(detailPage, itemType, itemName);
     showPage(pageId);
   }
 
   function generateColorDetailPageContent(detailPage, colorData, colorName) {
-    // Get references to the template elements
     const title = detailPage.querySelector("h1");
     const swatch = detailPage.querySelector(".color-swatch");
-    const hue = detailPage.querySelector("#color-detail-page > section:nth-of-type(1) > p"); // Select the <p> in the first section
-    const seen = detailPage.querySelector("#color-detail-page > section:nth-of-type(2) > p"); // Select the <p> in the second section
-    const hexCode = detailPage.querySelector("#color-detail-page > section:nth-of-type(3) > p"); // Select the <p> in the third section
+    const hue = detailPage.querySelector("#color-detail-page > section:nth-of-type(1) > p");
+    const seen = detailPage.querySelector("#color-detail-page > section:nth-of-type(2) > p");
+    const hexCode = detailPage.querySelector("#color-detail-page > section:nth-of-type(3) > p");
 
-    // Update the content of the template elements
     title.textContent = colorName;
     swatch.style.backgroundColor = colorData.hex;
     hue.textContent = colorData.description;
@@ -178,22 +170,17 @@
   }
 
   function generateMaterialDetailPageContent(detailPage, materialData, materialName) {
-    // Get references to the template elements
     const title = detailPage.querySelector("h1");
-    const blurb = detailPage.querySelector("p"); // Select the first <p>
+    const blurb = detailPage.querySelector("p");
     const description = detailPage.querySelectorAll("p"); // Select the second <p>
     const techniquesList = detailPage.querySelector("ul");
-    const availability = detailPage.querySelector("#material-detail-page > section:nth-of-type(3) > p"); // Select the <p> in the third section of #material-detail-page
+    const availability = detailPage.querySelector("#material-detail-page > section:nth-of-type(3) > p");
 
-    // Update the content of the template elements
     title.textContent = materialName;
     blurb.textContent = materialData.blurb;
-    description.textContent = materialData.description;
+    description.textContent = materialData.description; // Set the content of the second <p>
 
-    console.log(materialData)
-
-    // Clear existing techniques and add new ones
-    techniquesList.innerHTML = ""; // Using innerHTML here for efficiency
+    techniquesList.innerHTML = "";
     materialData.techniques.forEach(technique => {
       const listItem = document.createElement("li");
       listItem.textContent = technique;
@@ -206,13 +193,12 @@
     generateExploreFurtherList(exploreList, materialData.explore);
   }
 
-  function generateTextureDetailPageContent(detailPage, textureData, textureName) {
-    // Get references to the template elements
-    const title = detailPage.querySelector("h1");
-    const blurb = detailPage.querySelector("p"); // Select the first <p>
-    const description = detailPage.querySelector("#texture-detail-content > p"); // Select the <p> within #texture-detail-content
 
-    // Update the content of the template elements
+  function generateTextureDetailPageContent(detailPage, textureData, textureName) {
+    const title = detailPage.querySelector("h1");
+    const blurb = detailPage.querySelector("p");
+    const description = detailPage.querySelector("#texture-detail-content > p");
+
     title.textContent = textureName;
     blurb.textContent = textureData.blurb;
     description.textContent = textureData.create;
@@ -222,67 +208,20 @@
   }
 
   function generateExploreFurtherList(exploreList, exploreItems) {
-    exploreList.innerHTML = ""; // Clear existing items
+    exploreList.innerHTML = "";
 
     exploreItems.forEach(item => {
       const listItem = document.createElement("li");
       let article;
 
       if (item in COLORS) {
-        const colorData = COLORS[item];
-        article = document.createElement("article");
-        article.classList.add("small-color-card", "selectable");
-        article.dataset.itemType = "color";
-        article.dataset.itemName = item;
-        article.dataset.pageId = "color-detail-page";
-        article.addEventListener("click", showDetailPage); // Add event listener for navigation
-
-        const h3 = document.createElement("h3");
-        h3.textContent = item;
-        article.appendChild(h3);
-
-        const swatch = document.createElement("span");
-        swatch.classList.add("color-swatch");
-        swatch.style.backgroundColor = colorData.hex;
-        article.appendChild(swatch);
-
+        article = createSmallColorCard(item, COLORS[item]);
       } else if (item in TEXTURES) {
-        const textureData = TEXTURES[item];
-        article = document.createElement("article");
-        article.classList.add("small-text-card", "selectable");
-        article.dataset.itemType = "texture";
-        article.dataset.itemName = item;
-        article.dataset.pageId = "texture-detail-page";
-        article.addEventListener("click", showDetailPage); // Add event listener for navigation
-
-        const h3 = document.createElement("h3");
-        h3.textContent = item;
-        article.appendChild(h3);
-
-        const blurb = document.createElement("p");
-        blurb.textContent = textureData.blurb;
-        article.appendChild(blurb);
-
+        article = createSmallTextCard(item, TEXTURES[item], "texture");
       } else if (item in MATERIALS) {
-        const materialData = MATERIALS[item];
-        article = document.createElement("article");
-        article.classList.add("small-text-card", "selectable");
-        article.dataset.itemType = "material";
-        article.dataset.itemName = item;
-        article.dataset.pageId = "material-detail-page";
-        article.addEventListener("click", showDetailPage); // Add event listener for navigation
-
-        const h3 = document.createElement("h3");
-        h3.textContent = item;
-        article.appendChild(h3);
-
-        const blurb = document.createElement("p");
-        blurb.textContent = materialData.blurb;
-        article.appendChild(blurb);
-
+        article = createSmallTextCard(item, MATERIALS[item], "material");
       } else {
-        // Item not found in any data, so don't render it
-        return;
+        return; // Item not found
       }
 
       listItem.appendChild(article);
@@ -292,7 +231,7 @@
 
   // --- Image Gallery Handling ---
   function populateGallery() {
-    const gallery = document.getElementById('gallery');
+    const gallery = id('gallery');
     if (!gallery) {
       console.error("Gallery element not found.");
       return;
@@ -302,12 +241,11 @@
 
     for (const artworkName in ARTWORK) {
       const artworkData = ARTWORK[artworkName];
-      console.log(ARTWORK, artworkData);
       const img = document.createElement('img');
-      img.src = `img/${artworkData.image}`; // Assuming images are in 'img' folder
+      img.src = `img/${artworkData.image}`;
       img.alt = artworkData.alt;
-      img.dataset.itemName = artworkName; // Store artwork name for event handling
-      img.addEventListener("click", showArtworkDetailPage); // Add click listener
+      img.dataset.itemName = artworkName;
+      img.addEventListener("click", showArtworkDetailPage);
       gallery.appendChild(img);
     }
   }
@@ -320,30 +258,28 @@
 
     const detailPage = id("artwork-detail-page");
     generateArtworkDetailPageContent(detailPage, artworkData, artworkName);
+    checkFavoriteButtonState(detailPage, "artwork", artworkName); // Check favorite state
     showPage("artwork-detail-page");
   }
 
   function generateArtworkDetailPageContent(detailPage, artworkData, artworkName) {
-    // Get references to the template elements
     const title = detailPage.querySelector("h1");
-    const artistYear = detailPage.querySelector("header > section > p"); // Select the <p> within the header section
+    const artistYear = detailPage.querySelector("header > section > p");
     const image = detailPage.querySelector(".artwork-image-container img");
-    const description = detailPage.querySelector(".artwork-about > section:nth-of-type(1) > p"); // Select the <p> in the first section of.artwork-about
-    const notesList = detailPage.querySelector(".artwork-about > section:nth-of-type(2) > ul"); // Select the <ul> in the second section of.artwork-about
-    const audio = detailPage.querySelector(".artwork-about > section:nth-of-type(3) > audio"); // Select the <audio> in the third section of.artwork-about
+    const description = detailPage.querySelector(".artwork-about > section:nth-of-type(1) > p");
+    const notesList = detailPage.querySelector(".artwork-about > section:nth-of-type(2) > ul");
+    const audio = detailPage.querySelector(".artwork-about > section:nth-of-type(3) > audio");
     const credit = detailPage.querySelector("#audio-description-credit");
 
-    // Update the content of the template elements
     title.textContent = artworkName;
     artistYear.textContent = `${artworkData.notes.artist}, ${artworkData.notes.year}`;
-    image.src = `img/${artworkData.image}`; // Assuming images are in 'img' folder
+    image.src = `img/${artworkData.image}`;
     image.alt = artworkData.alt;
     description.textContent = artworkData.description;
 
-    // Clear existing notes and add new ones
     notesList.innerHTML = "";
     for (const note in artworkData.notes) {
-      if (note!== "artist" && note!== "year") { // Exclude artist and year as they are already displayed
+      if (note!== "artist" && note!== "year") {
         const listItem = document.createElement("li");
         listItem.textContent = `${note}: ${artworkData.notes[note]}`;
         notesList.appendChild(listItem);
@@ -357,16 +293,139 @@
     generateExploreFurtherList(exploreList, artworkData.explore);
   }
 
-  // Helper Functions
+  // --- Favorites Handling ---
+
+  function checkFavoriteButtonState(detailPage, itemType, itemName) {
+      const button = detailPage.querySelector(".favorites-button");
+      if (!button) return;
+
+      const isFavorite = favorites.some(fav => fav.name === itemName && fav.type === itemType);
+      button.textContent = isFavorite ? "Remove from Favorites" : "Save to Favorites";
+  }
+
+
+  function saveToFavorites(event) {
+    const button = event.target;
+    const detailPage = button.closest(".detail-page");
+    const itemType = detailPage.id.split("-")[0];
+    const itemName = detailPage.querySelector("h1").textContent;
+
+    let itemData;
+    switch (itemType) {
+      case "color":
+        itemData = COLORS[itemName];
+        break;
+      case "material":
+        itemData = MATERIALS[itemName]; // This was missing
+        break;
+      case "texture":
+        itemData = TEXTURES[itemName];
+        break;
+      case "artwork":
+        itemData = ARTWORK[itemName];
+        break;
+    }
+
+    const existingIndex = favorites.findIndex(fav => fav.name === itemName && fav.type === itemType);
+    if (existingIndex > -1) {
+      favorites.splice(existingIndex, 1);
+      button.textContent = "Save to Favorites";
+    } else {
+      favorites.push({ type: itemType, name: itemName, data: itemData });
+      button.textContent = "Remove from Favorites";
+    }
+
+    generateFavoritesPage();
+  }
+
+  function generateFavoritesPage() {
+    const favoritesList = id("favorite-page").querySelector("ul");
+    favoritesList.innerHTML = "";
+
+    favorites.forEach(favorite => {
+      const listItem = document.createElement("li");
+      let article;
+
+      switch (favorite.type) {
+        case "color":
+          article = createSmallColorCard(favorite.name, favorite.data);
+          break;
+        case "material":
+        case "texture":
+          article = createSmallTextCard(favorite.name, favorite.data, favorite.type);
+          break;
+        case "artwork":
+          article = createSmallArtworkCard(favorite.name, favorite.data);
+          break;
+      }
+
+      if (article) {
+        listItem.appendChild(article);
+        favoritesList.appendChild(listItem);
+      }
+    });
+  }
+
+  // Helper functions to create small cards
+  function createSmallColorCard(colorName, colorData) {
+    const article = document.createElement("article");
+    article.classList.add("small-color-card", "selectable");
+    article.dataset.itemType = "color";
+    article.dataset.itemName = colorName;
+    article.dataset.pageId = "color-detail-page";
+    article.addEventListener("click", showDetailPage);
+
+    const h3 = document.createElement("h3");
+    h3.textContent = colorName;
+    article.appendChild(h3);
+
+    const swatch = document.createElement("span");
+    swatch.classList.add("color-swatch");
+    swatch.style.backgroundColor = colorData.hex;
+    article.appendChild(swatch);
+
+    return article;
+  }
+
+  function createSmallTextCard(itemName, itemData, itemType) {
+    const article = document.createElement("article");
+    article.classList.add("small-text-card", "selectable");
+    article.dataset.itemType = itemType;
+    article.dataset.itemName = itemName;
+    article.dataset.pageId = `${itemType}-detail-page`;
+    article.addEventListener("click", showDetailPage);
+
+    const h3 = document.createElement("h3");
+    h3.textContent = itemName;
+    article.appendChild(h3);
+
+    const blurb = document.createElement("p");
+    blurb.textContent = itemData.blurb;
+    article.appendChild(blurb);
+
+    return article;
+  }
+
+  function createSmallArtworkCard(artworkName, artworkData) {
+    const article = document.createElement("article");
+    article.classList.add("small-artwork-card", "selectable"); // You might want to style this differently
+    article.dataset.itemName = artworkName;
+    article.addEventListener("click", showArtworkDetailPage);
+
+    const img = document.createElement('img');
+    img.src = `img/${artworkData.image}`;
+    img.alt = artworkData.alt;
+    article.appendChild(img);
+
+    const h3 = document.createElement("h3");
+    h3.textContent = artworkName;
+    article.appendChild(h3);
+
+    return article;
+  }
+
+  // Helper Function
   function id(idName) {
     return document.getElementById(idName);
   }
-
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
-
 })();
