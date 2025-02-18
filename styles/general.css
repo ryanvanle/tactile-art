@@ -4,8 +4,8 @@ html {
   font-weight: 400;
   font-style: normal;
   margin-top: 2%;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
+  margin-left: 3.5%;
+  margin-right: 3.5%;
   /* margin-right: 1%; */
 }
 
@@ -79,8 +79,8 @@ button {
   /* margin-right: 1rem; */
   /* padding-left: 2dvw; */
   /* padding-right: 2dvw; */
-  padding-top: 3dvh;
-  padding-bottom: 3dvh;
+  padding-top: 1.75dvh;
+  padding-bottom: 1.75dvh;
 }
 
 #detail-page header section {
@@ -152,4 +152,14 @@ button {
   height: 50%;
   font-size: 24pt;
   margin: 0;
+}
+
+#gallery {
+  columns: 3 12rem;
+  gap: 1rem;
+}
+
+#gallery img {
+  width: 100%;
+  margin-bottom: 1rem;
 }

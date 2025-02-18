@@ -16,6 +16,8 @@
         button.addEventListener("click", () => showPage("home-page"));
     });
 
+    populateGallery();
+
     generateColors();
     generateMaterials();
     generateTextures();
@@ -216,6 +218,46 @@
     backButton.addEventListener("click", () => showPage("texture-page"));
     detailPage.appendChild(backButton);
   }
+
+  function populateGallery() {
+    const gallery = document.getElementById('gallery');
+    if (!gallery) {
+      console.error("Gallery element not found.");
+      return;
+    }
+
+    let imageFolder = "img/"
+
+    // Clear existing images (optional, if you want to replace them)
+    gallery.innerHTML = '';
+
+    const imageNames = [
+      "1.jpg",
+      "2.jpg",
+      "3.jpg",
+      "4.jpg",
+      "5.jpg",
+      "6.jpg",
+      "7.jpg"
+    ];
+
+
+    const shuffle = true;
+    if (shuffle) {
+      // Fisher-Yates shuffle algorithm (more efficient and unbiased)
+      for (let i = imageNames.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [imageNames[i], imageNames[j]] = [imageNames[j], imageNames[i]]; // Swap elements
+      }
+    }
+
+    imageNames.forEach(imageName => {
+      const img = document.createElement('img');
+      img.src = `${imageFolder}/${imageName}`;
+      gallery.appendChild(img);
+    });
+  }
+
 
   function id(idName) {
     return document.getElementById(idName);
