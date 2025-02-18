@@ -3,6 +3,8 @@ html {
   font-family: "Quando", serif;
   font-weight: 400;
   font-style: normal;
+  margin: 2%;
+  /* margin-right: 1%; */
 }
 
 .hidden {
@@ -14,7 +16,6 @@ header {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
 }
 
 #title {
@@ -59,4 +60,78 @@ button {
   padding-right: 6dvw;
   padding-top: 3dvh;
   padding-bottom: 3dvh;
+}
+
+.color-page header section {
+  width: 50%;
+}
+
+.color-page header span {
+  width: 50%;
+  height: 1.25rem;
+  margin: 0;
+}
+
+.detail-page-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+}
+
+
+#detail-page h1 {
+  font-size: 42pt;
+  margin-bottom: 1rem;
+}
+
+
+#explore-more {
+  display: flex;
+  /* justify-content: space-evenly; */
+  /* align-items: center; */
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+  width: 100%;
+  overflow: auto;
+  overflow-y: hidden;
+}
+
+
+#explore-more ul {
+  list-style-type: none;
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+#explore-more h2 {
+  flex: 0 0 100%;
+}
+
+
+.small-color-card, .small-text-card {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: solid 3px black;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  width: 350px;
+  justify-content: space-evenly;
+  margin-right: 2rem;
+}
+
+
+.small-color-card h3, .small-text-card h3 {
+  height: 50%;
+  font-size: 24pt;
+  margin: 0;
 }
