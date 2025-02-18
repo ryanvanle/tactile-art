@@ -62,7 +62,7 @@ button {
   padding-bottom: 3dvh;
 }
 
-.color-page header section {
+#detail-page header section {
   width: 50%;
 }
 
@@ -78,7 +78,6 @@ button {
   align-items: center;
   justify-content: end;
 }
-
 
 #detail-page h1 {
   font-size: 42pt;
@@ -128,7 +127,6 @@ button {
   justify-content: space-evenly;
   margin-right: 2rem;
 }
-
 
 .small-color-card h3, .small-text-card h3 {
   height: 50%;
