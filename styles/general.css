@@ -93,8 +93,6 @@ button {
   flex-wrap: wrap;
   list-style-type: none;
   width: 100%;
-  overflow: auto;
-  overflow-y: hidden;
 }
 
 
@@ -102,6 +100,7 @@ button {
   list-style-type: none;
   flex: 1;
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   width: 100%;
   margin: 0;
@@ -111,11 +110,11 @@ button {
 
 #explore-more h2 {
   flex: 0 0 100%;
+  margin-bottom: -1rem;
 }
 
-
 .small-color-card, .small-text-card {
-  margin-top: 1rem;
+  margin-top: 2rem;
   padding: 1rem;
   border: solid 3px black;
   border-radius: 10px;
@@ -124,6 +123,7 @@ button {
   flex-direction: column;
   height: 70%;
   width: 350px;
+  align-items: center;
   justify-content: space-evenly;
   margin-right: 2rem;
 }
