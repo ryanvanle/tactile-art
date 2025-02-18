@@ -15,13 +15,13 @@
     <title>tactile art</title>
 </head>
 <body>
-    <section id="home-page" class="page hidden">
+    <section id="home-page" class="page">
         <header>
             <section id="title">
                 <h1>Tactile Art</h1>
                 <p>Start your tactile journey here.</p>
             </section>
-            <section>
+            <section id="title-buttons-container">
                 <button id="favorites-button">My Favorites</button>
             </section>
         </header>
@@ -57,26 +57,28 @@
 
     <section id="material-page" class="page hidden">
         <h1>Materials</h1>
+        <p>Explore different tactile materials here.</p>
         <button class="back-button">Back to Home</button>
 
         <ul id="materials-list">
+          <!-- populated in js -->
         </ul>
-
-
     </section>
 
     <section id="texture-page" class="page hidden">
         <h1>Textures</h1>
+        <p>Explore different textures of tactile art here.</p>
         <button class="back-button">Back to Home</button>
 
         <ul id="textures-list">
-          <li>
+          <!-- <li>
             <article>
               <h2>Smooth</h2>
               <p>Even, polished surface with no roughness</p>
             </article>
-          </li>
+          </li> -->
 
+          <!-- populated in js -->
         </ul>
     </section>
 
@@ -85,7 +87,7 @@
         <button class="back-button">Back to Home</button>
     </section>
 
-    <section id="detail-page" class="page texture-page">
+    <section id="detail-page" class="page texture-page hidden">
       <header>
         <section>
           <h1>Smooth</h1>

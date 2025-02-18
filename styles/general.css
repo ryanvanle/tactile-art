@@ -1,9 +1,11 @@
 html {
-  font-size: 16pt;
+  /* font-size: 16pt; */
   font-family: "Quando", serif;
   font-weight: 400;
   font-style: normal;
-  margin: 2%;
+  margin-top: 2%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
   /* margin-right: 1%; */
 }
 
@@ -18,8 +20,26 @@ header {
   flex-wrap: wrap;
 }
 
+#home-page header {
+  align-items: flex-start;
+}
+
 #title {
   width: 80%;
+  /* font-size:larger; */
+}
+
+h1 {
+  font-size: 42pt;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#title-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 20%;
+  /* align-items: center; */
 }
 
 #search-container, #search-container input {
@@ -45,19 +65,20 @@ button {
   padding-bottom: 1dvh;
 }
 
-
 #attributes-container {
-  background-color: red;
+  /* background-color: red; */
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 
 #attributes-container button {
   /* width: 15%; */
-  font-size: 14pt;
-  padding-left: 6dvw;
-  padding-right: 6dvw;
+  font-size: 16pt;
+  width: 30%;
+  /* margin-right: 1rem; */
+  /* padding-left: 2dvw; */
+  /* padding-right: 2dvw; */
   padding-top: 3dvh;
   padding-bottom: 3dvh;
 }
@@ -94,7 +115,6 @@ button {
   list-style-type: none;
   width: 100%;
 }
-
 
 #explore-more ul {
   list-style-type: none;
