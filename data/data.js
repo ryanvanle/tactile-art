@@ -265,5 +265,149 @@ This daring approach was influenced by the increasing sophistication of photogra
     audio: "Matisse Dance I Verbal Description.mp3", // AUDIO_FILE under /audio
     credit: "Museum of Modern Art (MoMA)",
     explore: ["Emerald", "Navy Blue", "Slippery", "Soft", "Oil Paints", "Felt", "Papier-Mâché"]
+  },
+  "Les Demoiselles d'Avignon": {
+    image: "Les Demoiselles d'Avignon.jpg",
+    alt: "PLACEHOLDER",
+    description: `Among Picasso’s profuse output of more than 20,000 paintings, prints, drawings, sculptures, ceramics, theater sets, and costume designs is Les Demoiselles d’Avignon (1907). In this painting, he did away with pre-existing artistic conventions, like naturalism and perspective, hurling even the most forward-thinking viewers into a future they weren’t quite ready for.
+
+Picasso was a 25-year-old Spanish immigrant to France when he painted Les Demoiselles d’Avignon, working in a cramped warren of studios on the Parisian hill of Montmartre. The story of its making begins with hundreds of preparatory paintings and drawings, which he generated over an intensive six-month period, working out his ideas. They reflected Picasso’s responses to Paul Cézanne’s structured, almost sculptural depiction of objects and figures and his prismatic structuring of space in his still lifes and scenes of bathers. They also reflected his fascination with the African, Iberian, and Oceanic masks and statuary populating France’s ethnographic museums, as well as the lusts and anxieties wrapped up in his own, complex relationships with women.
+
+Out of this intellectual-emotional tumult came a painting in which form and content were equalized. Its title, which translates to “The Young Women of Avignon,” refers to Avignon Street in Barcelona, home to the prostitutes the artist frequented. The five women’s pinkish-peach-colored bodies, appearing larger than human-scale, fill the space of the painting, which is eight feet high by just over seven feet wide. The women’s shoulders, hips, and limbs are depicted with angular lines and flat, geometric planes. Cubic shapes or, in the case of the woman standing left of center, half-circles, form their breasts. Their faces, too, are sharp-edged and radically simplified, especially those of the two women at right, which he modeled directly after African masks.
+
+As his preparatory studies reveal, Picasso initially conceived of the figure at the left of the painting as a male medical student, in the act of entering the brothel. Deciding that such a narrative detail would interfere with the work’s visual impact, he ultimately transformed the figure into a fifth prostitute. The women emerge from brown, white, and blue curtains that look like shattered glass, their bodies thrust forward toward the viewer by the scene’s lack of depth. Their eyes—enormous and almond-shaped, and inspired by African and Iberian carvings—are fixed daringly on the viewer. Near their feet sits a small arrangement of fruit, with a scythe-like sliver of melon set behind a bunch of grapes, an apple, and a pear, and which, like the women’s bodies, seems too sharp to touch.`,
+    notes: {
+      artist: "Pablo Picasso",
+      medium: "Oil on canvas",
+      dimensions: `8' x 7' 8" (243.9 x 233.7 cm)`,
+      year: 1907,
+      creation: "Paris",
+      location: "Museum of Modern Art, New York City",
+    },
+    audio: "Les Demoiselles d'Avignon.mp3",
+    credit: "Museum of Modern Art (MoMA)",
+    explore: ["Rough", "Gritty", "Hard", "Air-Dry Clay", "Oil Paints"]
+  },
+  "The Starry Night": {
+    image: "The Starry Night.jpg",
+    alt: "PLACEHOLDER",
+    audio: "Van Gogh Final Description and Interpretation.mp3",
+    credit: "Museum of Modern Art (MoMA)",
+    explore: ["Ripped", "Soft", "Natural Fibers", "Navy Blue", "Golden Yellow", "Oil Paints"],
+    description: `In creating this image of the night sky—dominated by the bright moon at right and Venus at center left—van Gogh heralded modern painting’s new embrace of mood, expression, symbol, and sentiment. Inspired by the view from his window at the Saint-Paul-de-Mausole asylum in Saint-Rémy, in southern France, where the artist spent twelve months in 1889–90 seeking reprieve from his mental illnesses, The Starry Night (made in mid-June) is both an exercise in observation and a clear departure from it. The vision took place at night, yet the painting, among hundreds of artworks van Gogh made that year, was created in several sessions during the day, under entirely different atmospheric conditions. The picturesque village nestled below the hills was based on other views—it could not be seen from his window—and the cypress at left appears much closer than it was. And although certain features of the sky have been reconstructed as observed, the artist altered celestial shapes and added a sense of glow.
+
+Van Gogh assigned an emotional language to night and nature that took them far from their actual appearances. Dominated by vivid blues and yellows applied with gestural verve and immediacy, The Starry Night also demonstrates how inseparable van Gogh’s vision was from the new procedures of painting he had devised, in which color and paint describe a world outside the artwork even as they telegraph their own status as, merely, color and paint.`,
+    notes: {
+      artist: "Vincent van Gogh",
+      medium: "Oil on canvas",
+      dimensions: "73.7 cm x 92.1 cm (29.01 in x 36.26 in)",
+      year: "1889",
+      creation: "Saint Rémy",
+      location: "Museum of Modern Art, New York City",
+    }
+  },
+  "Shooting Painting American Embassy": {
+    image: "Shooting Painting American Embassy.jpg",
+    alt: "PLACEHOLDER",
+    audio: "Niki de Saint Phalle Description and Interpretation Final.mp3",
+    credit: "Museum of Modern Art (MoMA)",
+    explore: ["Aluminum Foil", "Foam Sheets", "Metal Wire", "Natural Fibers", "Acrylic Paint", "Burnt Orange", "Navy Blue", "Charcoal Grey", "Gritty", "Slippery", "Bumpy"],
+    description: `De Saint-Phalle was the only female member of a French group known as the Nouveaux Réalistes, or the New Realists. And these artists were interested in finding new ways, as Robert Rauschenberg famously put it, of “working in the gap between art and life.” They did so by recycling things scavenged from the street or from the garbage can and introducing them into their art. If you look at the lower portion, there are all sorts of scavenged objects a bucket seat and a plastic toy gun, a hatchet, and an old shoe.
+
+If you look at its upper section, I hope you can see that embedded in that messy layer of plaster and wire are plastic packages of paint. And de Saint-Phalle burst many of these packages by shooting at them with a rifle, causing those cascades of brightly colored paint to pour down over the cluttered surface of this work. Her stated goal was "to make a painting that would bleed." In doing this, she repositioned the art of painting and of assemblage into a highly charged physical performance.`,
+    notes: {
+      artist: "Niki de Saint Phalle",
+      medium: "Paint, plaster, wood, plastic bags, shoe, twine, metal seat, axe, metal can, toy gun, wire mesh, shot pellets, and other objects on wood",
+      dimensions: `96 3/8 x 25 7/8 x 8 5/8" (244.8 x 65.7 x 21.9 cm)`,
+      year: "1961",
+      location: "Museum of Modern Art, New York City",
+    }
+  },
+  "Campbell's Soup Cans": {
+    image: "Campbell's Soup Cans.jpg",
+    alt: "PLACEHOLDER",
+    audio: "Warhol Description and Interpretation Final.mp3",
+    credit: "Museum of Modern Art (MoMA)",
+    explore: ["Foam Sheets", "Acrylic Paint", "Aluminum Foil", "Crimson", "Golden Yellow", "Charcoal Grey"],
+    description: `Andy Warhol famously appropriated familiar images from consumer culture and mass media, among them celebrity and tabloid news photographs, comic strips, and, in this work, the widely consumed canned soup made by the Campbell’s Soup Company. When he first exhibited Campbell’s Soup Cans in 1962, the canvases were displayed together on shelves, like products in a grocery aisle. At the time, Campbell’s sold 32 soup varieties; each one of Warhol’s 32 canvases corresponds to a different flavor. (The first flavor the company introduced, in 1897, was tomato).
+
+Though Campbell’s Soup Cans resembles the mass-produced, printed advertisements by which Warhol was inspired, its canvases are hand-painted, and the fleur de lys pattern ringing each can’s bottom edge is hand-stamped. Warhol mimicked the repetition and uniformity of advertising by carefully reproducing the same image across each individual canvas. He varied only the label on the front of each can, distinguishing them by their variety. Warhol said of Campbell’s soup, “I used to drink it. I used to have the same lunch every day, for 20 years, I guess, the same thing over and over again.”
+
+Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warhol turned to the photo-silkscreen process. A printmaking technique originally invented for commercial use, it would become his signature medium and link his art making methods more closely to those of advertisements. “I don’t think art should be only for the select few,” he claimed, “I think it should be for the mass of the American people.”`,
+    notes: {
+      artist: "Andy Warhol",
+      medium: "Synthetic polymer paint on canvas",
+      dimensions: "20 by 16 inches (51 cm × 41 cm) each for 32 canvases",
+      year: "1962",
+      creation: "Los Angeles",
+      location: "Museum of Modern Art, New York City",
+    }
+  },
+
+  "Yakshi": {
+    image: "Yakshi.jpg",
+    alt: "PLACEHOLDER",
+    audio: "Yakshi Description.mp3",
+    credit: "Museum of Modern Art (MoMA)",
+    explore: ["Navy Blue", "Bumpy", "Woven", "Fuzzy", "Natural Fibers", "Felt"],
+    description: `Trained as a painter in Baroda, India, Mukherjee began using natural fibers in the early 1970s, exploring “an integrated approach” fusing local craft with contemporary sculpture. The work’s title references the fertility deity Yakshi from Hindu, Buddhist, and Jain faiths. Mukherjee filtered traditional images of Yakshi into a unique visual mythology that does not refer to existing iconography. While the suggestion of the body's curves evokes a humanlike deity, Yakshi remains abstract. As Mukherjee has said, the figure makes “metaphorical intrusions into other forms.”`,
+    notes: {
+      artist: "Mrinalini Mukherjee",
+      medium: "Dyed hemp",
+      dimensions: `97 × 48 × 29" (246.4 × 121.9 × 73.7cm)`,
+      year: "1984",
+      location: "Museum of Modern Art, New York City",
+    }
+  },
+
+  "My Grandparents, My Parents, and I": {
+    image: "My Grandparents, My Parents, and I.jpg",
+    alt: "PLACEHOLDER",
+    audio: "Frida Kahlo My Grandparents My parents Verbal Description.mp3",
+    credit: "Museum of Modern Art (MoMA)",
+    explore: ["Rippled", "Fuzzy", "Oil Paints", "Metal Wire", "Air-Dry Clay", "Crimson", "Sage Green", "Burnt Orange", "Blue Turquoise"],
+    description: `Kahlo reimagined what a family tree might look like in this painting, illustrating her biological lineage and showing herself as a zygote, fetus, and child. Her maternal grandparents, of mixed Indigenous and Spanish descent, are superimposed above the Mexican mountain ranges, while her German paternal grandparents float over the Atlantic Ocean. Kahlo paintedthis work a year after Nazi Germany enforced the Nuremberg Race Laws, effectively stripping Jewish peoples of their civil rights and prohibiting interracial marriage—falsely substantiated by a genealogical chart that determined who was Jewish according to bloodlines. Kahlo’s interpretation of a family tree is a counter to such violent, supremacist ideas.`,
+    notes: {
+      artist: "Frida Kahlo",
+      medium: "Oil and tempera on zinc",
+      dimensions: `12 1/8 x 13 5/8" (30.7 x 34.5 cm)`,
+      year: "1936",
+      location: "Museum of Modern Art, New York City",
+    }
+  },
+
+  "Wind and Water": {
+    image: "Wind and Water.jpg",
+    alt: "PLACEHOLDER",
+    audio: "Suzanne Jackson Wind and Water Verbal Description.mp3",
+    credit: "Museum of Modern Art (MoMA)",
+    explore: ["Acrylic Paint", "Pipe Cleaners", "Blue Turquoise", "Crystal Rose", "Dusty Plum", "Crimson"],
+    description: `Described by the artist as “living artworks,” Jackson’s dreamlike paintings are as steeped in the natural world of her Alaskan childhood as they are in her encounters with 1960s counterculture in San Francisco, and the ancestral connections fostered by her study of African art and symbolism. Here, faces look in different directions but share a heart, a flower blooms from the beak of a bird, an arm turns into a rose, and a loose pool of color sweeps up into an orange fish. Mediating between dream and reality, Jackson conjures a mystical environment where human and nonhuman entities meet.`,
+    notes: {
+      artist: "Suzanne Jackson",
+      medium: "Acrylic and pencil on canvas",
+      dimensions:  `Two panels, Each panel: 97 × 60" (246.4 × 152.4 cm)`,
+      year: "1975",
+      creation: "Los Angeles",
+      location: "Museum of Modern Art, New York City",
+    }
+  },
+
+  "Shrine head": {
+    image: "Shrine head.jpg",
+    alt: "PLACEHOLDER",
+    audio: "Shrine head.mp3",
+    credit: "Minneapolis Institute of Art (MiA)",
+    explore: ["Golden Yellow", "Air-Dry Clay", "Crackled", "Rippled", "Hard", "Foam Sheets"],
+    description: `This head’s tranquil demeanor and introspective gaze express what the Yoruba peoples consider a person’s inner virtue. It is a memorial portrait head that comes from the royal city of Ife in western Nigeria, a center of economic, religious, and political power between 1100 and 1400. Ancient Yoruba artists made heads in bronze and terracotta that were part of complete figures or, like here, freestanding. The vertical lines covering the woman’s face either reflect the traditional scarification designs used in the Ife kingdom or represent the veil worn by members of the royal family.`,
+    notes: {
+      artist: "Unknown",
+      medium: "Terracotta",
+      dimensions: `12 1/4 x 5 3/4 x 7 1/4 in. (31.1 x 14.6 x 18.4 cm)`,
+      year: "12th-14th century",
+      creation: "Ancient Yorubu, Nigeria",
+      location: "Minneapolis Institute of Art, Minneapolis",
+    }
   }
 }
+
