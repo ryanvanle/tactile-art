@@ -9,13 +9,13 @@ const COLORS = {
     hex: "#cb8f16",
     description: "",
     seen:"",
-    explore:"",
+    explore:[],
   },
   "Emerald": {
     hex: "#009877",
     description: "",
     seen:"",
-    explore:"",
+    explore:[],
   },
   "Navy Blue": {
     hex: "#403f6f",
@@ -64,42 +64,42 @@ const TEXTURES = {
   "Rough": {
     blurb: "Coarse, uneven surface with bumps or ridges",
     create: "",
-    explore: "",
+    explore: [],
   },
   "Fuzzy": {
     blurb: "Soft, slightly hairy or fluffy texture",
     create: "",
-    explore: "",
+    explore: [],
   },
   "Bumpy": {
     blurb: "Raised areas creating an irregular surface",
     create: "",
-    explore: "",
+    explore: [],
   },
   "Slippery": {
     blurb: "Slick, hard to grip, often glossy or wet",
     create: "",
-    explore: "",
+    explore: [],
   },
   "Gritty": {
     blurb: "Small, grainy particles creating a sandy feel",
     create: "",
-    explore: "",
+    explore: [],
   },
   "Sticky": {
     blurb: "Tacky, adhesive surface that clings to touch",
     create: "",
-    explore: "",
+    explore: [],
   },
   "Soft": {
     blurb: "Gentle, cushion-like feel, easy to press into",
     create: "",
-    explore: "",
+    explore: [],
   },
   "Hard": {
     blurb: "Firm, unyielding surface with no give",
     create: "",
-    explore: "",
+    explore: [],
   }
 };
 
