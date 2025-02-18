@@ -197,13 +197,22 @@ const MATERIALS = {
 };
 
 const ARTWORK = {
-  "title": {
-    image: "", // IMAGE_PATH under /img
-    alt: "",
-    description: "",
-    notes: {},
-    audio: "", // AUDIO_PATH under /audio
-    credit: "",
-    explore: []
+  "Dance (I)": {
+    image: "Dance (I).jpg", // IMAGE_FILE under /img
+    alt: "PLACEHOLDER",
+    description: `Matisse created Dance (I) as a study for a painting commissioned by the Russian businessman and arts patron Sergei Shchukin. The final work and its pendant painting, Music (both completed in 1910), are housed in the collection of the Hermitage Museum in St. Petersburg. Dance (I) marks a moment in Matisse’s career when he embraced a reductive approach to painting, seeking the expressive potentials of fundamental elements: line, color, and form.
+
+This daring approach was influenced by the increasing sophistication of photographic technology. In 1909 the artist observed, “The painter no longer has to preoccupy himself with details. The photograph is there to render the multitude of details a hundred times better and more quickly. Plastic form will present emotion as directly as possible and by the simplest means.” Across this monumental canvas Matisse used only four naturalistic colors: blue for the sky, green for the ground, and black and pale pink in rendering the five figures. Although he made adjustments to the composition, Matisse’s final lines convey a remarkable fluidity and sense of dynamic movement in their economical application—in the sweeping curve along the front side of the left figure, for example, and along the outstretched arms of the dancers as they come together in an unhampered expression of joy.`,
+    notes: {
+      artist: "Henri Matisse",
+      medium: "Oil on canvas",
+      dimensions: "259.7 cm x 390.1 cm (102.2 in x 153.6 in)",
+      year: "1909",
+      creation: "Paris, Boulevard des Invalides",
+      location: "Museum of Modern Art, New York City",
+    },
+    audio: "Matisse Dance I Verbal Description.mp3", // AUDIO_FILE under /audio
+    credit: "Museum of Modern Art (MoMA)",
+    explore: ["Emerald", "Navy Blue", "Slippery", "Soft", "Oil Paints", "Felt", "Papier-Mâché"]
   }
 }

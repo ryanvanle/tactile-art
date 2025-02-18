@@ -1,7 +1,6 @@
 "use strict";
 
 (function() {
-
   window.addEventListener("load", init);
 
   function init() {
@@ -12,7 +11,7 @@
     id("favorites-button").addEventListener("click", () => showPage("favorite-page"));
 
     // Event listeners for back buttons (delegation)
-    document.addEventListener('click', function (event) {
+    document.addEventListener('click', function(event) {
       if (event.target.classList.contains('back-button')) {
         showPage("home-page");
       }
@@ -25,15 +24,30 @@
   }
 
   function showPage(pageId) {
+
+    const audio = document.querySelector("#artwork-detail-audio > audio");
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
     const pages = document.querySelectorAll(".page");
     pages.forEach(page => page.classList.add("hidden"));
     id(pageId).classList.remove("hidden");
   }
 
   // --- Card Generation Functions ---
-  function generateColors() { generateColorCards(); }
-  function generateMaterials() { generateMaterialsCards(); }
-  function generateTextures() { generateTexturesCards(); }
+  function generateColors() {
+    generateColorCards();
+  }
+
+  function generateMaterials() {
+    generateMaterialsCards();
+  }
+
+  function generateTextures() {
+    generateTexturesCards();
+  }
 
   function generateColorCards() {
     const colorsList = id('colors-list');
@@ -128,7 +142,7 @@
     const detailPage = id(pageId);
 
     // Call the appropriate function to update the template content
-    switch(itemType) {
+    switch (itemType) {
       case "color":
         generateColorDetailPageContent(detailPage, COLORS[itemName], itemName);
         break;
@@ -169,13 +183,14 @@
     const blurb = detailPage.querySelector("p"); // Select the first <p>
     const description = detailPage.querySelectorAll("p"); // Select the second <p>
     const techniquesList = detailPage.querySelector("ul");
-    const availability = detailPage.querySelectorAll("p"); // Select the third <p>
+    const availability = detailPage.querySelector("#material-detail-page > section:nth-of-type(3) > p"); // Select the <p> in the third section of #material-detail-page
 
     // Update the content of the template elements
     title.textContent = materialName;
     blurb.textContent = materialData.blurb;
     description.textContent = materialData.description;
-    availability.textContent = materialData.availability;
+
+    console.log(materialData)
 
     // Clear existing techniques and add new ones
     techniquesList.innerHTML = ""; // Using innerHTML here for efficiency
@@ -283,26 +298,69 @@
       return;
     }
 
-    let imageFolder = "img/"
-
     gallery.innerHTML = ''; // Clear existing images
 
-    const imageNames = [
-      "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg"
-    ];
-
-    // Shuffle images (optional)
-    shuffleArray(imageNames);
-
-    imageNames.forEach(imageName => {
+    for (const artworkName in ARTWORK) {
+      const artworkData = ARTWORK[artworkName];
+      console.log(ARTWORK, artworkData);
       const img = document.createElement('img');
-      img.src = `${imageFolder}/${imageName}`;
+      img.src = `img/${artworkData.image}`; // Assuming images are in 'img' folder
+      img.alt = artworkData.alt;
+      img.dataset.itemName = artworkName; // Store artwork name for event handling
+      img.addEventListener("click", showArtworkDetailPage); // Add click listener
       gallery.appendChild(img);
-    });
+    }
+  }
+
+  // --- Artwork Detail Page Handling ---
+  function showArtworkDetailPage(event) {
+    const img = event.currentTarget;
+    const artworkName = img.dataset.itemName;
+    const artworkData = ARTWORK[artworkName];
+
+    const detailPage = id("artwork-detail-page");
+    generateArtworkDetailPageContent(detailPage, artworkData, artworkName);
+    showPage("artwork-detail-page");
+  }
+
+  function generateArtworkDetailPageContent(detailPage, artworkData, artworkName) {
+    // Get references to the template elements
+    const title = detailPage.querySelector("h1");
+    const artistYear = detailPage.querySelector("header > section > p"); // Select the <p> within the header section
+    const image = detailPage.querySelector(".artwork-image-container img");
+    const description = detailPage.querySelector(".artwork-about > section:nth-of-type(1) > p"); // Select the <p> in the first section of.artwork-about
+    const notesList = detailPage.querySelector(".artwork-about > section:nth-of-type(2) > ul"); // Select the <ul> in the second section of.artwork-about
+    const audio = detailPage.querySelector(".artwork-about > section:nth-of-type(3) > audio"); // Select the <audio> in the third section of.artwork-about
+    const credit = detailPage.querySelector("#audio-description-credit");
+
+    // Update the content of the template elements
+    title.textContent = artworkName;
+    artistYear.textContent = `${artworkData.notes.artist}, ${artworkData.notes.year}`;
+    image.src = `img/${artworkData.image}`; // Assuming images are in 'img' folder
+    image.alt = artworkData.alt;
+    description.textContent = artworkData.description;
+
+    // Clear existing notes and add new ones
+    notesList.innerHTML = "";
+    for (const note in artworkData.notes) {
+      if (note!== "artist" && note!== "year") { // Exclude artist and year as they are already displayed
+        const listItem = document.createElement("li");
+        listItem.textContent = `${note}: ${artworkData.notes[note]}`;
+        notesList.appendChild(listItem);
+      }
+    }
+
+    audio.src = `audio/${artworkData.audio}`;
+    credit.textContent = artworkData.credit;
+
+    const exploreList = id("artwork-detail-page").querySelector(".explore-more ul");
+    generateExploreFurtherList(exploreList, artworkData.explore);
   }
 
   // Helper Functions
-  function id(idName) { return document.getElementById(idName); }
+  function id(idName) {
+    return document.getElementById(idName);
+  }
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
