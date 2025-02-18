@@ -250,7 +250,7 @@ const MATERIALS = {
 const ARTWORK = {
   "Dance (I)": {
     image: "Dance (I).jpg", // IMAGE_FILE under /img
-    alt: "PLACEHOLDER",
+    alt: "Dance (I) by Henri Matisse. The painting features five figures, dancing in an energetic, carefree rhythm. The bodies are simple and fluid, with no interior details, almost like soft, playful shapes. Their movements are free and unrestrained, evoking a sense of joy and spontaneity. The vibrant colors and bold forms emphasize the emotion of the piece, where form and content harmonize to express pure, unencumbered joy.",
     description: `Matisse created Dance (I) as a study for a painting commissioned by the Russian businessman and arts patron Sergei Shchukin. The final work and its pendant painting, Music (both completed in 1910), are housed in the collection of the Hermitage Museum in St. Petersburg. Dance (I) marks a moment in Matisse’s career when he embraced a reductive approach to painting, seeking the expressive potentials of fundamental elements: line, color, and form.
 
 This daring approach was influenced by the increasing sophistication of photographic technology. In 1909 the artist observed, “The painter no longer has to preoccupy himself with details. The photograph is there to render the multitude of details a hundred times better and more quickly. Plastic form will present emotion as directly as possible and by the simplest means.” Across this monumental canvas Matisse used only four naturalistic colors: blue for the sky, green for the ground, and black and pale pink in rendering the five figures. Although he made adjustments to the composition, Matisse’s final lines convey a remarkable fluidity and sense of dynamic movement in their economical application—in the sweeping curve along the front side of the left figure, for example, and along the outstretched arms of the dancers as they come together in an unhampered expression of joy.`,
@@ -268,7 +268,7 @@ This daring approach was influenced by the increasing sophistication of photogra
   },
   "Les Demoiselles d'Avignon": {
     image: "Les Demoiselles d'Avignon.jpg",
-    alt: "PLACEHOLDER",
+    alt: "Les Demoiselles d’Avignon by Pablo Picasso. The painting depicts five women with exaggerated, angular forms, filling the canvas with their pinkish-peach bodies. Their faces are simplified and sharp-edged, influenced by African masks. The women emerge from broken, geometric curtains, thrusting forward in a flat, two-dimensional space. Their bold eyes meet the viewer’s gaze, while a small arrangement of fruit rests near their feet, mirroring the sharpness of their forms.",
     description: `Among Picasso’s profuse output of more than 20,000 paintings, prints, drawings, sculptures, ceramics, theater sets, and costume designs is Les Demoiselles d’Avignon (1907). In this painting, he did away with pre-existing artistic conventions, like naturalism and perspective, hurling even the most forward-thinking viewers into a future they weren’t quite ready for.
 
 Picasso was a 25-year-old Spanish immigrant to France when he painted Les Demoiselles d’Avignon, working in a cramped warren of studios on the Parisian hill of Montmartre. The story of its making begins with hundreds of preparatory paintings and drawings, which he generated over an intensive six-month period, working out his ideas. They reflected Picasso’s responses to Paul Cézanne’s structured, almost sculptural depiction of objects and figures and his prismatic structuring of space in his still lifes and scenes of bathers. They also reflected his fascination with the African, Iberian, and Oceanic masks and statuary populating France’s ethnographic museums, as well as the lusts and anxieties wrapped up in his own, complex relationships with women.
@@ -290,7 +290,7 @@ As his preparatory studies reveal, Picasso initially conceived of the figure at 
   },
   "The Starry Night": {
     image: "The Starry NIght.jpg",
-    alt: "PLACEHOLDER",
+    alt: "The Starry Night by Vincent van Gogh. The painting features a swirling night sky with vivid blues and yellows, highlighted by a bright moon and Venus. A cypress tree stands at the left, while a peaceful village rests below the hills. Bold, dynamic brushstrokes create a sense of movement, capturing both emotion and energy in the scene.",
     audio: "Van Gogh Final Description and Interpretation.mp3",
     credit: "Museum of Modern Art (MoMA)",
     explore: ["Ripped", "Soft", "Natural Fibers", "Navy Blue", "Golden Yellow", "Oil Paints"],
@@ -308,7 +308,7 @@ Van Gogh assigned an emotional language to night and nature that took them far f
   },
   "Shooting Painting American Embassy": {
     image: "Shooting Painting American Embassy.jpg",
-    alt: "PLACEHOLDER",
+    alt: "Shooting Painting American Embassy by Niki de Saint-Phalle. This artwork features a chaotic mix of plaster, wire, and scavenged objects like a plastic toy gun, a bucket seat, and an old shoe. The upper section holds plastic paint packages embedded in the messy surface. These packages were shot with a rifle, causing bright, dripping paint to cascade down, creating an explosive and dynamic effect. The vibrant streaks contrast with the cluttered, textured base, turning the act of painting into a charged physical performance.",
     audio: "Niki de Saint Phalle Description and Interpretation Final.mp3",
     credit: "Museum of Modern Art (MoMA)",
     explore: ["Aluminum Foil", "Foam Sheets", "Metal Wire", "Natural Fibers", "Acrylic Paint", "Burnt Orange", "Navy Blue", "Charcoal Grey", "Gritty", "Slippery", "Bumpy"],
@@ -325,7 +325,7 @@ If you look at its upper section, I hope you can see that embedded in that messy
   },
   "Campbell's Soup Cans": {
     image: "Campbell's Soup Cans.jpg",
-    alt: "PLACEHOLDER",
+    alt: "Campbell Soup Cans by Andy Warhol. This iconic series shows 32 soup cans, each painted in red, white, and gold with a clean, graphic design. The front-facing cans feature labels with bold, cursive 'Campbell’s' in white and 'condensed' in smaller letters, all framed by a row of gold fleurs-de-lis. The flavor, such as Chicken Noodle or Clam Chowder, is displayed in red block letters. Though they appear mass-produced, each painting reveals slight irregularities, with hand-applied details like the imperfect spacing of the fleurs-de-lis. The Cheddar Cheese can stands out with two bright yellow banners advertising its versatility.",
     audio: "Warhol Description and Interpretation Final.mp3",
     credit: "Museum of Modern Art (MoMA)",
     explore: ["Foam Sheets", "Acrylic Paint", "Aluminum Foil", "Crimson", "Golden Yellow", "Charcoal Grey"],
@@ -346,7 +346,7 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
 
   "Yakshi": {
     image: "Yakshi.jpg",
-    alt: "PLACEHOLDER",
+    alt: "Yakshi by Mrinalini Mukherjee. This monumental sculpture, made of knotted dyed hemp over a hidden metal frame, depicts a towering, abstract female form. Inspired by the Yakshi, a fertility deity in Indian traditions, it features exaggerated curves and a tactile, woven texture. Light filters through the knotted fibers, giving the dense structure an unexpected airiness and sensual presence.",
     audio: "Yakshi Description.mp3",
     credit: "Museum of Modern Art (MoMA)",
     explore: ["Navy Blue", "Bumpy", "Woven", "Fuzzy", "Natural Fibers", "Felt"],
@@ -362,7 +362,7 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
 
   "My Grandparents, My Parents, and I": {
     image: "My Grandparents, My Parents, and I.jpg",
-    alt: "PLACEHOLDER",
+    alt: "My Grandparents, My Parents, and I by Frida Kahlo. This intimate family portrait shows a young Kahlo standing in the courtyard of her childhood home, holding a red ribbon that branches upward like a family tree. The ribbon connects her to painted busts of her parents and grandparents, set against a Mexican landscape and a cloudy sky. Blending realism and symbolism, the painting reflects Kahlo’s Mexican and German ancestry, with figures varying in scale to emphasize their familial ties.",
     audio: "Frida Kahlo My Grandparents My parents Verbal Description.mp3",
     credit: "Museum of Modern Art (MoMA)",
     explore: ["Rippled", "Fuzzy", "Oil Paints", "Metal Wire", "Air-Dry Clay", "Crimson", "Sage Green", "Burnt Orange", "Blue Turquoise"],
@@ -378,7 +378,7 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
 
   "Wind and Water": {
     image: "Wind and Water.jpg",
-    alt: "PLACEHOLDER",
+    alt: "Wind and Water by Suzanne Jackson. This vibrant diptych, blends figures and abstraction across two towering canvases. Women's faces emerge in profile near the top, gradually dissolving into swirling elements of nature—birds, flowers, water, and sun. Colors flow and morph, with human forms merging into expressive splashes of paint. The work’s scale and fluid composition evoke a sense of movement, capturing the interplay between humanity and the natural world.",
     audio: "Suzanne Jackson Wind and Water Verbal Description.mp3",
     credit: "Museum of Modern Art (MoMA)",
     explore: ["Acrylic Paint", "Pipe Cleaners", "Blue Turquoise", "Crystal Rose", "Dusty Plum", "Crimson"],
@@ -395,7 +395,7 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
 
   "Shrine head": {
     image: "Shrine head.jpg",
-    alt: "PLACEHOLDER",
+    alt: "Shrine Head by unknown. This sculpted portrait, likely representing a royal woman, reflects the artistic sophistication of Ife, a powerful city in present-day Nigeria between the 12th and 14th centuries. Modeled in terracotta or bronze, such heads adorned palace shrines. The delicate facial lines depict scarification, signifying identity, status, and beauty. Unlike many African art styles, this piece features striking realism, capturing individuality with refined detail. ",
     audio: "Shrine head.mp3",
     credit: "Minneapolis Institute of Art (MiA)",
     explore: ["Golden Yellow", "Air-Dry Clay", "Crackled", "Rippled", "Hard", "Foam Sheets"],
