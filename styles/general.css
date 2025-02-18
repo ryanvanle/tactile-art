@@ -198,6 +198,7 @@ button {
 }
 
 .artwork-about {
+  order: 1; /* Moves image to the left visually */
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -208,6 +209,7 @@ button {
 }
 
 .artwork-image-container {
+  order: 2; /* Moves image to the right visually */
   width: 50%;
   display: flex;
   /* flex-direction: column; */
