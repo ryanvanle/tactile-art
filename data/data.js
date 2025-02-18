@@ -195,3 +195,15 @@ const MATERIALS = {
     alt: "",
   }
 };
+
+const ARTWORK = {
+  "title": {
+    image: "", // IMAGE_PATH under /img
+    alt: "",
+    description: "",
+    notes: {},
+    audio: "", // AUDIO_PATH under /audio
+    credit: "",
+    explore: []
+  }
+}
