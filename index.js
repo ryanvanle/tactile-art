@@ -63,6 +63,95 @@
     generateMaterials();
     generateTextures();
     generateFavoritesPage();
+    initSearch();
+  }
+
+  function initSearch() {
+    const searchBars = document.querySelectorAll(".search-bar");
+    searchBars.forEach(searchBar => {
+      searchBar.addEventListener("input", () => {
+        const searchTerm = searchBar.value.toLowerCase();
+        const pageId = searchBar.closest(".page").id;
+          switch (pageId) {
+            case "home-page":
+              searchHomePage(searchTerm);
+              break;
+            case "colors-page":
+              searchColorsPage(searchTerm);
+              break;
+            case "material-page":
+              searchMaterialsPage(searchTerm);
+              break;
+            case "texture-page":
+              searchTexturesPage(searchTerm);
+              break;
+          }
+        });
+    });
+  }
+
+  function searchHomePage(searchTerm) {
+    const gallery = id("gallery");
+    const images = gallery.querySelectorAll("img");
+
+    images.forEach(image => {
+      const artworkName = image.dataset.itemName;
+      const artworkData = ARTWORK[artworkName];
+      const artworkAlt = artworkData.alt.toLowerCase();
+
+      if (artworkAlt.includes(searchTerm)) {
+        image.style.display = "block";
+      } else {
+        image.style.display = "none";
+      }
+    });
+  }
+
+  function searchColorsPage(searchTerm) {
+    const colorsList = id("colors-list");
+    const colorItems = colorsList.querySelectorAll("li");
+
+    colorItems.forEach(item => {
+      const colorName = item.querySelector("h2").textContent.toLowerCase();
+
+      if (colorName.includes(searchTerm)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  }
+
+  function searchMaterialsPage(searchTerm) {
+    const materialsList = id("materials-list");
+    const materialItems = materialsList.querySelectorAll("li");
+
+    materialItems.forEach(item => {
+      const materialName = item.querySelector("h2").textContent.toLowerCase();
+      const materialBlurb = item.querySelector("p").textContent.toLowerCase();
+
+      if (materialName.includes(searchTerm) || materialBlurb.includes(searchTerm)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  }
+
+  function searchTexturesPage(searchTerm) {
+    const texturesList = id("textures-list");
+    const textureItems = texturesList.querySelectorAll("li");
+
+    textureItems.forEach(item => {
+      const textureName = item.querySelector("h2").textContent.toLowerCase();
+      const textureBlurb = item.querySelector("p").textContent.toLowerCase();
+
+      if (textureName.includes(searchTerm) || textureBlurb.includes(searchTerm)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
   }
 
   function showPage(pageId) {
