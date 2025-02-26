@@ -17,7 +17,7 @@
 <body aria-live="polite">
     <section id="home-page" class="page">
         <header>
-            <section id="title">
+            <section id="title" type="search">
                 <h1>Tactile Art</h1>
                 <p>Start your tactile journey here.</p>
             </section>
@@ -25,7 +25,9 @@
                 <button id="favorites-button">My Favorites</button>
             </section>
         </header>
-        <h2>Filters</h2>
+        <label for="home-search"></label>
+        <input id="home-search" class="search-bar">
+        <h2>Glossary</h2>
         <section id="attributes-container">
             <button id="materials-button">Materials</button>
             <button id="textures-button">Textures</button>
@@ -55,8 +57,9 @@
     <section id="colors-page" class="page hidden">
         <h1>Colors</h1>
         <p>Explore hues of color here. Color names are from Pantone</p>
+        <label for="color-search"></label>
+        <input id="color-search" class="search-bar">
         <button class="back-button">Back to Home</button>
-
         <ul id="colors-list">
           <!-- <li>
             <article>
@@ -73,6 +76,9 @@
     <section id="material-page" class="page hidden">
         <h1>Materials</h1>
         <p>Explore different tactile materials here.</p>
+        <label for="material-search"></label>
+        <input id="material-search" class="search-bar">
+
         <button class="back-button">Back to Home</button>
 
         <ul id="materials-list">
@@ -83,6 +89,8 @@
     <section id="texture-page" class="page hidden">
         <h1>Textures</h1>
         <p>Explore different textures of tactile art here.</p>
+        <label for="texture-search"></label>
+        <input id="texture-search" class="search-bar">
         <button class="back-button">Back to Home</button>
 
         <ul id="textures-list">
