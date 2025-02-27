@@ -15,7 +15,28 @@
     <title>tactile art</title>
 </head>
 <body aria-live="polite">
-    <section id="home-page" class="page">
+
+    <section id="search-page" class="page">
+      <h1>Tactile Art</h1>
+      <p>Search our collection of inspiration</p>
+      <section class="search-box">
+        <img src="/icons/search.svg" alt="Search icon of an magnifying glass" class="search-icon">
+        <label for="home-search"></label>
+        <input id="home-search" class="search-bar" placeholder="Search for artworks, materials, textures, colors, or keywords">
+      </section>
+      <section>
+        <button id="search-button">Search</button>
+        <button id="upload-artwork-button">Upload Artwork</button>
+        <button id="search-artsy-button">I'm Feeling Artsy!</button>
+      </section>
+      <section id="search-page-bottom-container">
+        <button>My Saved</button>
+        <button>My Suggestions</button>
+        <button>Art Gallery</button>
+        <button>Glossary</button>
+      </section>
+    </section>
+    <section id="home-page" class="page hidden">
         <header>
             <section id="title" type="search">
                 <h1>Tactile Art</h1>
@@ -192,7 +213,7 @@
         <section class="artwork-image-container">
           <img src="img/2.jpg" alt="PLACEHOLDER">
         </section>
-        
+
         <section class="artwork-about">
           <section>
             <h2>Description</h2>

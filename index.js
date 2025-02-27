@@ -55,9 +55,18 @@
     function handleFavoritesClick(event){
         if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") {
             saveToFavorites(event);
-          }
+        }
     }
 
+  const searchInput = document.getElementById('home-search');
+
+  searchInput.addEventListener('focus', () => {
+    searchInput.placeholder = ''; // Clear placeholder on focus
+  });
+
+  // searchInput.addEventListener('blur', () => {
+  //   searchInput.placeholder = 'Search Google or type a URL'; // Restore placeholder on blur
+  // });
     populateGallery();
     generateColors();
     generateMaterials();
@@ -432,13 +441,7 @@
       const button = detailPage.querySelector(".favorites-button");
       if (!button) return;
 
-
       const isFavorite = favorites.some(fav => fav.name === itemName && fav.type === itemType);
-
-      // console.log("checkFavoriteButtonState");
-      // console.log(favorites);
-      // console.log(isFavorite, detailPage, itemType, itemName);
-
       button.textContent = isFavorite? "Remove from Favorites": "Save to Favorites";
   }
 
