@@ -23,7 +23,13 @@
     id("colors-button").addEventListener("click", () => showPage("colors-page"));
     id("favorites-button").addEventListener("click", () => showPage("favorite-page"));
 
-    // TODO UPDATE functionally
+    id("search-button").addEventListener("click", () => processSearchResults(id("home-search")));
+
+    id("upload-artwork-button").addEventListener("click", () => {
+      // TODO clear out the form page
+      showPage("upload-page");
+    });
+
     const backButtons = document.querySelectorAll('.back-button');
     backButtons.forEach(button => {
       button.addEventListener('click', (event) => {
@@ -54,9 +60,11 @@
     });
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === "Enter" || event.key === " ") { // Space or Enter
-            handleFavoritesClick(event);
-        }
+      if(event.key === "Enter" && document.activeElement === id("home-search")){
+        processSearchResults(id("home-search"));
+      } else if (event.key === "Enter" || event.key === " ") { // Space or Enter
+        handleFavoritesClick(event);
+      }
     });
 
 
@@ -71,6 +79,18 @@
       userSuggestionPopup.close();
     });
 
+  }
+
+  function processSearchResults(currentElement) {
+
+    console.log(currentElement);
+    updateSearchResults(currentElement.value);
+    showPage("search-result-page");
+  }
+
+  function updateSearchResults(searchQuery) {
+    id("search-results-search").value = searchQuery;
+    console.log("updateSearchResults");
   }
 
   function initSearch() {
