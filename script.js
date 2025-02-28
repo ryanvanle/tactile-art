@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, addDoc, doc, getDoc } from "firebase/firestore";
+import { COLORS, TEXTURES, MATERIALS, ARTWORK } from './data.js';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,26 +19,57 @@ measurementId: "G-V7SS7LHDZ3"
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = firebase.auth();
-const db = firebase.firestore();
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 async function uploadDataToFirestore() {
-    const collections = ["colors", "textures", "materials", "artwork"];
-
-    for (const collectionName of collections) {
-        const collectionRef = collection(db, collectionName);
-        const data = firestoreData[collectionName];
-
-        for (const item of data) {
-        await addDoc(collectionRef, item);
-        console.log(`Added document to ${collectionName}: ${item.id}`);
+    try {
+        // Upload COLORS
+        for (const [colorName, colorData] of Object.entries(COLORS)) {
+            await addDoc(collection(db, "colors"), {
+                name: colorName,
+                ...colorData
+            });
+            console.log(`Added color: ${colorName}`);
         }
+
+        // Upload TEXTURES
+        for (const [textureName, textureData] of Object.entries(TEXTURES)) {
+            await addDoc(collection(db, "textures"), {
+                name: textureName,
+                ...textureData
+            });
+            console.log(`Added texture: ${textureName}`);
+        }
+
+        // Upload MATERIALS
+        for (const [materialName, materialData] of Object.entries(MATERIALS)) {
+            await addDoc(collection(db, "materials"), {
+                name: materialName,
+                ...materialData
+            });
+            console.log(`Added material: ${materialName}`);
+        }
+
+        // Upload ARTWORK
+        for (const [artworkName, artworkData] of Object.entries(ARTWORK)) {
+            await addDoc(collection(db, "artwork"), {
+                name: artworkName,
+                ...artworkData
+            });
+            console.log(`Added artwork: ${artworkName}`);
+        }
+
+        console.log("All data uploaded successfully!");
+    } catch (error) {
+        console.error("Error uploading data:", error);
     }
 }
 
+// Call the function to upload data
+// Uncomment this line when you're ready to upload the data
 uploadDataToFirestore();
 
 //Function for creating a new user
@@ -117,5 +149,17 @@ onAuthStateChanged(auth, (user) => {
     console.log("User is signed out");
   }
 });
+
+// Example usage
+createUser("your.email@example.com", "yourpassword", "Your Name");
+
+// Example usage
+loginUser("your.email@example.com", "yourpassword");
+
+// Example usage
+const user = auth.currentUser; // Get the current logged-in user
+if (user) {
+    submitForm("Your text description", ["tag1", "tag2"], user);
+}
 
 
