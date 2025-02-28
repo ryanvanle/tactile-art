@@ -37,6 +37,76 @@
       </section>
     </section>
 
+    <section id="search-result-page" class="page">
+      <header>
+        <h1>Search Results</h1>
+        <section class="search-box">
+          <img src="/icons/search.svg" alt="Search icon of an magnifying glass" class="search-icon">
+          <label for="search-results-search"></label>
+          <input id="search-results-search" class="search-bar" placeholder="Search for artworks, materials, textures, colors, or keywords">
+        </section>
+        <section id="search-result-filters">
+          <h2>Filter By:</h2>
+          <label class="category-label"><input type="checkbox" name="category" value="material">Material</label>
+          <label class="category-label"><input type="checkbox" name="category" value="texture">Texture</label>
+          <label class="category-label"><input type="checkbox" name="category" value="color">Color</label>
+          <label class="category-label"><input type="checkbox" name="category" value="artwork">Artwork</label>
+        </section>
+      </header>
+
+      <ul>
+        <li>
+          <button class="search-result-card-artwork">
+            <img src="img/1.jpg" alt="PLACEHOLDER">
+            <h3>Flowers Painting</h3>
+            <p>by Kent Paulette</p>
+          </button>
+        </li>
+
+        <li>
+          <button class="search-result-card-color">
+            <h3>Poppy Pink</h3>
+            <span class="color-swatch" style="background-color: pink;"></span>
+            <p>Used in many artworks that depict flowers</p>
+          </button>
+        </li>
+
+        <li>
+          <button class="search-result-card-text">
+            <h3>Acrylic</h3>
+            <p>"I like layering acrylic paint to achieve petals and their dimension"</p>
+          </button>
+        </li>
+
+        <li>
+          <button class="search-result-card-artwork">
+            <img src="img/6.jpg" alt="PLACEHOLDER">
+            <h3>Flowers Painting</h3>
+            <p>by Kent Paulette</p>
+          </button>
+        </li>
+
+        <li>
+          <button class="search-result-card-color">
+            <h3>Poppy Pink</h3>
+            <span class="color-swatch" style="background-color: pink;"></span>
+            <p>Used in many artworks that depict flowers</p>
+          </button>
+        </li>
+
+        <li>
+          <button class="search-result-card-text">
+            <h3>Acrylic</h3>
+            <p>"I like layering acrylic paint to achieve petals and their dimension"</p>
+          </button>
+        </li>
+
+
+      </ul>
+
+    </section>
+
+
     <section id="user-suggestion-page" class="page hidden">
       <header>
         <h1>Community Suggestions Form</h1>
@@ -107,8 +177,7 @@
 
     </section>
 
-
-    <section id="upload-page" class="page">
+    <section id="upload-page" class="page hidden">
       <header>
         <h1>Upload Artwork Form</h1>
         <p>Share your artwork and its details with the community</p>
@@ -150,7 +219,6 @@
           <input type="text" id="inspired-input" placeholder="Is this an original work, a reinterpretation, or influenced by another piece? If inspired by another work, name it."></input>
         </section>
 
-
         <h2>Additional Information (Optional)</h2>
 
         <section class="input-group">
@@ -180,8 +248,6 @@
 
         <button type="submit">Submit</button>
       </form>
-
-
     </section>
 
     <section id="home-page" class="page hidden">
