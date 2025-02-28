@@ -64,6 +64,23 @@
     searchInput.placeholder = ''; // Clear placeholder on focus
   });
 
+
+  const submitButton = id("user-suggestion-page-submit-button");
+  const closeButton = id("user-suggestion-popup-close-button");
+  const userSuggestionPopup = id("user-suggestion-popup");
+
+  submitButton.addEventListener('click', () => {
+    console.log("fires");
+    userSuggestionPopup.showModal();
+  });
+
+  closeButton.addEventListener('click', () => {
+    userSuggestionPopup.close();
+  })
+
+
+
+
   // searchInput.addEventListener('blur', () => {
   //   searchInput.placeholder = 'Search Google or type a URL'; // Restore placeholder on blur
   // });

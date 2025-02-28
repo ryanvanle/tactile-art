@@ -449,3 +449,45 @@ button {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
+
+#user-suggestion-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+#user-suggestion-page h3 {
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+}
+
+.input-group textarea, .input-group input {
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 1rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+#user-suggestion-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#user-suggestion-popup {
+  text-align: center;
+  padding: 5rem;
+}
+
+hr {
+  width: 100%;
+}

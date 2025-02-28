@@ -16,7 +16,7 @@
 </head>
 <body aria-live="polite">
 
-    <section id="search-page" class="page">
+    <section id="search-page" class="page hidden">
       <h1>Tactile Art</h1>
       <p>Search our collection of inspiration</p>
       <section class="search-box">
@@ -36,6 +36,77 @@
         <button>Glossary</button>
       </section>
     </section>
+
+    <section id="user-suggestion-page" class="page">
+      <header>
+        <h1>Community Suggestions Form</h1>
+        <p>Share your insight for the following artwork.</p>
+      </header>
+
+      <p id="user-suggestion-page-content-title">Mona Lisa</p>
+
+      <form>
+        <section>
+          <h3>Please Select a Category</h3>
+          <label class="category-label"><input type="radio" name="category" value="material">Material</label>
+          <label class="category-label"><input type="radio" name="category" value="texture">Texture</label>
+          <label class="category-label"><input type="radio" name="category" value="idea">Idea</label>
+          <label class="category-label"><input type="radio" name="category" value="color">Color</label>
+          <label class="category-label"><input type="radio" name="category" value="artwork">Artwork</label>
+        </section>
+
+        <section class="input-group">
+          <label for="suggestion">What are you suggesting?</label>
+          <input type="text" id="suggestion" placeholder="Give us a brief description of your suggestion">
+        </section>
+
+        <section class="input-group">
+          <label for="explanation">Tell Us About Your Suggestion</label>
+          <textarea id="explanation" placeholder="Why are you suggesting this? E.g., &quot;The fabric appears soft—perhaps a smooth clay could replicate it.&quot; Start typing here..."></textarea>
+        </section>
+      </form>
+
+      <dialog id="user-suggestion-popup">
+        <p>Suggestion Submitted!</p>
+        <section>
+          <button>+ Suggest Another</button>
+          <button id="user-suggestion-popup-close-button">Return to Previous Page</button>
+        </section>
+      </dialog>
+      <!-- <hr>
+
+      <form>
+        <section>
+          <h3>Please Select a Category</h3>
+          <label class="category-label"><input type="radio" name="category" value="material">Material</label>
+          <label class="category-label"><input type="radio" name="category" value="texture">Texture</label>
+          <label class="category-label"><input type="radio" name="category" value="idea">Idea</label>
+          <label class="category-label"><input type="radio" name="category" value="color">Color</label>
+          <label class="category-label"><input type="radio" name="category" value="artwork">Artwork</label>
+        </section>
+
+        <section class="input-group">
+          <label for="suggestion">What are you suggesting?</label>
+          <input type="text" id="suggestion" placeholder="Give us a brief description of your suggestion">
+        </section>
+
+        <section class="input-group">
+          <label for="explanation">Tell Us About Your Suggestion</label>
+          <textarea id="explanation" placeholder="Why are you suggesting this? E.g., &quot;The fabric appears soft—perhaps a smooth clay could replicate it.&quot; Start typing here..."></textarea>
+        </section>
+      </form>
+ -->
+
+
+      <!-- add more inputs -->
+      <!-- TODO: figure out how to add icons in button container -->
+
+      <button>+ Suggest Another</button>
+      <button id="user-suggestion-page-submit-button">Submit</button>
+
+    </section>
+
+
     <section id="home-page" class="page hidden">
         <header>
             <section id="title" type="search">
