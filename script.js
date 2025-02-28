@@ -1,21 +1,26 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, collection, addDoc, doc, getDoc } from "firebase/firestore";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+
+import { getAnalytics } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js';
+
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
+
+import { getFirestore, collection, addDoc, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
 import { COLORS, TEXTURES, MATERIALS, ARTWORK } from './data.js';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Firebase Configuration
 const firebaseConfig = {
-apiKey: "AIzaSyDWKcR-dzcwq0PoBwmPVp-Kr-xmYlCah3Q",
-authDomain: "tactileart-cse482a.firebaseapp.com",
-projectId: "tactileart-cse482a",
-storageBucket: "tactileart-cse482a.firebasestorage.app",
-messagingSenderId: "954927873836",
-appId: "1:954927873836:web:c35026dd563a900399f689",
-measurementId: "G-V7SS7LHDZ3"
+  apiKey: "AIzaSyDWKcR-dzcwq0PoBwmPVp-Kr-xmYlCah3Q",
+  authDomain: "tactileart-cse482a.firebaseapp.com",
+  projectId: "tactileart-cse482a",
+  storageBucket: "tactileart-cse482a.firebasestorage.app",
+  messagingSenderId: "954927873836",
+  appId: "1:954927873836:web:c35026dd563a900399f689",
+  measurementId: "G-V7SS7LHDZ3"
 };
 
 // Initialize Firebase
