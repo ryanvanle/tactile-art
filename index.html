@@ -17,8 +17,10 @@
 <body aria-live="polite">
 
     <section id="search-page" class="page hidden">
-      <h1>Tactile Art</h1>
-      <p>Search our collection of inspiration</p>
+      <header>
+        <h1>Tactile Art</h1>
+        <p>Search our collection of inspiration</p>
+      </header>
       <section class="search-box">
         <img src="/icons/search.svg" alt="Search icon of an magnifying glass" class="search-icon">
         <label for="home-search"></label>
@@ -37,8 +39,11 @@
       </section>
     </section>
 
-    <section id="search-result-page" class="page">
+    <section id="search-result-page" class="page hidden">
       <header>
+        <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
         <h1>Search Results</h1>
         <section class="search-box">
           <img src="/icons/search.svg" alt="Search icon of an magnifying glass" class="search-icon">
@@ -100,15 +105,14 @@
             <p>"I like layering acrylic paint to achieve petals and their dimension"</p>
           </button>
         </li>
-
-
       </ul>
-
     </section>
 
-
-    <section id="user-suggestion-page" class="page hidden">
+    <section id="user-suggestion-page" class="page">
       <header>
+        <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
         <h1>Community Suggestions Form</h1>
         <p>Share your insight for the following artwork.</p>
       </header>
@@ -179,6 +183,9 @@
 
     <section id="upload-page" class="page hidden">
       <header>
+        <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
         <h1>Upload Artwork Form</h1>
         <p>Share your artwork and its details with the community</p>
       </header>
@@ -294,7 +301,9 @@
         <p>Explore hues of color here. Color names are from Pantone</p>
         <label for="color-search"></label>
         <input id="color-search" class="search-bar">
-        <button class="back-button">Back to Home</button>
+                <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
         <ul id="colors-list">
           <!-- <li>
             <article>
@@ -314,7 +323,9 @@
         <label for="material-search"></label>
         <input id="material-search" class="search-bar">
 
-        <button class="back-button">Back to Home</button>
+                <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
 
         <ul id="materials-list">
           <!-- populated in js -->
@@ -326,7 +337,9 @@
         <p>Explore different textures of tactile art here.</p>
         <label for="texture-search"></label>
         <input id="texture-search" class="search-bar">
-        <button class="back-button">Back to Home</button>
+                <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
 
         <ul id="textures-list">
           <!-- <li>
@@ -342,7 +355,9 @@
 
     <section id="favorite-page" class="page hidden">
         <h1>Favorites</h1>
-        <button class="back-button">Back to Home</button>
+                <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
         <ul>
           <article class="favorite-small-text-card selectable">
             <h2>Smooth</h2>
@@ -365,7 +380,9 @@
           <p>Even, polished surface with no roughness</p>
         </section>
         <section class="detail-page-button-container">
-          <button class="back-button">Back to Home</button>
+                  <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
           <button class="favorites-button" aria-live="assertive">Save to Favorites</button>
         </section>
       </header>
@@ -417,7 +434,9 @@
           <p>Artist: Edvard Munch, 1893</p>
         </section>
         <section class="detail-page-button-container">
-          <button class="back-button">Back to Home</button>
+                  <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
           <button class="favorites-button" aria-live="assertive">Save to Favorites</button>
         </section>
       </header>
@@ -494,7 +513,9 @@
           <p>Malleable, lightweight, good for beginners</p>
         </section>
         <section class="detail-page-button-container">
-          <button class="back-button">Back to Home</button>
+                  <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
           <button class="favorites-button" aria-live="assertive">Save to Favorites</button>
         </section>
 
@@ -555,7 +576,9 @@
           <span class="color-swatch" style="background-color: red;"></span>
         </section>
         <section class="detail-page-button-container">
-          <button class="back-button">Back to Home</button>
+                  <button class="back-button">
+          <img src="icons/back-button.svg" alt="back button arrow">
+        </button>
           <button class="favorites-button" aria-live="assertive">Save to Favorites</button>
         </section>
 
