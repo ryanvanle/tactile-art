@@ -13,7 +13,7 @@ html {
   display: none !important;
 }
 
-header {
+#home-page header {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -486,6 +486,11 @@ button {
 #user-suggestion-popup {
   text-align: center;
   padding: 5rem;
+}
+
+#user-suggestion-page header {
+  display: flex;
+  flex-direction: column;
 }
 
 hr {
