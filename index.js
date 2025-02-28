@@ -2,39 +2,47 @@
 
 (function() {
   let favorites = []; // Initialize an empty array to store favorites
+  let currentPageId = "search-page"; // Initialize with the default home page
+  let previousPageId = "search-page"; // Initialize to home page as well, in case of initial back button press
 
   window.addEventListener("load", init);
 
   function init() {
-    // Event listeners for main navigation buttons
+    initializeEventListeners();
+    populateGallery();
+    generateColors();
+    generateMaterials();
+    generateTextures();
+    generateFavoritesPage();
+    initSearch();
+  }
+
+  function initializeEventListeners() {
     id("materials-button").addEventListener("click", () => showPage("material-page"));
     id("textures-button").addEventListener("click", () => showPage("texture-page"));
     id("colors-button").addEventListener("click", () => showPage("colors-page"));
     id("favorites-button").addEventListener("click", () => showPage("favorite-page"));
 
-    // Event listeners for back buttons (delegation)
+    // TODO UPDATE functionally
     const backButtons = document.querySelectorAll('.back-button');
     backButtons.forEach(button => {
       button.addEventListener('click', (event) => {
-        console.log("back button")
-        showPage("home-page");
+        showPreviousPage();
       });
     });
 
-    // Event listener for selectable elements (delegation) - ONLY for detail page navigation
     document.addEventListener('click', function(event) {
       handleSelectableClick(event);
     });
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === "Enter" || event.key === " ") { // Space or Enter
-            handleSelectableClick(event);
-        }
+      if (event.key === "Enter" || event.key === " ") {
+        handleSelectableClick(event);
+      }
     });
 
     function handleSelectableClick(event){
         const selectable = event.target.closest('.selectable');
-        // console.log(event, event.target);
         if (selectable && !event.target.closest('.back-button')) { // Check if it's selectable AND NOT a close button
           showDetailPage(selectable);
         }
@@ -52,44 +60,17 @@
     });
 
 
-    function handleFavoritesClick(event){
-        if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") {
-            saveToFavorites(event);
-        }
-    }
+    const submitButton = id("user-suggestion-page-submit-button");
+    const closeButton = id("user-suggestion-popup-close-button");
+    const userSuggestionPopup = id("user-suggestion-popup");
+    submitButton.addEventListener('click', () => {
+      userSuggestionPopup.showModal();
+    });
 
-  const searchInput = document.getElementById('home-search');
+    closeButton.addEventListener('click', () => {
+      userSuggestionPopup.close();
+    });
 
-  searchInput.addEventListener('focus', () => {
-    searchInput.placeholder = ''; // Clear placeholder on focus
-  });
-
-
-  const submitButton = id("user-suggestion-page-submit-button");
-  const closeButton = id("user-suggestion-popup-close-button");
-  const userSuggestionPopup = id("user-suggestion-popup");
-
-  submitButton.addEventListener('click', () => {
-    console.log("fires");
-    userSuggestionPopup.showModal();
-  });
-
-  closeButton.addEventListener('click', () => {
-    userSuggestionPopup.close();
-  })
-
-
-
-
-  // searchInput.addEventListener('blur', () => {
-  //   searchInput.placeholder = 'Search Google or type a URL'; // Restore placeholder on blur
-  // });
-    populateGallery();
-    generateColors();
-    generateMaterials();
-    generateTextures();
-    generateFavoritesPage();
-    initSearch();
   }
 
   function initSearch() {
@@ -187,18 +168,20 @@
       audio.currentTime = 0;
     }
 
+    previousPageId = currentPageId; // Store current page as previous
+    currentPageId = pageId;        // Update current page to the new page
+
     const pages = document.querySelectorAll(".page");
     pages.forEach(page => {
       page.classList.add("hidden");
-      // page.setAttribute('aria-hidden', 'true');
     });
 
-
-
     const currentPage = id(pageId);
-    // currentPage.setAttribute('aria-hidden', 'false');
     currentPage.classList.remove("hidden");
+  }
 
+  function showPreviousPage() {
+    showPage(previousPageId);
   }
 
   function generateColors() {
@@ -655,6 +638,13 @@
 
     return img;
   }
+
+  function handleFavoritesClick(event){
+    if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") {
+        saveToFavorites(event);
+    }
+}
+
 
   function id(idName) {
     return document.getElementById(idName);
