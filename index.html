@@ -37,7 +37,7 @@
       </section>
     </section>
 
-    <section id="user-suggestion-page" class="page">
+    <section id="user-suggestion-page" class="page hidden">
       <header>
         <h1>Community Suggestions Form</h1>
         <p>Share your insight for the following artwork.</p>
@@ -107,6 +107,82 @@
 
     </section>
 
+
+    <section id="upload-page" class="page">
+      <header>
+        <h1>Upload Artwork Form</h1>
+        <p>Share your artwork and its details with the community</p>
+      </header>
+      <form>
+        <h2>Required Fields</h2>
+        <section class="input-group">
+          <label for="title-input">Title</label>
+          <input type="text" id="title-input" placeholder="What is the name of the artwork?"></input>
+        </section>
+
+        <section class="input-group">
+          <label for="artist-input">Artist</label>
+          <input type="text" id="artist-input" placeholder="Who created this?"></input>
+        </section>
+
+        <section class="input-group">
+          <label for="year-input">Year</label>
+          <input type="text" id="year-input" placeholder="When was this created?"></input>
+        </section>
+
+        <section class="input-group">
+          <label for="image-input">Upload a Clear Image of Your Artwork</label>
+          <input type="file" id="image-input" accept="image/*"></input>
+        </section>
+
+        <section class="input-group">
+          <label for="alt-text-input">Alt Text</label>
+          <input type="text" id="alt-text-input" placeholder="Provide a descriptive alternative text for your image."></input>
+        </section>
+
+        <section class="input-group">
+          <label for="description-input">Artist's Description or Interpretation</label>
+          <input type="text" id="description-input" placeholder="Share the story, inspiration, or background of this piece."></input>
+        </section>
+
+        <section class="input-group">
+          <label for="inspired-input">Inspired By</label>
+          <input type="text" id="inspired-input" placeholder="Is this an original work, a reinterpretation, or influenced by another piece? If inspired by another work, name it."></input>
+        </section>
+
+
+        <h2>Additional Information (Optional)</h2>
+
+        <section class="input-group">
+          <label for="size-input">Size</label>
+          <input type="text" id="size-input" placeholder="Dimensions or scale of the piece."></input>
+        </section>
+
+        <section class="input-group">
+          <label for="material-input">Material</label>
+          <input type="text" id="material-input" placeholder="What materials did you use?"></input>
+        </section>
+
+        <section class="input-group">
+          <label for="color-input">Color</label>
+          <input type="text" id="color-input" placeholder="Key colors used in your piece."></input>
+        </section>
+
+        <section class="input-group">
+          <label for="texture-input">Texture</label>
+          <input type="text" id="texture-input" placeholder="Describe the surface quality or feel of the artwork."></input>
+        </section>
+
+        <section class="input-group">
+          <label for="contains-input">Contains</label>
+          <input type="text" id="contains-input" placeholder="Any notable details, motifs, or themes present?"></input>
+        </section>
+
+        <button type="submit">Submit</button>
+      </form>
+
+
+    </section>
 
     <section id="home-page" class="page hidden">
         <header>

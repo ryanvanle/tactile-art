@@ -496,3 +496,14 @@ button {
 hr {
   width: 100%;
 }
+
+#upload-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#upload-page h2 {
+  margin-bottom: 0;
+  margin-top: 0;
+}
