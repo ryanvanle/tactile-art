@@ -1,4 +1,4 @@
-const COLORS = {
+export const COLORS = {
   "Crimson": {
     hex: "#ad1c42",
     description: "Crimson is a deep, cool red with a hint of blue, making it darker and more intense than ruby or cherry red. It stands apart from warmer reds like scarlet and vermilion, and is deeper than pink or lighter reds like coral.",
@@ -73,7 +73,7 @@ const COLORS = {
   },
 };
 
-const TEXTURES = {
+export const TEXTURES = {
   "Smooth": {
     blurb: "Even, polished surface with no roughness",
     create: "To achieve a smooth surface in tactile art, explore materials that naturally lend themselves to a polished feel, such as fine clay, soft fabric, or sanded wood. Consider layering techniques—building up thin, even coats of paint, glue, or plaster can help smooth out rough areas. Tools like sandpaper, sponges, or even a damp cloth can refine textures, while sealing with varnish, wax, or resin can enhance the sleekness.",
@@ -136,7 +136,7 @@ const TEXTURES = {
   },
 };
 
-const MATERIALS = {
+export const MATERIALS = {
   "Aluminum Foil": {
     blurb: "Malleable, lightweight, good for beginners",
     description: "Aluminum foil is a lightweight, flexible material that reflects light and holds shape well. Artists use it for sculpture armatures, collage, and printmaking, taking advantage of its reflective surface and ability to capture fine details. Foil adds a dynamic, metallic element to compositions, making it a versatile tool for creative expression.",
@@ -247,7 +247,7 @@ const MATERIALS = {
   },
 };
 
-const ARTWORK = {
+export const ARTWORK = {
   "Dance (I)": {
     image: "Dance (I).jpg", // IMAGE_FILE under /img
     alt: "Dance (I) by Henri Matisse. The painting features five figures, dancing in an energetic, carefree rhythm. The bodies are simple and fluid, with no interior details, almost like soft, playful shapes. Their movements are free and unrestrained, evoking a sense of joy and spontaneity. The vibrant colors and bold forms emphasize the emotion of the piece, where form and content harmonize to express pure, unencumbered joy.",
@@ -409,5 +409,4 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
       location: "Minneapolis Institute of Art, Minneapolis",
     }
   }
-}
-
+};

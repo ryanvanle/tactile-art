@@ -7,7 +7,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, on
 
 import { getFirestore, collection, addDoc, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
-import { COLORS, TEXTURES, MATERIALS, ARTWORK } from './data.js';
+import { COLORS, TEXTURES, MATERIALS, ARTWORK } from './data/data.js';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -167,4 +167,4 @@ if (user) {
     submitForm("Your text description", ["tag1", "tag2"], user);
 }
 
-
+console.log(app, analytics, auth, db);
