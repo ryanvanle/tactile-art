@@ -615,7 +615,6 @@ hr {
 #search-result-filters {
   display: flex;
   align-items: center;
-  flex-direction: column;
   justify-content: left;
   gap: 2rem;
 }
