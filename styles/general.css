@@ -84,6 +84,12 @@ button {
 
 .detail-page {
   height: 100%;
+  width: 100%;
+}
+
+
+.detail-page header {
+  display: flex;
 }
 
 .detail-page header section {
