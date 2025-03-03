@@ -29,6 +29,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   let MATERIALS = [];
   let TEXTURES = [];
 
+  let currentSearchResults = [];
+  let currentFilterResults = [];
+
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -96,6 +99,11 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
       });
     });
 
+    const checkboxes = document.querySelectorAll('#search-result-filters input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', filterSearchResults);
+    });
+
     // document.addEventListener('click', function(event) {
     //   handleSelectableClick(event);
     // });
@@ -154,6 +162,25 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     let searchResultsArray = await searchDataset(searchQuery);
     generateSearchResults(searchResultsArray);
     showPage("search-result-page");
+  }
+
+  function filterSearchResults() {
+    const checkboxes = document.querySelectorAll('#search-result-filters input[type="checkbox"]');
+    const selectedFilters = Array.from(checkboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+
+    if (selectedFilters.length === 0) {
+      // No filters selected, show all results
+      currentFilterResults = currentSearchResults;
+    } else {
+      currentFilterResults = currentSearchResults.filter(result => {
+        return selectedFilters.includes(result.type);
+      });
+    }
+
+    // Regenerate the search results list with the filtered results
+    generateSearchResults(currentFilterResults);
   }
 
   async function searchDataset(searchQuery) {
@@ -217,6 +244,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
       }
     }
 
+    currentSearchResults = results;
     return results;
   }
 
@@ -414,6 +442,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     const pageId = article.dataset.pageId;
     const detailPage = id(pageId);
 
+    console.log("show dp", article, itemType, itemName, pageId, detailPage);
+
     switch (itemType) {
       case "color":
         generateColorDetailPageContent(detailPage, COLORS[itemName], itemName);
@@ -424,6 +454,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
       case "texture":
         generateTextureDetailPageContent(detailPage, TEXTURES[itemName], itemName);
         break;
+      case "artwork":
+        generateArtworkDetailPageContent(detailPage, ARTWORK[itemName], itemName);
     }
     checkFavoriteButtonState(detailPage, itemType, itemName);
     showPage(pageId);
@@ -442,8 +474,12 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     seen.textContent = colorData.seen;
     hexCode.textContent = `Hex code: ${colorData.hex}`;
 
-    const exploreList = id("color-detail-page").querySelector(".explore-more ul");
-    generateExploreFurtherList(exploreList, colorData.explore);
+    const communitySuggestionsList = id("color-detail-page").querySelector(".community-suggestions-list ul");
+    generateSuggestionsList(communitySuggestionsList, colorData.suggestions, colorData);
+    // generateExploreFurtherList(exploreList, colorData.explore);
+
+    // const exploreList = id("color-detail-page").querySelector(".explore-more ul");
+    // generateExploreFurtherList(exploreList, colorData.explore);
   }
 
   function generateMaterialDetailPageContent(detailPage, materialData, materialName) {
@@ -466,8 +502,11 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
 
     availability.textContent = materialData.availability;
 
-    const exploreList = id("material-detail-page").querySelector(".explore-more ul");
-    generateExploreFurtherList(exploreList, materialData.explore);
+    // const exploreList = id("material-detail-page").querySelector(".explore-more ul");
+    // generateExploreFurtherList(exploreList, materialData.explore);
+
+    const communitySuggestionsList = id("material-detail-page").querySelector(".community-suggestions-list ul");
+    generateSuggestionsList(communitySuggestionsList, materialData.suggestions, materialData);
   }
 
 
@@ -480,8 +519,25 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     blurb.textContent = textureData.blurb;
     description.textContent = textureData.create;
 
-    const exploreList = id("texture-detail-page").querySelector(".explore-more ul");
-    generateExploreFurtherList(exploreList, textureData.explore);
+    const communitySuggestionsList = id("texture-detail-page").querySelector(".community-suggestions-list ul");
+    generateSuggestionsList(communitySuggestionsList, textureData.suggestions, textureData);
+  }
+
+  function generateSuggestionsList(suggestionList, suggestionItems, data) {
+    suggestionList.innerHTML = "";
+
+    const addSuggestionLi = document.createElement("li");
+    const addSuggestionSection = document.createElement("section");
+    addSuggestionSection.classList.add("suggestion-card-add", "selectable");
+    addSuggestionSection.addEventListener("click", () => showPage("user-suggestion-page"));
+
+    const addSuggestionH3 = document.createElement("h3");
+    addSuggestionH3.textContent = "Add your own suggestion";
+
+    addSuggestionLi.appendChild(addSuggestionSection);
+    addSuggestionSection.appendChild(addSuggestionH3);
+    suggestionList.appendChild(addSuggestionLi);
+
   }
 
   function generateExploreFurtherList(exploreList, exploreItems) {
@@ -566,9 +622,10 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     audio.src = `audio/${artworkData.audio}`;
     credit.textContent = artworkData.credit;
 
-    const exploreList = id("artwork-detail-page").querySelector(".explore-more ul");
-    generateExploreFurtherList(exploreList, artworkData.explore);
+    const communitySuggestionsList = id("artwork-detail-page").querySelector(".community-suggestions-list ul");
+    generateSuggestionsList(communitySuggestionsList, artworkData.suggestions);
   }
+
 
   function checkFavoriteButtonState(detailPage, itemType, itemName) {
       const button = detailPage.querySelector(".favorites-button");
