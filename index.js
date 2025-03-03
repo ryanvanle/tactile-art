@@ -549,8 +549,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     generateSuggestionsList(communitySuggestionsList, textureData.suggestions, textureData);
   }
 
-  function generateSuggestionsList(suggestionList, suggestionItems, data) {
-    suggestionList.innerHTML = "";
+  function generateSuggestionsList(suggestionListElement, suggestionDataObject, data) {
+    suggestionListElement.innerHTML = "";
 
     const addSuggestionLi = document.createElement("li");
     const addSuggestionSection = document.createElement("section");
@@ -562,7 +562,101 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     addSuggestionLi.appendChild(addSuggestionSection);
     addSuggestionSection.appendChild(addSuggestionH3);
-    suggestionList.appendChild(addSuggestionLi);
+    suggestionListElement.appendChild(addSuggestionLi);
+
+    // console.log(suggestionItems);
+    let suggestionDataList = Object.values(suggestionDataObject);
+
+    suggestionDataList.sort(function(a,b) {
+      let aScore = a.metadata.upvotes - a.metadata.downvotes;
+      let bScore = b.metadata.upvotes - b.metadata.downvotes;
+      return bScore-aScore;
+    });
+
+    for (let suggestionData of suggestionDataList) {
+      let card = generateSuggestionCard(suggestionData);
+      suggestionListElement.appendChild(card);
+    }
+  }
+
+  function generateSuggestionCard(data) {
+    let category = data.category;
+    let listItem = document.createElement("li");
+    let suggestionCard = document.createElement("section");
+    suggestionCard.classList.add("selectable");
+
+    let title = document.createElement("h3");
+    title.textContent = data.itemTitle;
+
+    let context = document.createElement("p");
+    context.textContent = data.context;
+
+    let cornerIcon = document.createElement("i");
+    let iconImg = document.createElement("img");
+    cornerIcon.appendChild(iconImg);
+    iconImg.alt = "placeholder";
+    iconImg.classList.add("corner-icon");
+
+    let voteContainer = document.createElement("section");
+    voteContainer.classList.add("vote-container");
+    let upvoteButton = document.createElement("button");
+    upvoteButton.classList.add("upvote-button");
+    let upvoteImg = document.createElement("img");
+    upvoteImg.src = "icons/upvote.svg";
+    upvoteImg.alt = "PLACEHOLDER";
+    upvoteButton.appendChild(upvoteImg);
+
+    let downvoteButton = document.createElement("button");2
+    downvoteButton.classList.add("downvote-button");
+    let downvoteImg = document.createElement("img");
+    downvoteImg.src = "icons/downvote.svg";
+    downvoteImg.alt = "PLACEHOLDER";
+    downvoteButton.appendChild(downvoteImg);
+
+    voteContainer.appendChild(upvoteButton);
+    voteContainer.appendChild(downvoteButton);
+
+    console.log(data);
+
+    if (category === "material") {
+        suggestionCard.classList.add("suggestion-card-material");
+        iconImg.src = "icons/material.svg";
+    } else if (category === "color") {
+        suggestionCard.classList.add("suggestion-card-color");
+        let colorSwatch = document.createElement("span");
+        colorSwatch.classList.add("suggestion-color-swatch");
+        colorSwatch.style.backgroundColor = data.itemTitle;
+        suggestionCard.appendChild(colorSwatch);
+        iconImg.src = "icons/color.svg";
+    } else if (category === "interpretation") {
+        title.textContent = "Interpretation";
+        suggestionCard.classList.add("suggestion-card-interpretation");
+        iconImg.src = "icons/interpretation.svg";
+    } else if (category === "texture") {
+        suggestionCard.classList.add("suggestion-card-texture");
+        iconImg.src = "icons/texture.svg";
+    } else if (category === "artwork") {
+        suggestionCard.classList.add("suggestion-card-artwork");
+
+        let artworkData = ARTWORK[data.itemTitle];
+        let artworkImg = document.createElement("img");
+        artworkImg.src = `img/${artworkData.image}` || "img/placeholder.jpg";
+        artworkImg.alt = artworkData.alt;
+        suggestionCard.appendChild(artworkImg);
+
+        let artistPara = document.createElement("p");
+        artistPara.textContent = "by " + artworkData.notes.artist;
+        suggestionCard.appendChild(artistPara);
+        iconImg.src = "icons/artwork.svg";
+    }
+
+    suggestionCard.appendChild(title);
+    suggestionCard.appendChild(context);
+    suggestionCard.appendChild(cornerIcon);
+    suggestionCard.appendChild(voteContainer);
+
+    listItem.appendChild(suggestionCard);
+    return listItem;
   }
 
   function showSuggestionForm(data) {
