@@ -10,8 +10,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
 (function() {
   let favorites = []; // Initialize an empty array to store favorites
+
+  const pageHistory = [];
   let currentPageId = "search-page"; // Initialize with the default home page
-  let previousPageId = "search-page"; // Initialize to home page as well, in case of initial back button press\
 
   // Firebase Configuration this is fine to have here, we'll need to look into security rules though
   const firebaseConfig = {
@@ -265,8 +266,10 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       audio.currentTime = 0;
     }
 
-    previousPageId = currentPageId; // Store current page as previous
-    currentPageId = pageId;        // Update current page to the new page
+    if (currentPageId !== pageId) { // Prevent pushing the same page multiple times
+      pageHistory.push(currentPageId); // Push current page onto the stack
+      currentPageId = pageId; // Update current page
+    }
 
     const pages = document.querySelectorAll(".page");
     pages.forEach(page => {
@@ -278,7 +281,19 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   }
 
   function showPreviousPage() {
-    showPage(previousPageId);
+    if (pageHistory.length > 1) { // Ensure there's a page to go back to
+      const previousPageId = pageHistory.pop(); // Get previous page from stack
+      currentPageId = pageHistory[pageHistory.length -1]; //update the current page ID to the last element of the history array.
+      showPage(previousPageId); // Show the previous page
+    } else if (pageHistory.length === 1) { //If on the inital page
+      const previousPageId = pageHistory[0]; //get the initial page.
+      currentPageId = previousPageId;
+      showPage(previousPageId);
+      pageHistory.pop(); //clear the history.
+    } else {
+      // Optionally handle cases where there's no history (e.g., disable the back button)
+      console.log("No history to go back to.");
+    }
   }
 
   function generateSearchResults(searchResults) {
