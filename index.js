@@ -1,32 +1,89 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
+
+import { getAnalytics } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js';
+
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
+
+import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
 "use strict";
 
 (function() {
   let favorites = []; // Initialize an empty array to store favorites
   let currentPageId = "search-page"; // Initialize with the default home page
-  let previousPageId = "search-page"; // Initialize to home page as well, in case of initial back button press
+  let previousPageId = "search-page"; // Initialize to home page as well, in case of initial back button press\
+
+  // Firebase Configuration this is fine to have here, we'll need to look into security rules though
+  const firebaseConfig = {
+    apiKey: "AIzaSyDWKcR-dzcwq0PoBwmPVp-Kr-xmYlCah3Q",
+    authDomain: "tactileart-cse482a.firebaseapp.com",
+    projectId: "tactileart-cse482a",
+    storageBucket: "tactileart-cse482a.firebasestorage.app",
+    messagingSenderId: "954927873836",
+    appId: "1:954927873836:web:c35026dd563a900399f689",
+    measurementId: "G-V7SS7LHDZ3"
+  };
+
+  let ARTWORK = [];
+  let COLORS = [];
+  let MATERIALS = [];
+  let TEXTURES = [];
+
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
   window.addEventListener("load", init);
 
-  function init() {
+  async function init() {
+    await getAllData();
     initializeEventListeners();
     populateGallery();
     generateColors();
     generateMaterials();
     generateTextures();
     generateFavoritesPage();
-    initSearch();
     updateSuggestionForm();
-
   }
+
+  async function getAllData() {
+
+    COLORS = [];
+    MATERIALS = [];
+    ARTWORK = [];
+    TEXTURES = [];
+
+    const colorsSnapshot = await getDocs(collection(db, "colors"));
+    colorsSnapshot.forEach((doc) => {
+      COLORS[doc.id] = doc.data();
+    });
+
+    const materialsSnapshot = await getDocs(collection(db, "materials"));
+    materialsSnapshot.forEach((doc) => {
+      MATERIALS[doc.id] = doc.data();
+    });
+
+    const artworksSnapshot = await getDocs(collection(db, "artworks"));
+    artworksSnapshot.forEach((doc) => {
+      ARTWORK[doc.id] = doc.data();
+    });
+
+    const texturesSnapshot = await getDocs(collection(db, "textures"));
+    texturesSnapshot.forEach((doc) => {
+      TEXTURES[doc.id] = doc.data();
+    });
+  }
+
 
   function initializeEventListeners() {
     id("materials-button").addEventListener("click", () => showPage("material-page"));
     id("textures-button").addEventListener("click", () => showPage("texture-page"));
     id("colors-button").addEventListener("click", () => showPage("colors-page"));
     id("favorites-button").addEventListener("click", () => showPage("favorite-page"));
-
     id("search-button").addEventListener("click", () => processSearchResults(id("home-search")));
-
     id("upload-artwork-button").addEventListener("click", () => {
       // TODO clear out the form page
       showPage("upload-page");
@@ -39,22 +96,22 @@
       });
     });
 
-    document.addEventListener('click', function(event) {
-      handleSelectableClick(event);
-    });
+    // document.addEventListener('click', function(event) {
+    //   handleSelectableClick(event);
+    // });
 
-    document.addEventListener('keydown', function(event) {
-      if (event.key === "Enter" || event.key === " ") {
-        handleSelectableClick(event);
-      }
-    });
+    // document.addEventListener('keydown', function(event) {
+    //   if (event.key === "Enter" || event.key === " ") {
+    //     handleSelectableClick(event);
+    //   }
+    // });
 
-    function handleSelectableClick(event){
-        const selectable = event.target.closest('.selectable');
-        if (selectable && !event.target.closest('.back-button')) { // Check if it's selectable AND NOT a close button
-          showDetailPage(selectable);
-        }
-    }
+    // function handleSelectableClick(event){
+    //   const selectable = event.currentTarget; // Use event.currentTarget here
+    //   if (selectable && !event.target.closest('.back-button')) {
+    //     showDetailPage(selectable);
+    //   }
+    // }
 
     // Event listener for save to favorites buttons (delegation)
     document.addEventListener('click', function(event) {
@@ -68,7 +125,6 @@
         handleFavoritesClick(event);
       }
     });
-
 
     const submitButton = id("user-suggestion-page-submit-button");
     const closeButton = id("user-suggestion-popup-close-button");
@@ -90,103 +146,78 @@
   }
 
   function processSearchResults(currentElement) {
-
-    console.log(currentElement);
     updateSearchResults(currentElement.value);
+  }
+
+  async function updateSearchResults(searchQuery) {
+    id("search-results-search").value = searchQuery;
+    let searchResultsArray = await searchDataset(searchQuery);
+    generateSearchResults(searchResultsArray);
     showPage("search-result-page");
   }
 
-  function updateSearchResults(searchQuery) {
-    id("search-results-search").value = searchQuery;
-    console.log("updateSearchResults");
-  }
+  async function searchDataset(searchQuery) {
+    const results = [];
+    await getAllData();
+    searchQuery = searchQuery.toLowerCase();
 
-  function initSearch() {
-    const searchBars = document.querySelectorAll(".search-bar");
-    searchBars.forEach(searchBar => {
-      searchBar.addEventListener("input", () => {
-        const searchTerm = searchBar.value.toLowerCase();
-        const pageId = searchBar.closest(".page").id;
-          switch (pageId) {
-            case "home-page":
-              searchHomePage(searchTerm);
-              break;
-            case "colors-page":
-              searchColorsPage(searchTerm);
-              break;
-            case "material-page":
-              searchMaterialsPage(searchTerm);
-              break;
-            case "texture-page":
-              searchTexturesPage(searchTerm);
-              break;
-          }
-        });
-    });
-  }
-
-  function searchHomePage(searchTerm) {
-    const gallery = id("gallery");
-    const images = gallery.querySelectorAll("img");
-
-    images.forEach(image => {
-      const artworkName = image.dataset.itemName;
-      const artworkData = ARTWORK[artworkName];
-      const artworkAlt = artworkData.alt.toLowerCase();
-
-      if (artworkAlt.includes(searchTerm)) {
-        image.style.display = "block";
-      } else {
-        image.style.display = "none";
+    // Search through ARTWORK
+    for (const artwork in ARTWORK) {
+      const artworkData = ARTWORK[artwork];
+      if (
+        artwork.toLowerCase().includes(searchQuery) ||
+        artworkData.alt.toLowerCase().includes(searchQuery) ||
+        artworkData.description.toLowerCase().includes(searchQuery) ||
+        artworkData.notes.artist.toLowerCase().includes(searchQuery) ||
+        artworkData.notes.medium.toLowerCase().includes(searchQuery) ||
+        artworkData.explore.some(item => item.toLowerCase().includes(searchQuery))
+      ) {
+        results.push({ type: 'artwork', name: artwork, data: artworkData });
       }
-    });
-  }
+    }
 
-  function searchColorsPage(searchTerm) {
-    const colorsList = id("colors-list");
-    const colorItems = colorsList.querySelectorAll("li");
-
-    colorItems.forEach(item => {
-      const colorName = item.querySelector("h2").textContent.toLowerCase();
-
-      if (colorName.includes(searchTerm)) {
-        item.style.display = "block";
-      } else {
-        item.style.display = "none";
+    // Search through COLORS
+    for (const color in COLORS) {
+      const colorData = COLORS[color];
+      if (
+        color.toLowerCase().includes(searchQuery) ||
+        colorData.description.toLowerCase().includes(searchQuery) ||
+        colorData.seen.toLowerCase().includes(searchQuery) ||
+        colorData.explore.some(item => item.toLowerCase().includes(searchQuery))
+      ) {
+        results.push({ type: 'color', name: color, data: colorData });
       }
-    });
-  }
+    }
 
-  function searchMaterialsPage(searchTerm) {
-    const materialsList = id("materials-list");
-    const materialItems = materialsList.querySelectorAll("li");
-
-    materialItems.forEach(item => {
-      const materialName = item.querySelector("h2").textContent.toLowerCase();
-      const materialBlurb = item.querySelector("p").textContent.toLowerCase();
-
-      if (materialName.includes(searchTerm) || materialBlurb.includes(searchTerm)) {
-        item.style.display = "block";
-      } else {
-        item.style.display = "none";
+    // Search through TEXTURES
+    for (const texture in TEXTURES) {
+      const textureData = TEXTURES[texture];
+      if (
+        texture.toLowerCase().includes(searchQuery) ||
+        textureData.blurb.toLowerCase().includes(searchQuery) ||
+        textureData.create.toLowerCase().includes(searchQuery) ||
+        textureData.explore.some(item => item.toLowerCase().includes(searchQuery))
+      ) {
+        results.push({ type: 'texture', name: texture, data: textureData });
       }
-    });
-  }
+    }
 
-  function searchTexturesPage(searchTerm) {
-    const texturesList = id("textures-list");
-    const textureItems = texturesList.querySelectorAll("li");
-
-    textureItems.forEach(item => {
-      const textureName = item.querySelector("h2").textContent.toLowerCase();
-      const textureBlurb = item.querySelector("p").textContent.toLowerCase();
-
-      if (textureName.includes(searchTerm) || textureBlurb.includes(searchTerm)) {
-        item.style.display = "block";
-      } else {
-        item.style.display = "none";
+    // Search through MATERIALS
+    for (const material in MATERIALS) {
+      const materialData = MATERIALS[material];
+      if (
+        material.toLowerCase().includes(searchQuery) ||
+        materialData.blurb.toLowerCase().includes(searchQuery) ||
+        materialData.description.toLowerCase().includes(searchQuery) ||
+        materialData.techniques.some(item => item.toLowerCase().includes(searchQuery)) ||
+        materialData.availability.toLowerCase().includes(searchQuery) ||
+        materialData.explore.some(item => item.toLowerCase().includes(searchQuery))
+      ) {
+        results.push({ type: 'material', name: material, data: materialData });
       }
-    });
+    }
+
+    return results;
   }
 
   function showPage(pageId) {
@@ -210,6 +241,82 @@
 
   function showPreviousPage() {
     showPage(previousPageId);
+  }
+
+  function generateSearchResults(searchResults) {
+    const resultsList = document.querySelector("#search-result-page ul");
+    resultsList.innerHTML = ""; // Clear previous results
+
+    searchResults.forEach(result => {
+      const listItem = document.createElement("li");
+      let resultCard = document.createElement("button");
+      resultCard.classList.add("selectable"); // Make the card selectable
+      resultCard.dataset.itemType = result.type;
+      resultCard.dataset.itemName = result.name;
+
+      if (result.type === "artwork") {
+        resultCard.classList.add("search-result-card-artwork");
+        resultCard.dataset.pageId = "artwork-detail-page"; // Set the correct page ID
+
+        const img = document.createElement("img");
+        img.src = `img/${result.data.image}`;
+        img.alt = result.data.alt;
+        resultCard.appendChild(img);
+
+        const title = document.createElement("h3");
+        title.textContent = result.name;
+        resultCard.appendChild(title);
+
+        const artist = document.createElement("p");
+        artist.textContent = `by ${result.data.notes.artist}`;
+        resultCard.appendChild(artist);
+
+      } else if (result.type === "color") {
+        resultCard.classList.add("search-result-card-color");
+        resultCard.dataset.pageId = "color-detail-page"; // Set the correct page ID
+
+        const title = document.createElement("h3");
+        title.textContent = result.name;
+        resultCard.appendChild(title);
+
+        const swatch = document.createElement("span");
+        swatch.classList.add("color-swatch");
+        swatch.style.backgroundColor = result.data.hex;
+        resultCard.appendChild(swatch);
+
+        const description = document.createElement("p");
+        description.textContent = result.data.description;
+        resultCard.appendChild(description);
+
+      } else if (result.type === "texture") {
+        resultCard.classList.add("search-result-card-text");
+        resultCard.dataset.pageId = "texture-detail-page"; // Set the correct page ID
+
+        const title = document.createElement("h3");
+        title.textContent = result.name;
+        resultCard.appendChild(title);
+
+        const blurb = document.createElement("p");
+        blurb.textContent = result.data.blurb;
+        resultCard.appendChild(blurb);
+
+      } else if (result.type === "material") {
+        resultCard.classList.add("search-result-card-text");
+        resultCard.dataset.pageId = "material-detail-page"; // Set the correct page ID
+
+        const title = document.createElement("h3");
+        title.textContent = result.name;
+        resultCard.appendChild(title);
+
+        const blurb = document.createElement("p");
+        blurb.textContent = result.data.blurb || result.data.description; // Use blurb or description if blurb is not available
+        resultCard.appendChild(blurb);
+      }
+
+      resultCard.addEventListener("click", showDetailPage); // Add event listener to the card
+      listItem.appendChild(resultCard);
+      resultsList.appendChild(listItem);
+    });
   }
 
   function generateColors() {
@@ -301,12 +408,10 @@
   }
 
   function showDetailPage(event) {
-
     const article = event.currentTarget;
     const itemType = article.dataset.itemType;
     const itemName = article.dataset.itemName;
     const pageId = article.dataset.pageId;
-
     const detailPage = id(pageId);
 
     switch (itemType) {

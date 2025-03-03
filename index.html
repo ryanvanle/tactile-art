@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="styles/colors-page.css">
     <script src="data/data.js"></script>
     <script src="script.js" type="module"></script>
-    <script src="index.js"></script>
+    <script src="index.js" type="module"></script>
     <title>tactile art</title>
 </head>
 <body aria-live="polite">
 
-    <section id="search-page" class="page hidden">
+    <section id="search-page" class="page">
       <header>
         <h1>Tactile Art</h1>
         <p>Search our collection of inspiration</p>
@@ -498,7 +498,7 @@
       </section>
     </section>
 
-    <section id="artwork-detail-page" class="page detail-page">
+    <section id="artwork-detail-page" class="page detail-page hidden">
       <header>
         <section>
           <h1>The Scream</h1>
@@ -639,46 +639,6 @@
           </section>
         </ul>
       </section>
-
-      <dialog class="community-suggestion-popup" open>
-        <h2>title</h2>
-        <button class="close-button">
-          <img src="icons/x-symbol.svg" alt="close button x symbol icon">
-        </button>
-
-        <section>
-          <p>I used acrylic in layers to create a rough texture for her hair.
-
-            Lorem ipsum dolor sit amet. Et corrupti fugit ex unde earum aut animi voluptatum ea quaerat eaque eum quam ipsam. Rem recusandae aliquid et impedit recusandae ad amet enim quo exercitationem molestiae. </p>
-        </section>
-
-        <button class="learn-more-button">Learn More</button>
-        <section class="vote-container">
-          <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
-          <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
-        </section>
-
-      </dialog>
-
-      <dialog class="community-suggestion-popup" open>
-        <h2>Girl with a Pearl Earring</h2>
-        <button class="close-button">
-          <img src="icons/x-symbol.svg" alt="close button x symbol icon">
-        </button>
-
-        <section>
-          <img src="img/1.jpg" alt="PLACEHOLDER">
-          <p>Johannes Vermeer, 1665</p>
-          <p>This reminds me of the oil painting of a young girl with a pearl earring. The quality of clothing can be similar.</p>
-        </section>
-
-        <button class="learn-more-button">Learn More</button>
-        <section class="vote-container">
-          <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
-          <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
-        </section>
-      </dialog>
-
     </section>
     <section id="material-detail-page" class="page detail-page hidden">
       <header>
@@ -801,6 +761,46 @@
         </ul>
       </section>
     </section>
+
+
+    <!-- <dialog class="community-suggestion-popup" open>
+      <h2>title</h2>
+      <button class="close-button">
+        <img src="icons/x-symbol.svg" alt="close button x symbol icon">
+      </button>
+
+      <section>
+        <p>I used acrylic in layers to create a rough texture for her hair.
+
+          Lorem ipsum dolor sit amet. Et corrupti fugit ex unde earum aut animi voluptatum ea quaerat eaque eum quam ipsam. Rem recusandae aliquid et impedit recusandae ad amet enim quo exercitationem molestiae. </p>
+      </section>
+
+      <button class="learn-more-button">Learn More</button>
+      <section class="vote-container">
+        <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
+        <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
+      </section>
+
+    </dialog> -->
+<!--
+    <dialog class="community-suggestion-popup" open>
+      <h2>Girl with a Pearl Earring</h2>
+      <button class="close-button">
+        <img src="icons/x-symbol.svg" alt="close button x symbol icon">
+      </button>
+
+      <section>
+        <img src="img/1.jpg" alt="PLACEHOLDER">
+        <p>Johannes Vermeer, 1665</p>
+        <p>This reminds me of the oil painting of a young girl with a pearl earring. The quality of clothing can be similar.</p>
+      </section>
+
+      <button class="learn-more-button">Learn More</button>
+      <section class="vote-container">
+        <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
+        <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
+      </section>
+    </dialog> -->
 
   <script type="module" src="script.js"></script>
 </body>
