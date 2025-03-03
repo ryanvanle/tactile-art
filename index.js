@@ -4,7 +4,7 @@ import { getAnalytics } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js';
 
-import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runTransaction } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
 "use strict";
 
@@ -42,6 +42,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   window.addEventListener("load", init);
 
   async function init() {
+
     await getAllData();
     initializeEventListeners();
     populateGallery();
@@ -63,24 +64,28 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     colorsSnapshot.forEach((doc) => {
       COLORS[doc.id] = doc.data();
       COLORS[doc.id].title = doc.id; // TODO change this lol, make the title in the object in addition as the key, tbh it as the key might be bad but oh well
+      COLORS[doc.id].category = "colors";
     });
 
     const materialsSnapshot = await getDocs(collection(db, "materials"));
     materialsSnapshot.forEach((doc) => {
       MATERIALS[doc.id] = doc.data();
       MATERIALS[doc.id].title = doc.id;
+      MATERIALS[doc.id].category = "materials";
     });
 
     const artworksSnapshot = await getDocs(collection(db, "artworks"));
     artworksSnapshot.forEach((doc) => {
       ARTWORK[doc.id] = doc.data();
       ARTWORK[doc.id].title = doc.id;
+      ARTWORK[doc.id].category = "artworks";
     });
 
     const texturesSnapshot = await getDocs(collection(db, "textures"));
     texturesSnapshot.forEach((doc) => {
       TEXTURES[doc.id] = doc.data();
       TEXTURES[doc.id].title = doc.id;
+      TEXTURES[doc.id].category = "textures"
     });
   }
 
@@ -141,7 +146,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     const submitButton = id("user-suggestion-page-submit-button");
     const closeButton = id("user-suggestion-popup-close-button");
     const userSuggestionPopup = id("user-suggestion-popup");
-    submitButton.addEventListener('click', () => {
+    submitButton.addEventListener('click', (event) => {
+      processSuggestionForm(event);
       userSuggestionPopup.showModal();
     });
 
@@ -570,11 +576,87 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
 
     // Update artwork data from the passed-in data parameter
     const artworkData = data;
+    id("user-suggestion-form").dataset.data = JSON.stringify(data);
     id("user-suggestion-title").textContent = artworkData.title; // You might need to adjust this if the artwork name is dynamic
     id("user-suggestion-image").src = `img/${artworkData.image}`;
     id("user-suggestion-image").alt = artworkData.alt;
 
     showPage("user-suggestion-page");
+  }
+
+  async function processSuggestionForm(event) {
+    // console.log(event);
+
+    if (validateSuggestionForm()) {
+      // check form and display message
+      return;
+    }
+
+    event.preventDefault();
+
+    let input = document.querySelector("#user-suggestion-form input");
+    let textarea = document.querySelector("#user-suggestion-form textarea");
+    let suggestionCategory = id("user-suggestion-form").dataset.type;
+    let recipientData = JSON.parse(id("user-suggestion-form").dataset.data);
+
+    let suggestionData = {
+      category: suggestionCategory,
+      metadata: {
+        likes: 0,
+        dislikes: 0,
+        timestamp: new Date().getTime()
+      },
+      recipient: {
+        title: recipientData.title,
+        category: recipientData.category,
+      }
+    }
+
+    if (input) {
+      suggestionData.itemTitle = input.value;
+    }
+
+    if (textarea) {
+      suggestionData.context = textarea.value;
+    }
+
+    console.log("suggestionData", suggestionData);
+    console.log("processSuggestionForm");
+    console.log("HI", input, textarea, suggestionCategory, recipientData);
+
+    //submit data
+
+    console.log("recipientReference", db, recipientData.category, recipientData.title);
+    const recipientReference = doc(db, recipientData.category, recipientData.title);
+
+    try {
+      await runTransaction(db, async (transaction) => {
+        const recipientDoc = await transaction.get(recipientReference);
+        if (!recipientDoc.exists()) {
+          throw "Document does not exist!";
+        }
+
+        const newSuggestionsList = Object.values(recipientDoc.data().suggestions);
+        newSuggestionsList.push(suggestionData);
+
+        // Convert the array back to an object
+        const newSuggestionsObject = {};
+        newSuggestionsList.forEach((suggestion, index) => {
+          newSuggestionsObject[index] = suggestion;
+        });
+
+        transaction.update(doc(db, recipientData.category, recipientData.title), { suggestions: newSuggestionsObject });
+      });
+      console.log("Transaction successfully committed!");
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
+
+
+  }
+
+  function validateSuggestionForm() {
+    return false;
   }
 
   function generateExploreFurtherList(exploreList, exploreItems) {
@@ -908,6 +990,10 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   }
 
   function createMaterialForm(formSection) {
+
+    id("user-suggestion-form").dataset.type = "material";
+
+
     const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing material or add a new one.", "material");
     formSection.appendChild(suggestionSection);
 
@@ -916,6 +1002,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   }
 
   function createTextureForm(formSection) {
+
+    id("user-suggestion-form").dataset.type = "texture";
+
     const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing texture or add a new one.", "texture");
     formSection.appendChild(suggestionSection);
 
@@ -924,6 +1013,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   }
 
   function createArtworkForm(formSection) {
+
+    id("user-suggestion-form").dataset.type = "artwork";
+
     const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing artwork or add a new one.", "artwork");
     formSection.appendChild(suggestionSection);
 
@@ -932,6 +1024,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   }
 
   function createInterpretationForm(formSection) {
+
+    id("user-suggestion-form").dataset.type = "interpretation";
+
     const guidingQuestions = document.createElement("h3");
     guidingQuestions.textContent = "Guiding Questions (optional):";
     formSection.appendChild(guidingQuestions);

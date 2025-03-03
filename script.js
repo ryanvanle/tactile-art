@@ -1,4 +1,5 @@
-// // Import the functions you need from the SDKs you need
+// Import the functions you need from the SDKs you need
+
 // import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js';
 
 // import { getAnalytics } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js';
@@ -39,26 +40,25 @@
 //    }
 //  }
 
-// //  for (let color in COLORS) {
-// //    let colorData = COLORS[color];
-// //    writeData("colors", color, colorData);
-// //  }
+//  for (let color in COLORS) {
+//    let colorData = COLORS[color];
+//    writeData("colors", color, colorData);
+//  }
 
-// //  for (let texture in TEXTURES) {
-// //    let data = TEXTURES[texture];
-// //    writeData("textures", texture, data);
-// //  }
+//  for (let texture in TEXTURES) {
+//    let data = TEXTURES[texture];
+//    writeData("textures", texture, data);
+//  }
 
-// //  for (let material in MATERIALS) {
-// //    let data = MATERIALS[material];
-// //    writeData("materials", material, data);
-// //  }
+//  for (let material in MATERIALS) {
+//    let data = MATERIALS[material];
+//    writeData("materials", material, data);
+//  }
 
-// //  for (let artwork in ARTWORK) {
-// //   let data = ARTWORK[artwork];
-// //   writeData("artworks", artwork, data);
-// //  }
-
+//  for (let artwork in ARTWORK) {
+//   let data = ARTWORK[artwork];
+//   writeData("artworks", artwork, data);
+//  }
 
 //  // writeData();
 

@@ -4,72 +4,84 @@ export const COLORS = {
     description: "Crimson is a deep, cool red with a hint of blue, making it darker and more intense than ruby or cherry red. It stands apart from warmer reds like scarlet and vermilion, and is deeper than pink or lighter reds like coral.",
     seen:"Crimson can be seen in deep red roses, autumn leaves, or royal clothing. It symbolizes passion, love, power, and intensity, often evoking strong emotions like desire or courage. It can also represent luxury and mystery.",
     explore:["Burnt Orange", "Hard", "Crystal Rose", "Blue Turquoise"],
+    suggestions: []
   },
   "Golden Yellow": {
     hex: "#cb8f16",
     description: "Golden Yellow is a warm, rich color that combines the brightness of yellow with earthy amber undertones. It's more sophisticated than pure yellow, balancing vibrancy with a deep, metallic quality that suggests both sunlight and precious metals.",
-    seen: "Gloden yellow appears naturally in ripe wheat fields, autumn leaves, and fresh honey. It's prominent in royal crowns, sacred art, and harvest celebrations, symbolizing abundance, wisdom, and the warmth of late summer sunshine.",
+    seen: "Golden yellow appears naturally in ripe wheat fields, autumn leaves, and fresh honey. It's prominent in royal crowns, sacred art, and harvest celebrations, symbolizing abundance, wisdom, and the warmth of late summer sunshine.",
     explore: ["Burnt Orange", "Crystal Rose", "Smooth", "Hard"],
+    suggestions: []
   },
   "Emerald": {
     hex: "#009877",
     description: "Emerald is a deep, luxurious green with cool blue undertones, inspired by the precious gemstone. It's richer than forest green but more natural than artificial greens, combining depth with clarity in a way that suggests both precious stones and lush vegetation.",
     seen: "Emerald found in tropical rainforest canopies, precious gemstones, and peacock feathers. In art and design, it represents growth, prosperity, and natural beauty, often associated with springtime renewal and environmental vitality.",
     explore: ["Navy Blue", "Blue Turquoise", "Smooth", "Crystal Rose"],
+    suggestions: []
   },
   "Navy Blue": {
     hex: "#403f6f",
     description: "Navy Blue is a profound, dignified shade of blue with purple undertones, darker than royal blue but warmer than midnight blue. It has a depth that suggests both the ocean's mysteries and the evening sky, creating a sense of infinite space.",
     seen: "Navy Blue appears in deep ocean waters, storm clouds at dusk, and formal uniforms. It represents authority, wisdom, and depth, evoking feelings of trust and stability while maintaining an air of sophistication.",
     explore: ["Emerald", "Blue Turquoise", "Smooth", "Hard"],
+    suggestions:[],
   },
   "Lavender": {
     hex: "#b2a4d4",
     description: "Lavender is a soft, gentle purple with cool gray undertones, lighter than royal purple but more sophisticated than pink. It combines the delicacy of morning mist with the subtle richness of flower petals, creating a soothing, ethereal quality.",
     seen: "Visible in lavender flower fields, twilight skies, and morning fog. This color represents tranquility, grace, and spiritual awareness, often associated with spring blooms and peaceful meditation spaces.",
     explore: ["Crystal Rose", "Navy Blue", "Soft", "Smooth"],
+    suggestions:[],
   },
   "Burnt Orange": {
     hex: "#c7632c",
     description: "Burnt Orange is a warm, intense color that combines the vibrancy of orange with earthy brown undertones. It's deeper than pure orange but more energetic than terra cotta, suggesting both fire and earth elements in its composition.",
     seen: "Burnt Orange appears in desert sunsets, autumn maple leaves, and weathered clay pottery. It represents energy, creativity, and earthly warmth, evoking both the comfort of hearth fires and the excitement of seasonal change.",
     explore: ["Golden Yellow", "Crimson", "Rough", "Hard"],
+    suggestions: []
   },
   "Charcoal Gray": {
     hex: "#6a6a6a",
     description: "Charcoal Gray is a rich, deep neutral that sits between pure black and medium gray. It has the depth of storm clouds but maintains a softness that pure black lacks, suggesting both strength and sophistication.",
     seen: "Found in wet stones, thunder clouds, and graphite drawings. This color represents stability, maturity, and contemplation, often used to create depth and shadow in artistic compositions while maintaining a sense of warmth.",
     explore: ["Navy Blue", "Crystal Rose", "Smooth", "Hard"],
+    suggestions: []
   },
   "Blue Turquoise": {
     hex: "#52b0ae",
     description: "Blue Turquoise is a bright, refreshing color that balances blue's coolness with green's vitality. It's lighter than deep sea blue but more grounded than sky blue, capturing the essence of shallow tropical waters and precious stones.",
     seen: "Blue Turquoise appears in Caribbean waters, semi-precious stones, and tropical bird feathers. It represents renewal, clarity, and emotional healing, often associated with clean water and fresh beginnings.",
     explore: ["Emerald", "Navy Blue", "Smooth", "Slippery"],
+    suggestions: []
   },
   "Crystal Rose": {
     hex: "#fdc4c7",
     description: "Crystal Rose is a delicate, luminous pink that combines the softness of rose petals with the clarity of morning light. It's lighter than traditional pink but warmer than white, suggesting both innocence and gentle warmth.",
     seen: "Visible in cherry blossoms, rose quartz crystals, and sunrise clouds. This color represents tenderness, youth, and new beginnings, evoking feelings of gentle affection and fresh starts.",
     explore: ["Lavender", "Golden Yellow", "Soft", "Smooth"],
+    suggestions: []
   },
   "Forest Green": {
     hex: "#228B22",
     description: "Forest Green is a deep, rich green reminiscent of dense woodland canopies. It's darker and more muted than emerald, with a natural earthiness that grounds any composition.",
     seen: "This color appears in dense forest foliage, moss-covered stones, and evergreen trees. It's often used in nature-inspired artwork and represents growth, stability, and the natural world.",
     explore: ["Emerald", "Navy Blue", "Rough", "Hard"],
+    suggestions: [],
   },
   "Sage Green": {
     hex: "#87AE73",
     description: "Sage Green is a muted, earthy green with gray undertones, softer than forest green but more sophisticated than mint. It combines the freshness of herbs with the subtlety of morning mist, creating a sense of natural tranquility.",
     seen: "This color appears in garden herbs, desert succulents, and weathered copper. It represents balance, healing, and wisdom, often associated with herbal medicine and peaceful gardens.",
-    explore: ["Emerald", "Charcoal Gray", "Soft", "Smooth"]
+    explore: ["Emerald", "Charcoal Gray", "Soft", "Smooth"],
+    suggestions: [],
   },
   "Dusty Plum": {
     hex: "#7D4B69",
     description: "Dusty Plum is a sophisticated purple-brown that balances warmth and depth. It's more muted than royal purple but richer than mauve, suggesting both luxury and earthiness in its complex undertones.",
     seen: "Found in aged wine, vintage velvet, and twilight shadows. This color represents refinement, mystery, and contemplation, evoking the transition between day and night.",
-    explore: ["Crimson", "Navy Blue", "Soft", "Smooth"]
+    explore: ["Crimson", "Navy Blue", "Soft", "Smooth"],
+    suggestions: [],
   },
 };
 
@@ -77,62 +89,74 @@ export const TEXTURES = {
   "Smooth": {
     blurb: "Even, polished surface with no roughness",
     create: "To achieve a smooth surface in tactile art, explore materials that naturally lend themselves to a polished feel, such as fine clay, soft fabric, or sanded wood. Consider layering techniques—building up thin, even coats of paint, glue, or plaster can help smooth out rough areas. Tools like sandpaper, sponges, or even a damp cloth can refine textures, while sealing with varnish, wax, or resin can enhance the sleekness.",
-    explore: ["Air-Dry Clay", "Papier-Mâché", "Soft", "Blue Turquoise", "Charcoal Gray"]
+    explore: ["Air-Dry Clay", "Papier-Mâché", "Soft", "Blue Turquoise", "Charcoal Gray"],
+    suggestions: []
   },
   "Rough": {
     blurb: "Coarse, uneven surface with bumps or ridges",
     create: "Create rough textures using materials like sandpaper, burlap, or coarse stones. Apply techniques such as dry brushing, stippling, or adding sand to paint. Natural materials like tree bark or dried plants can provide authentic roughness. Use tools like texture combs, crumpled paper, or wire brushes to create varied patterns. Consider building up layers of different materials for complex textures.",
-    explore: ["Gritty", "Hard", "Bumpy", "Burnt Orange", "Metal Wire"]
+    explore: ["Gritty", "Hard", "Bumpy", "Burnt Orange", "Metal Wire"],
+    suggestions: []
   },
   "Fuzzy": {
     blurb: "Soft, slightly hairy or fluffy texture",
     create: "Develop fuzzy textures using materials like felt, yarn, or faux fur. Experiment with flocking powder, velvet, or brushed fabrics. Try techniques like needle felting or brushing out fibers. Layer different materials of varying pile heights for depth. Consider using tools like wire brushes or velvet-finishing techniques to create subtle variations in the surface.",
-    explore: ["Soft", "Smooth", "Crystal Rose", "Lavender", "Pipe Cleaners"]
+    explore: ["Soft", "Smooth", "Crystal Rose", "Lavender", "Pipe Cleaners"],
+    suggestions: []
   },
   "Bumpy": {
     blurb: "Raised areas creating an irregular surface",
     create: "Build bumpy textures using dimensional media like modeling paste, textured gels, or small beads. Apply materials in dots or clusters, varying sizes for interest. Try techniques like impasto painting or relief work. Use tools like palette knives, dotting tools, or textured rollers. Consider natural materials like pebbles or seed pods for organic patterns.",
-    explore: ["Rough", "Hard", "Gritty", "Navy Blue", "Air-Dry Clay"]
+    explore: ["Rough", "Hard", "Gritty", "Navy Blue", "Air-Dry Clay"],
+    suggestions: []
   },
   "Slippery": {
     blurb: "Slick, hard to grip, often glossy or wet",
     create: "Achieve slippery textures using high-gloss finishes, resins, or polished surfaces. Experiment with layers of clear mediums, glazes, or sealants. Try techniques like pouring, burnishing, or wet-blending. Use materials like glass, polished stone, or glossy papers. Consider combining smooth surfaces with protective coatings for enhanced slickness.",
-    explore: ["Smooth", "Hard", "Blue Turquoise", "Crystal Rose", "Oil Paints"]
+    explore: ["Smooth", "Hard", "Blue Turquoise", "Crystal Rose", "Oil Paints"],
+    suggestions: []
   },
   "Gritty": {
     blurb: "Small, grainy particles creating a sandy feel",
     create: "Create gritty textures using materials like sand, fine gravel, or textured mediums. Mix additives into paint or adhesives for consistent texture. Try techniques like sprinkling, pressing, or embedding particles. Use tools like texture spreaders or sieves for even application. Consider layering different grain sizes for complex surfaces.",
-    explore: ["Rough", "Hard", "Bumpy", "Charcoal Gray", "Metal Wire"]
+    explore: ["Rough", "Hard", "Bumpy", "Charcoal Gray", "Metal Wire"],
+    suggestions: []
   },
   "Sticky": {
     blurb: "Tacky, adhesive surface that clings to touch",
     create: "Develop sticky textures using adhesives, tacky mediums, or specialty glues. Experiment with different viscosities and drying times. Try techniques like controlled dripping or dabbing. Use tools like palette knives or silicone brushes for application. Consider combining different adhesives for varied tactile experiences.",
-    explore: ["Soft", "Smooth", "Crystal Rose", "Golden Yellow", "Acrylic Paint"]
+    explore: ["Soft", "Smooth", "Crystal Rose", "Golden Yellow", "Acrylic Paint"],
+    suggestions: []
   },
   "Soft": {
     blurb: "Gentle, cushion-like feel, easy to press into",
     create: "Create soft textures using materials like batting, foam, or plush fabrics. Layer materials for depth and give. Try techniques like quilting, padding, or stuffing. Use tools like needle and thread or adhesives for construction. Consider combining different densities of materials for varied softness.",
-    explore: ["Fuzzy", "Smooth", "Lavender", "Crystal Rose", "Felt"]
+    explore: ["Fuzzy", "Smooth", "Lavender", "Crystal Rose", "Felt"],
+    suggestions: []
   },
   "Hard": {
     blurb: "Firm, unyielding surface with no give",
     create: "Achieve hard textures using materials like wood, stone, or hardened clay. Apply techniques like polishing, sealing, or finishing for desired surface quality. Try methods like carving, casting, or assembling solid materials. Use tools like chisels, files, or sanders for shaping. Consider combining different hard materials for visual and tactile contrast.",
-    explore: ["Smooth", "Rough", "Navy Blue", "Charcoal Gray", "Metal Wire"]
+    explore: ["Smooth", "Rough", "Navy Blue", "Charcoal Gray", "Metal Wire"],
+    suggestions: []
   },
   "Woven": {
     blurb: "Interlaced patterns creating a fabric-like surface",
     create: "Create woven textures using materials like ribbons, strips of paper, or thin wire. Layer materials in alternating patterns for depth. Try techniques like basket weaving, paper weaving, or fabric manipulation. Use tools like looms or weaving boards for structure. Consider combining different materials for varied tactile experiences.",
-    explore: ["Smooth", "Soft", "Crystal Rose", "Lavender", "Felt"]
+    explore: ["Smooth", "Soft", "Crystal Rose", "Lavender", "Felt"],
+    suggestions: []
   },
   "Crackled": {
     blurb: "Network of fine lines creating a broken surface",
     create: "Achieve crackled textures using crackle mediums, aging techniques, or controlled drying methods. Apply materials in layers allowing for intentional separation. Try techniques like heat treating or chemical reactions. Use tools like heat guns or specialized mediums. Consider layering different colors for enhanced visual effect.",
-    explore: ["Rough", "Hard", "Charcoal Gray", "Navy Blue", "Acrylic Paint"]
+    explore: ["Rough", "Hard", "Charcoal Gray", "Navy Blue", "Acrylic Paint"],
+    suggestions: [],
   },
   "Rippled": {
     blurb: "Wave-like patterns creating flowing surface variations",
     create: "Develop rippled textures using fluid materials or moldable surfaces. Create wave patterns through controlled movement or tool manipulation. Try techniques like water manipulation or surface scoring. Use tools like combs or modeling tools. Consider layering different materials for complex wave patterns.",
-    explore: ["Smooth", "Slippery", "Blue Turquoise", "Crystal Rose", "Oil Paints"]
+    explore: ["Smooth", "Slippery", "Blue Turquoise", "Crystal Rose", "Oil Paints"],
+    suggestions: []
   },
 };
 
@@ -145,6 +169,7 @@ export const MATERIALS = {
     explore: ["Metal Wire", "Papier-Mâché", "Charcoal Gray", "Rough"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Air-Dry Clay": {
     blurb: "Easy to shape, lightweight, good for beginners",
@@ -154,6 +179,7 @@ export const MATERIALS = {
     explore: ["Papier-Mâché", "Smooth", "Hard", "Crystal Rose", "Navy Blue"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Foam Sheets": {
     blurb: "Soft, lightweight, easy to cut, good for beginners",
@@ -163,6 +189,7 @@ export const MATERIALS = {
     explore: ["Felt", "Soft", "Smooth", "Crystal Rose", "Lavender"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Metal Wire": {
     blurb: "Flexible, thin, ideal for intricate shapes",
@@ -172,6 +199,7 @@ export const MATERIALS = {
     explore: ["Aluminum Foil", "Hard", "Smooth", "Charcoal Gray", "Navy Blue"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Felt": {
     blurb: "Soft, versatile fabric for layering and stitching",
@@ -181,6 +209,7 @@ export const MATERIALS = {
     explore: ["Foam Sheets", "Soft", "Fuzzy", "Crystal Rose", "Lavender"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Oil Paints": {
     blurb: "Rich, smooth texture, great for adding colors and blending",
@@ -190,6 +219,7 @@ export const MATERIALS = {
     explore: ["Acrylic Paint", "Smooth", "Slippery", "Navy Blue", "Crimson"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Acrylic Paint": {
     blurb: "Fast-drying, versatile, vibrant colors",
@@ -199,6 +229,7 @@ export const MATERIALS = {
     explore: ["Oil Paints", "Smooth", "Hard", "Golden Yellow", "Emerald"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Pipe Cleaners": {
     blurb: "Fuzzy, flexible, easy to bend, good for shaping",
@@ -208,6 +239,7 @@ export const MATERIALS = {
     explore: ["Metal Wire", "Fuzzy", "Soft", "Crystal Rose", "Lavender"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Beads": {
     blurb: "Small, textured, perfect for adding detail",
@@ -217,6 +249,7 @@ export const MATERIALS = {
     explore: ["Metal Wire", "Bumpy", "Hard", "Crystal Rose", "Navy Blue"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Papier-Mâché": {
     blurb: "Layered, hardened paper with a slightly rough, sculptable texture. Lightweight yet sturdy.",
@@ -226,6 +259,7 @@ export const MATERIALS = {
     explore: ["Air-Dry Clay", "Rough", "Hard", "Charcoal Gray", "Golden Yellow"],
     image: "",
     alt: "",
+    suggestions: []
   },
   "Natural Fibers": {
     blurb: "Organic materials like jute, hemp, or cotton for texture and strength",
@@ -234,7 +268,8 @@ export const MATERIALS = {
     availability: "Available from craft stores and specialty fiber shops. Many natural fibers can also be sourced directly from agricultural suppliers.",
     explore: ["Felt", "Fuzzy", "Soft", "Golden Yellow", "Sage Green"],
     image: "",
-    alt: ""
+    alt: "",
+    suggestions: [],
   },
   "Glass Beads": {
     blurb: "Transparent or frosted beads for catching light and adding texture",
@@ -243,7 +278,8 @@ export const MATERIALS = {
     availability: "Found in bead stores and craft shops in various sizes and finishes. Quality and price range from basic to artistic grade.",
     explore: ["Beads", "Smooth", "Hard", "Crystal Rose", "Blue Turquoise"],
     image: "",
-    alt: ""
+    alt: "",
+    suggestions: [],
   },
 };
 
@@ -261,10 +297,11 @@ This daring approach was influenced by the increasing sophistication of photogra
       year: "1909",
       creation: "Paris, Boulevard des Invalides",
       location: "Museum of Modern Art, New York City",
-    },
+  },
     audio: "Matisse Dance I Verbal Description.mp3", // AUDIO_FILE under /audio
     credit: "Museum of Modern Art (MoMA)",
-    explore: ["Emerald", "Navy Blue", "Slippery", "Soft", "Oil Paints", "Felt", "Papier-Mâché"]
+    explore: ["Emerald", "Navy Blue", "Slippery", "Soft", "Oil Paints", "Felt", "Papier-Mâché"],
+    suggestions: [],
   },
   "Les Demoiselles d'Avignon": {
     image: "Les Demoiselles d'Avignon.jpg",
@@ -286,7 +323,8 @@ As his preparatory studies reveal, Picasso initially conceived of the figure at 
     },
     audio: "Les Demoiselles d'Avignon.mp3",
     credit: "Museum of Modern Art (MoMA)",
-    explore: ["Rough", "Gritty", "Hard", "Air-Dry Clay", "Oil Paints"]
+    explore: ["Rough", "Gritty", "Hard", "Air-Dry Clay", "Oil Paints"],
+    suggestions: [],
   },
   "The Starry Night": {
     image: "The Starry NIght.jpg",
@@ -304,7 +342,8 @@ Van Gogh assigned an emotional language to night and nature that took them far f
       year: "1889",
       creation: "Saint Rémy",
       location: "Museum of Modern Art, New York City",
-    }
+    },
+    suggestions: []
   },
   "Shooting Painting American Embassy": {
     image: "Shooting Painting American Embassy.jpg",
@@ -321,7 +360,8 @@ If you look at its upper section, I hope you can see that embedded in that messy
       dimensions: `96 3/8 x 25 7/8 x 8 5/8" (244.8 x 65.7 x 21.9 cm)`,
       year: "1961",
       location: "Museum of Modern Art, New York City",
-    }
+    },
+    suggestions: []
   },
   "Campbell's Soup Cans": {
     image: "Campbell's Soup Cans.jpg",
@@ -341,7 +381,8 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
       year: "1962",
       creation: "Los Angeles",
       location: "Museum of Modern Art, New York City",
-    }
+    },
+    suggestions: []
   },
 
   "Yakshi": {
@@ -357,7 +398,8 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
       dimensions: `97 × 48 × 29" (246.4 × 121.9 × 73.7cm)`,
       year: "1984",
       location: "Museum of Modern Art, New York City",
-    }
+    },
+    suggestions: []
   },
 
   "My Grandparents, My Parents, and I": {
@@ -373,7 +415,8 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
       dimensions: `12 1/8 x 13 5/8" (30.7 x 34.5 cm)`,
       year: "1936",
       location: "Museum of Modern Art, New York City",
-    }
+    },
+    suggestions: []
   },
 
   "Wind and Water": {
@@ -390,7 +433,8 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
       year: "1975",
       creation: "Los Angeles",
       location: "Museum of Modern Art, New York City",
-    }
+    },
+    suggestions: []
   },
 
   "Shrine head": {
@@ -407,6 +451,7 @@ Towards the end of 1962, shortly after he completed Campbell’s Soup Cans, Warh
       year: "12th-14th century",
       creation: "Ancient Yorubu, Nigeria",
       location: "Minneapolis Institute of Art, Minneapolis",
-    }
+    },
+    suggestions: []
   }
 };
