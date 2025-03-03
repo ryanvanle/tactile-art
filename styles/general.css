@@ -7,6 +7,7 @@ html {
   margin-left: 5%;
   margin-right: 5%;
   margin-bottom: 2.5%;
+  height: max-content;
   /* margin-right: 1%; */
 }
 
@@ -127,6 +128,7 @@ button {
   margin-top: 3.5rem;
   margin-bottom: 3.5rem;
 }
+
 .artwork-content-card-list ul, .community-suggestions-list ul {
   list-style-type: none;
   flex: 1;
@@ -160,8 +162,13 @@ button {
 }
 
 .suggestion-card-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: row-reverse;
+  height: 100px;
 }
+
 
 .suggestion-card-material, .suggestion-card-color, .suggestion-card-texture, .suggestion-card-artwork, .suggestion-card-interpretation {
   margin-top: 2rem;
@@ -232,7 +239,7 @@ button {
 }
 
 .community-suggestions-list h3 {
-  height: 20%;
+  /* height: 20%; */
   font-size: 20pt;
   margin: 0;
   /* margin-bottom: 2rem; */
@@ -590,6 +597,7 @@ button {
 #user-suggestion-popup {
   text-align: center;
   padding: 5rem;
+  border-radius: 10px;
 }
 
 #user-suggestion-page header {

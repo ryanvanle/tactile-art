@@ -49,7 +49,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     generateMaterials();
     generateTextures();
     generateFavoritesPage();
-    updateSuggestionForm();
+    await updateSuggestionForm();
   }
 
   async function getAllData() {
@@ -62,26 +62,30 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     const colorsSnapshot = await getDocs(collection(db, "colors"));
     colorsSnapshot.forEach((doc) => {
       COLORS[doc.id] = doc.data();
+      COLORS[doc.id].title = doc.id; // TODO change this lol, make the title in the object in addition as the key, tbh it as the key might be bad but oh well
     });
 
     const materialsSnapshot = await getDocs(collection(db, "materials"));
     materialsSnapshot.forEach((doc) => {
       MATERIALS[doc.id] = doc.data();
+      MATERIALS[doc.id].title = doc.id;
     });
 
     const artworksSnapshot = await getDocs(collection(db, "artworks"));
     artworksSnapshot.forEach((doc) => {
       ARTWORK[doc.id] = doc.data();
+      ARTWORK[doc.id].title = doc.id;
     });
 
     const texturesSnapshot = await getDocs(collection(db, "textures"));
     texturesSnapshot.forEach((doc) => {
       TEXTURES[doc.id] = doc.data();
+      TEXTURES[doc.id].title = doc.id;
     });
   }
 
 
-  function initializeEventListeners() {
+  async function initializeEventListeners() {
     id("materials-button").addEventListener("click", () => showPage("material-page"));
     id("textures-button").addEventListener("click", () => showPage("texture-page"));
     id("colors-button").addEventListener("click", () => showPage("colors-page"));
@@ -148,9 +152,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     // New event listeners for radio buttons
     const categoryRadios = document.querySelectorAll('input[name="category"]');
     categoryRadios.forEach(radio => {
-      radio.addEventListener('change', updateSuggestionForm);
+      radio.addEventListener('change', async () => {await updateSuggestionForm()});
     });
-    updateSuggestionForm();
+    await updateSuggestionForm();
   }
 
   function processSearchResults(currentElement) {
@@ -442,7 +446,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     const pageId = article.dataset.pageId;
     const detailPage = id(pageId);
 
-    console.log("show dp", article, itemType, itemName, pageId, detailPage);
+    // console.log("show dp", article, itemType, itemName, pageId, detailPage);
 
     switch (itemType) {
       case "color":
@@ -457,6 +461,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
       case "artwork":
         generateArtworkDetailPageContent(detailPage, ARTWORK[itemName], itemName);
     }
+
     checkFavoriteButtonState(detailPage, itemType, itemName);
     showPage(pageId);
   }
@@ -529,7 +534,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     const addSuggestionLi = document.createElement("li");
     const addSuggestionSection = document.createElement("section");
     addSuggestionSection.classList.add("suggestion-card-add", "selectable");
-    addSuggestionSection.addEventListener("click", () => showPage("user-suggestion-page"));
+    addSuggestionSection.addEventListener("click", () => showSuggestionForm(data));
 
     const addSuggestionH3 = document.createElement("h3");
     addSuggestionH3.textContent = "Add your own suggestion";
@@ -537,7 +542,39 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     addSuggestionLi.appendChild(addSuggestionSection);
     addSuggestionSection.appendChild(addSuggestionH3);
     suggestionList.appendChild(addSuggestionLi);
+  }
 
+  function showSuggestionForm(data) {
+    const selectedCategory = document.querySelector('input[name="category"]:checked').value;
+    const suggestionCategorySpan = id("user-form-suggestion-category");
+    const helpText = id("user-form-suggestion-help-text");
+
+    // Update the displayed category
+    suggestionCategorySpan.textContent = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
+
+    // Update help text based on the selected category
+    switch (selectedCategory) {
+      case 'material':
+        helpText.textContent = "Help others understand the materials used in this artwork or share what you used to recreate it.";
+        break;
+      case 'texture':
+        helpText.textContent = "Help others understand the textures used in this artwork or share what you used to recreate it.";
+        break;
+      case 'idea':
+        helpText.textContent = "Help others explore artistic connections by suggesting a related artwork. Share how it connects, whether through style, theme, history, or technique.";
+        break;
+      case 'interpretation':
+        helpText.textContent = "Share your perspective on this section of the artwork. Whether it's symbolism, artistic choices, or a creative re-imagining, your insights can help others see it in new ways.";
+        break;
+    }
+
+    // Update artwork data from the passed-in data parameter
+    const artworkData = data;
+    id("user-suggestion-title").textContent = artworkData.title; // You might need to adjust this if the artwork name is dynamic
+    id("user-suggestion-image").src = `img/${artworkData.image}`;
+    id("user-suggestion-image").alt = artworkData.alt;
+
+    showPage("user-suggestion-page");
   }
 
   function generateExploreFurtherList(exploreList, exploreItems) {
@@ -623,7 +660,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     credit.textContent = artworkData.credit;
 
     const communitySuggestionsList = id("artwork-detail-page").querySelector(".community-suggestions-list ul");
-    generateSuggestionsList(communitySuggestionsList, artworkData.suggestions);
+    generateSuggestionsList(communitySuggestionsList, artworkData.suggestions, artworkData);
   }
 
 
@@ -836,7 +873,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   }
 
 
-  function updateSuggestionForm() {
+  async function updateSuggestionForm() {
+
     const selectedCategory = document.querySelector('input[name="category"]:checked').value;
     const formSection = document.querySelector('form');
     const suggestionCategorySpan = id("user-form-suggestion-category");
@@ -870,7 +908,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   }
 
   function createMaterialForm(formSection) {
-    const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing material or add a new one.");
+    const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing material or add a new one.", "material");
     formSection.appendChild(suggestionSection);
 
     const explanationSection = createTextAreaSection("explanation", "How does this material appear to this section, or how did you recreate it?", "Describe how you think it was used, how you used it, or how it could be used to recreate an element. (150 words max)");
@@ -878,7 +916,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   }
 
   function createTextureForm(formSection) {
-    const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing texture or add a new one.");
+    const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing texture or add a new one.", "texture");
     formSection.appendChild(suggestionSection);
 
     const explanationSection = createTextAreaSection("explanation", "How does this texture appear to this section, or how did you recreate it?", "Describe how the texture contributes to the artwork, or how you replicated it in a version. (150 words max)");
@@ -886,7 +924,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
   }
 
   function createArtworkForm(formSection) {
-    const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing artwork or add a new one.");
+    const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing artwork or add a new one.", "artwork");
     formSection.appendChild(suggestionSection);
 
     const explanationSection = createTextAreaSection("explanation", "How does this artwork connect to this section?", "Describe how the suggested artwork connects thematically, stylistically, or historically. (150 words max)");
@@ -916,7 +954,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     formSection.appendChild(explanationSection);
   }
 
-  function createInputSection(id, labelText, type, placeholder) {
+  function createInputSection(id, labelText, type, placeholder, category) {
     const section = document.createElement("section");
     section.classList.add("input-group");
 
@@ -929,10 +967,34 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc } from 'https://
     input.type = type;
     input.id = id;
     input.placeholder = placeholder;
-    section.appendChild(input);
+    input.setAttribute("list", `${type}-suggestion-options`);
 
+    const datalist = document.createElement("datalist");
+    datalist.id = `${type}-suggestion-options`;
+
+    let dataListContent = [];
+    if (category === "color") {
+        dataListContent = Object.values(COLORS);
+    } else if (category === "material") {
+        dataListContent = Object.values(MATERIALS);
+    } else if (category === "texture") {
+        dataListContent = Object.values(TEXTURES);
+    } else if (category === "artwork") {
+        dataListContent = Object.values(ARTWORK);
+    }
+
+    for (let item of dataListContent) {
+      if (item && item.title) {
+        const option = document.createElement("option");
+        option.value = item.title;
+        datalist.appendChild(option);
+      }
+    }
+
+    section.appendChild(input);
+    section.appendChild(datalist);
     return section;
-  }
+}
 
   function createTextAreaSection(id, question, describe) {
     const section = document.createElement("section");
