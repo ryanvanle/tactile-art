@@ -473,8 +473,16 @@ button {
   max-width: 100%;
   min-width: 100%;
   min-height: 1rem;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.input-group textarea {
+  min-height: 10rem;
+}
+
+.input-group h3 {
+  padding-top: 1rem;
 }
 
 #user-suggestion-page form {
@@ -511,9 +519,11 @@ hr {
 #search-result-filters {
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: left;
   gap: 2rem;
 }
+
 
 #search-result-filters input {
   width: 1rem;
@@ -585,6 +595,11 @@ hr {
 
 } */
 
+#user-suggestion-image {
+  width: 30%;
+  object-fit: contain;
+}
+
 
 .back-button {
   position: absolute;
@@ -603,3 +618,10 @@ hr {
 .back-button:hover {
   background-color: transparent;
 }
+
+#user-suggestion-page-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+

@@ -15,6 +15,8 @@
     generateTextures();
     generateFavoritesPage();
     initSearch();
+    updateSuggestionForm();
+
   }
 
   function initializeEventListeners() {
@@ -79,6 +81,12 @@
       userSuggestionPopup.close();
     });
 
+    // New event listeners for radio buttons
+    const categoryRadios = document.querySelectorAll('input[name="category"]');
+    categoryRadios.forEach(radio => {
+      radio.addEventListener('change', updateSuggestionForm);
+    });
+    updateSuggestionForm();
   }
 
   function processSearchResults(currentElement) {
@@ -663,7 +671,128 @@
     if (event.target.textContent === "Save to Favorites" || event.target.textContent === "Remove from Favorites") {
         saveToFavorites(event);
     }
-}
+  }
+
+
+  function updateSuggestionForm() {
+    const selectedCategory = document.querySelector('input[name="category"]:checked').value;
+    const formSection = document.querySelector('form');
+    const suggestionCategorySpan = id("user-form-suggestion-category");
+    const helpText = id("user-form-suggestion-help-text");
+
+    // Clear the form section
+    formSection.innerHTML = ''; // It's okay to use innerHTML here to clear the form
+
+    // Update the displayed category
+    suggestionCategorySpan.textContent = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
+
+    // Update help text and form fields based on the selected category
+    switch (selectedCategory) {
+      case 'material':
+        helpText.textContent = "Help others understand the materials used in this artwork or share what you used to recreate it.";
+        createMaterialForm(formSection);
+        break;
+      case 'texture':
+        helpText.textContent = "Help others understand the textures used in this artwork or share what you used to recreate it.";
+        createTextureForm(formSection);
+        break;
+      case 'idea': // Assuming 'idea' maps to 'artwork' in your comments
+        helpText.textContent = "Help others explore artistic connections by suggesting a related artwork. Share how it connects, whether through style, theme, history, or technique.";
+        createArtworkForm(formSection);
+        break;
+      case 'interpretation':
+        helpText.textContent = "Share your perspective on this section of the artwork. Whether it's symbolism, artistic choices, or a creative re-imagining, your insights can help others see it in new ways.";
+        createInterpretationForm(formSection);
+        break;
+    }
+  }
+
+  function createMaterialForm(formSection) {
+    const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing material or add a new one.");
+    formSection.appendChild(suggestionSection);
+
+    const explanationSection = createTextAreaSection("explanation", "How does this material appear to this section, or how did you recreate it?", "Describe how you think it was used, how you used it, or how it could be used to recreate an element. (150 words max)");
+    formSection.appendChild(explanationSection);
+  }
+
+  function createTextureForm(formSection) {
+    const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing texture or add a new one.");
+    formSection.appendChild(suggestionSection);
+
+    const explanationSection = createTextAreaSection("explanation", "How does this texture appear to this section, or how did you recreate it?", "Describe how the texture contributes to the artwork, or how you replicated it in a version. (150 words max)");
+    formSection.appendChild(explanationSection);
+  }
+
+  function createArtworkForm(formSection) {
+    const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing artwork or add a new one.");
+    formSection.appendChild(suggestionSection);
+
+    const explanationSection = createTextAreaSection("explanation", "How does this artwork connect to this section?", "Describe how the suggested artwork connects thematically, stylistically, or historically. (150 words max)");
+    formSection.appendChild(explanationSection);
+  }
+
+  function createInterpretationForm(formSection) {
+    const guidingQuestions = document.createElement("h3");
+    guidingQuestions.textContent = "Guiding Questions (optional):";
+    formSection.appendChild(guidingQuestions);
+
+    const questionList = document.createElement("ul");
+    const questions = [
+      "What artistic choices or symbolism stand out in this section?",
+      "How do you interpret this part of the artwork?",
+      "If you were to reimagine or alter it, what would you change or emphasize?",
+      "Does this section remind you of a different artistic style or concept?"
+    ];
+    questions.forEach(question => {
+      const listItem = document.createElement("li");
+      listItem.textContent = question;
+      questionList.appendChild(listItem);
+    });
+    formSection.appendChild(questionList);
+
+    const explanationSection = createTextAreaSection("explanation", "Use the guiding questions as an optional reference and answer below.", "Describe how the suggested artwork connects thematically, stylistically, or historically. (150 words max)");
+    formSection.appendChild(explanationSection);
+  }
+
+  function createInputSection(id, labelText, type, placeholder) {
+    const section = document.createElement("section");
+    section.classList.add("input-group");
+
+    const label = document.createElement("label");
+    label.htmlFor = id;
+    label.textContent = labelText;
+    section.appendChild(label);
+
+    const input = document.createElement("input");
+    input.type = type;
+    input.id = id;
+    input.placeholder = placeholder;
+    section.appendChild(input);
+
+    return section;
+  }
+
+  function createTextAreaSection(id, question, describe) {
+    const section = document.createElement("section");
+    section.classList.add("input-group");
+
+
+    const questionElement = document.createElement("h3");
+    questionElement.textContent = question;
+    section.appendChild(questionElement);
+
+    const label = document.createElement("label");
+    label.htmlFor = id;
+    label.textContent = describe;
+    section.appendChild(label);
+
+    const textarea = document.createElement("textarea");
+    textarea.id = id;
+    textarea.placeholder = "Start typing here...";
+    section.appendChild(textarea);
+
+    return section;
+  }
 
 
   function id(idName) {

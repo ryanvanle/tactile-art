@@ -40,7 +40,7 @@
       </section>
     </section>
 
-    <section id="search-result-page" class="page">
+    <section id="search-result-page" class="page hidden">
       <header>
         <button class="back-button">
           <img src="icons/back-button.svg" alt="back button arrow">
@@ -109,7 +109,7 @@
       </ul>
     </section>
 
-    <section id="user-suggestion-page" class="page hidden">
+    <section id="user-suggestion-page" class="page">
       <header>
         <button class="back-button">
           <img src="icons/back-button.svg" alt="back button arrow">
@@ -118,33 +118,105 @@
         <p>Share your insight for the following artwork.</p>
       </header>
 
-      <p id="user-suggestion-page-content-title">Mona Lisa</p>
+      <section>
+        <h2>Instructions</h2>
+        <p>Help others experience this artwork in new ways! Select a category below, then share your observation, interpretation, or creative suggestion. Your contribution will add to the community's understanding of this piece.</p>
+        <ol>
+          <li>Choose a category: Select whether you're suggesting a Material, Texture, Related Artwork, or Interpretation.</li>
+          <li>Answer the guiding questions: These will help you describe your suggestion with clarity.</li>
+          <li>Submit your idea: Your suggestion will be added for others to explore when they interact with the image.</li>
+        </ol>
+      </section>
+
+      <hr>
+
+      <section id="user-suggestion-page-filters">
+        <h3>Please Select a Category</h3>
+        <label class="category-label"><input type="radio" name="category" value="material" checked>Material</label>
+        <label class="category-label"><input type="radio" name="category" value="texture">Texture</label>
+        <label class="category-label"><input type="radio" name="category" value="idea">Artwork</label>
+        <label class="category-label"><input type="radio" name="category" value="interpretation">Interpretation</label>
+      </section>
+
+      <section>
+        <h2>Suggest a <span id="user-form-suggestion-category">Texture</span></h2>
+
+        <!-- material -->
+        <p id="user-form-suggestion-help-text">Help others understand the materials used in this artwork or share what you used to recreate it.</p>
+
+        <!-- texture -->
+        <!-- <p id="user-form-suggestion-help-text">Help others understand the textures used in this artwork or share what you used to recreate it.</p> -->
+
+        <!-- artwork-->
+        <!-- <p id="user-form-suggestion-help-text">Help others explore artistic connections by suggesting a related artwork. Share how it connects, whether through style, theme, history, or technique.</p> -->
+
+        <!-- interpretation -->
+        <!-- <p id="user-form-suggestion-help-text">Share your perspective on this section of the artwork. Whether it's symbolism, artistic choices, or a creative re-imagining, your insights can help others see it in new ways.</p> -->
+        <h3>You are suggesting for: <span id="user-form-object">Hair</span> (Segment from <span id="user-suggestion-title">Mona Lisa</span>)</h3>
+        <img src="img/1.jpg" alt="PLACEHOLDER" id="user-suggestion-image">
+      </section>
 
       <form>
-        <section>
-          <h3>Please Select a Category</h3>
-          <label class="category-label"><input type="radio" name="category" value="material">Material</label>
-          <label class="category-label"><input type="radio" name="category" value="texture">Texture</label>
-          <label class="category-label"><input type="radio" name="category" value="idea">Idea</label>
-          <label class="category-label"><input type="radio" name="category" value="color">Color</label>
-          <label class="category-label"><input type="radio" name="category" value="artwork">Artwork</label>
-        </section>
 
-        <section class="input-group">
+        <!-- material -->
+
+        <!-- <section class="input-group">
           <label for="suggestion">What are you suggesting?</label>
-          <input type="text" id="suggestion" placeholder="Give us a brief description of your suggestion">
+          <input type="text" id="suggestion" placeholder="Start typing to find an existing material or add a new one.">
         </section>
 
         <section class="input-group">
-          <label for="explanation">Tell Us About Your Suggestion</label>
-          <textarea id="explanation" placeholder="Why are you suggesting this? E.g., &quot;The fabric appears soft—perhaps a smooth clay could replicate it.&quot; Start typing here..."></textarea>
+          <p>How does this material appear to this section, or how did you recreate it?</p>
+          <label for="explanation">Describe how you think it was used, how you used it, or how it could be used to recreate an element. (150 words max)</label>
+          <textarea id="explanation" placeholder="Start typing here..."></textarea>
+        </section> -->
+
+        <!-- texture -->
+
+        <!-- <section class="input-group">
+          <label for="suggestion">What are you suggesting?</label>
+          <input type="text" id="suggestion" placeholder="Start typing to find an existing texture or add a new one.">
         </section>
+
+        <section class="input-group">
+          <h3>How does this texture appear to this section, or how did you recreate it?</h3>
+          <label for="explanation">Describe how the texture contributes to the artwork, or how you replicated it in a version. (150 words max)</label>
+          <textarea id="explanation" placeholder="Start typing here..."></textarea>
+        </section> -->
+
+        <!-- artwork-->
+
+        <!-- <section class="input-group">
+          <label for="suggestion">What are you suggesting?</label>
+          <input type="text" id="suggestion" placeholder="Start typing to find an existing artwork or add a new one.">
+        </section>
+
+        <section class="input-group">
+          <h3>How does this texture appear to this section, or how did you recreate it?</h3>
+          <label for="explanation">Describe how the suggested artwork connects thematically, stylistically, or historically. (150 words max)</label>
+          <textarea id="explanation" placeholder="Start typing here..."></textarea>
+        </section> -->
+
+        <!-- interpretation -->
+
+        <!-- <h3>Guiding Questions (optional):</h3>
+        <ul>
+          <li>What artistic choices or symbolism stand out in this section?</li>
+          <li>How do you interpret this part of the artwork?</li>
+          <li>If you were to reimagine or alter it, what would you change or emphasize?</li>
+          <li>Does this section remind you of a different artistic style or concept?</li>
+        </ul>
+
+        <section class="input-group">
+          <label for="explanation">Use the guiding questions as an optional reference and answer below. (150 words max)</label>
+          <textarea id="explanation" placeholder="Start typing here..."></textarea>
+        </section> -->
       </form>
 
       <dialog id="user-suggestion-popup">
         <p>Suggestion Submitted!</p>
         <section>
-          <button>+ Suggest Another</button>
+          <button>Cancel & Go Back</button>
           <button id="user-suggestion-popup-close-button">Return to Previous Page</button>
         </section>
       </dialog>
@@ -174,10 +246,8 @@
  -->
 
 
-      <!-- add more inputs -->
-      <!-- TODO: figure out how to add icons in button container -->
 
-      <button>+ Suggest Another</button>
+      <button>Suggest Another</button>
       <button id="user-suggestion-page-submit-button">Submit</button>
 
     </section>
