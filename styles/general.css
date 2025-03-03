@@ -113,6 +113,7 @@ button {
   flex-direction: row;
   flex-wrap: wrap;
   list-style-type: none;
+  /* height: 25%; */
   width: 100%;
 }
 
@@ -156,10 +157,90 @@ button {
   flex-direction: row-reverse;
 }
 
+.suggestion-card-material, .suggestion-card-color, .suggestion-card-texture, .suggestion-card-artwork, .suggestion-card-interpretation {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: solid 3px black;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  width: 275px;
+  align-items: center;
+  justify-content: start;
+  gap: 0.75rem;
+  margin-right: 2rem;
+  position: relative;
+  /* background-color: red; */
+  text-wrap: pretty;
+}
+
+.suggestion-card-artwork > img {
+  width: 100%;
+  height: 50%;
+  object-fit: cover;
+}
+
+.suggestion-card-material i, .suggestion-card-color i, .suggestion-card-texture i, .suggestion-card-artwork i, .suggestion-card-interpretation i {
+  position: absolute;
+  bottom: 0.15rem;
+  left: 0.35rem;
+}
+
+.suggestion-color-swatch {
+  display: block; /* Makes it sit inline with the text */
+  width: 100%; /* Make swatch fill article width */
+  height: 25%;
+  border: 1px solid #ccc; /* Optional border */
+  background-color: red;
+}
+
+
+.vote-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: none;
+  position: absolute;
+  bottom: 0.25rem;
+  right: 0.25rem;
+  /* gap: 1rem; */
+}
+
+.vote-container button {
+  padding: 0;
+  margin: 0.15rem;
+  border: none;
+  background-color: transparent;
+}
+
+.vote-container img {
+  width: 2.5rem;
+}
+
+.corner-icon {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+  /* background-color: red; */
+}
+
+.community-suggestions-list h3 {
+  height: 20%;
+  font-size: 20pt;
+  margin: 0;
+  /* margin-bottom: 2rem; */
+}
+
+.suggestion-card-artwork p {
+  margin: 0;
+}
+
 .small-color-card h3, .small-text-card h3 {
   height: 50%;
-  font-size: 24pt;
+  font-size: 20pt;
   margin: 0;
+  padding: 0;
 }
 
 #gallery {
@@ -591,24 +672,10 @@ hr {
   object-fit: contain;
 }
 
-/*
-.search-result-card-artwork {
-
-}
-
-.search-result-card-text {
-
-}
-
-.search-result-card-color {
-
-} */
-
 #user-suggestion-image {
   width: 30%;
   object-fit: contain;
 }
-
 
 .back-button {
   position: absolute;
