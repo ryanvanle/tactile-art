@@ -677,7 +677,7 @@ hr {
   object-fit: contain;
 }
 
-.back-button {
+.back-button, .close-button {
   position: absolute;
   background-color: transparent;
   border: none;
@@ -687,12 +687,17 @@ hr {
   top: 1dvh;
 }
 
-.back-button:active {
+.back-button:active, .close-button:active {
   background-color: transparent;
 }
 
-.back-button:hover {
+.back-button:hover, .close-button:active {
   background-color: transparent;
+}
+
+.close-button > img {
+  width: 2rem;
+  height: 2rem;
 }
 
 #user-suggestion-page-filters {
@@ -700,4 +705,34 @@ hr {
   flex-direction: column;
   gap: 0.75rem;
 }
+
+.community-suggestion-popup {
+  width: 30%;
+  /* height: 50%; */
+  height: 60dvh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  border-radius: 15px;
+  padding-bottom: 1rem;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.community-suggestion-popup section img {
+  width: 100%;
+  height: 60%;
+  object-fit: contain;
+}
+
+.learn-more-button {
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0.25rem;
+}
+
 
