@@ -156,6 +156,11 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       userSuggestionPopup.close();
     });
 
+    let button = id("artwork-detail-page").querySelector(".image-segmentation-button")
+    button.addEventListener("click", () => {
+      updateInteractWithArtworkPage();
+    });
+
     // New event listeners for radio buttons
     const categoryRadios = document.querySelectorAll('input[name="category"]');
     categoryRadios.forEach(radio => {
@@ -637,7 +642,6 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
         iconImg.src = "icons/texture.svg";
     } else if (category === "artwork") {
         suggestionCard.classList.add("suggestion-card-artwork");
-
         let artworkData = ARTWORK[data.itemTitle];
         let artworkImg = document.createElement("img");
         artworkImg.src = `img/${artworkData.image}` || "img/placeholder.jpg";
@@ -821,6 +825,13 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     generateArtworkDetailPageContent(detailPage, artworkData, artworkName);
     checkFavoriteButtonState(detailPage, "artwork", artworkName);
     showPage("artwork-detail-page");
+  }
+
+  function updateInteractWithArtworkPage() {
+    let title = id("artwork-detail-page").querySelector("h1").textContent;
+    let data = ARTWORK[title];
+    console.log(data);
+    showPage("segment-detail-page");
   }
 
   function generateArtworkDetailPageContent(detailPage, artworkData, artworkName) {

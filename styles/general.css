@@ -748,4 +748,6 @@ hr {
   left: 0.25rem;
 }
 
-
+#segment-detail-page header section {
+  width: 100%;
+}
