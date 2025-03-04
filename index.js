@@ -564,7 +564,6 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     const addSuggestionH3 = document.createElement("h3");
     addSuggestionH3.textContent = "Add your own suggestion";
-
     addSuggestionLi.appendChild(addSuggestionSection);
     addSuggestionSection.appendChild(addSuggestionH3);
     suggestionListElement.appendChild(addSuggestionLi);
@@ -580,8 +579,164 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     for (let suggestionData of suggestionDataList) {
       let card = generateSuggestionCard(suggestionData);
+      card.addEventListener("click", () => { showSuggestionPopupData(suggestionListElement, suggestionData) });
       suggestionListElement.appendChild(card);
     }
+  }
+
+  function showSuggestionPopupData(suggestionListElement, suggestionData) {
+    let detailPage = suggestionListElement.parentElement.parentElement;
+
+    let dialog = detailPage.querySelector("dialog");
+    if (dialog != null) {
+      dialog.remove();
+    }
+
+
+    let newDialog = document.createElement("dialog");
+    newDialog.classList.add("community-suggestion-popup");
+
+    // Create elements for the dialog
+    let h2New = document.createElement("h2");
+    let closeButton = document.createElement("button");
+    let closeButtonImg = document.createElement("img");
+    let sectionNew = document.createElement("section");
+    let learnMoreButton = document.createElement("button");
+    let voteContainer = document.createElement("section");
+    let upvoteButton = document.createElement("button");
+    let upvoteImg = document.createElement("img");
+    let downvoteButton = document.createElement("button");
+    let downvoteImg = document.createElement("img");
+
+    // Set attributes and content
+    closeButton.classList.add("close-button");
+    closeButtonImg.src = "icons/x-symbol.svg";
+    closeButtonImg.alt = "close button x symbol icon";
+    learnMoreButton.classList.add("learn-more-button");
+    learnMoreButton.textContent = "Learn More";
+
+    voteContainer.classList.add("vote-container");
+    upvoteButton.classList.add("upvote-button");
+    upvoteImg.src = "icons/upvote.svg";
+    upvoteImg.alt = "PLACEHOLDER";
+    downvoteButton.classList.add("downvote-button");
+    downvoteImg.src = "icons/downvote.svg";
+    downvoteImg.alt = "PLACEHOLDER";
+
+    // Assemble the elements
+    closeButton.appendChild(closeButtonImg);
+    upvoteButton.appendChild(upvoteImg);
+    downvoteButton.appendChild(downvoteImg);
+    voteContainer.appendChild(upvoteButton);
+    voteContainer.appendChild(downvoteButton);
+
+    newDialog.appendChild(h2New);
+    newDialog.appendChild(closeButton);
+    newDialog.appendChild(sectionNew);
+
+    if (suggestionData.category !== "interpretation") {
+      newDialog.appendChild(learnMoreButton);
+    }
+
+    newDialog.appendChild(voteContainer);
+
+    detailPage.appendChild(newDialog);
+    dialog = newDialog;
+
+
+
+    learnMoreButton.addEventListener("click", () =>{
+      processLearnMoreButton(suggestionData);
+      dialog.close();
+    });
+
+    // Populate the dialog with suggestionData
+    let h2 = dialog.querySelector("h2");
+    let section = dialog.querySelector("section");
+    section.innerHTML = ''; // Clear previous content
+
+    if (suggestionData.itemTitle) {
+      h2.textContent = suggestionData.itemTitle;
+    } else if (suggestionData.category === "interpretation") {
+      h2.textContent = "Interpretation";
+    }
+
+    if (suggestionData.category == "artwork") {
+      let artworkData = ARTWORK[suggestionData.itemTitle];
+      let img = document.createElement("img");
+      img.src = `img/${artworkData.image}`;
+      img.alt = artworkData.alt;
+      section.appendChild(img);
+    }
+
+    if (suggestionData.artist) {
+        let artistP = document.createElement("p");
+        artistP.textContent = suggestionData.artist;
+        section.appendChild(artistP);
+    }
+
+    if (suggestionData.context) {
+        let descriptionP = document.createElement("p");
+        descriptionP.textContent = suggestionData.context;
+        section.appendChild(descriptionP);
+    }
+
+    // // Add event listener to close button
+    dialog.querySelector(".close-button").addEventListener("click", () => {
+      dialog.close();
+    });
+
+    dialog.showModal();
+  }
+
+  function processLearnMoreButton(suggestionData) {
+    let itemName = suggestionData.itemTitle;
+    let category = suggestionData.category;
+
+    console.log(suggestionData);
+
+    let data;
+
+    if (category === "artworks") {
+      category = "artwork";
+    }
+
+    if (category === "material") {
+      data = MATERIALS[itemName];
+    } else if (category === "color") {
+      data = COLORS[itemName];
+    } else if (category === "texture") {
+      data = TEXTURES[itemName];
+    } else if (category === "artwork") {
+      data = ARTWORK[itemName];
+    }
+
+
+    const pageId = `${category}-detail-page`;
+    const detailPage = id(pageId);
+    console.log(itemName);
+    // console.log("show dp", article, itemType, itemName, pageId, detailPage);
+
+    switch (category) {
+      case "color":
+        generateColorDetailPageContent(detailPage, COLORS[itemName], itemName);
+        break;
+      case "material":
+        generateMaterialDetailPageContent(detailPage, MATERIALS[itemName], itemName);
+        break;
+      case "texture":
+        generateTextureDetailPageContent(detailPage, TEXTURES[itemName], itemName);
+        break;
+      case "artwork":
+        generateArtworkDetailPageContent(detailPage, ARTWORK[itemName], itemName);
+    }
+
+    console.log(pageId, detailPage);
+    checkFavoriteButtonState(detailPage, category, itemName);
+    showPage(pageId);
+
+    // showArtworkDetailPage();
+    // console.log(suggestionData);
   }
 
   function generateSuggestionCard(data) {
