@@ -491,7 +491,7 @@
           <img src="icons/back-button.svg" alt="back button arrow">
         </button>
         <section class="detail-page-button-container">
-          <button class="image-segmentation-button">Interact with Artwork</button>
+          <button id="image-segmentation-button" class="image-segmentation-button">Interact with Artwork</button>
           <button class="favorites-button" aria-live="assertive">Save to Favorites</button>
         </section>
       </header>
@@ -783,6 +783,66 @@
         <h2>Instructions</h2>
         <p>Hover over the image to explore its details. Click on any part to view community-submitted details on textures, materials,  interpretations, and related artworks. Have your own insights? Add a new suggestion to help others experience artwork in new ways.</p>
       </section>
+
+      <section id="segmentation-section" class="artwork-section">
+        <h2>Segment This Artwork</h2>
+        
+        <div class="artwork-segmentation-container">
+          <div class="canvas-container">
+          </div>
+          
+          <div class="segmentation-tools-container">
+            <!-- Segmentation controls -->
+            <!-- <div class="segmentation-controls"> -->
+              <!-- <button id="point-prompt" class="seg-tool active">Point (Click)</button> -->
+              <!-- <button id="box-prompt" class="seg-tool">Box Select</button> -->
+              <!-- <button id="clear-prompts" class="seg-tool">Clear Selection</button> -->
+            <!-- </div> -->
+            
+            <!-- Label input -->
+            <div class="segment-label-form">
+              <label for="segment-label">Label this selection:</label>
+              <input type="text" id="segment-label" placeholder="e.g., Face, Tree, Sky">
+              <button id="save-segment">Save Label</button>
+              <button id="clear-prompts" class="seg-tool">Clear Selection</button>
+            </div>
+            
+            <!-- Segment list -->
+            <div class="segment-list-container">
+              <h3>Saved Segments</h3>
+              <ul id="segments-list">
+              </ul>
+            </div>
+            
+            <!-- Drag and Drop palette -->
+            <div id="segmentation-palette" class="segmentation-palette">
+              <h3>Drag Materials, Textures & Colors onto a Segment</h3>
+              <div class="palette-tabs">
+                <button class="palette-tab active" data-tab="materials">Materials</button>
+                <button class="palette-tab" data-tab="textures">Textures</button>
+                <button class="palette-tab" data-tab="colors">Colors</button>
+              </div>
+              <div class="palette-content" id="palette-materials">
+              </div>
+              <div class="palette-content hidden" id="palette-textures">
+              </div>
+              <div class="palette-content hidden" id="palette-colors">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Explanation modal -->
+      <div id="explanation-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h3>Why does this element work well for this segment?</h3>
+          <textarea id="segment-explanation" placeholder="Explain why this material/texture/color works for this area of the artwork..."></textarea>
+          <button id="save-explanation">Save Explanation</button>
+        </div>
+      </div>
+
     </section>
 
 
@@ -826,5 +886,9 @@
     </dialog> -->
 
   <script type="module" src="script.js"></script>
+
+  <!-- Add our segmentation scripts -->
+  <script src="data/data.js"></script>
+  <script src="js/segmentation.js"></script>
 </body>
 </html>

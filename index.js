@@ -156,10 +156,16 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       userSuggestionPopup.close();
     });
 
-    let button = id("artwork-detail-page").querySelector(".image-segmentation-button")
-    button.addEventListener("click", () => {
-      updateInteractWithArtworkPage();
-    });
+    let button = document.getElementById("image-segmentation-button");
+    console.log("Found button?", button); // DEBUG
+    if (button) {
+      button.addEventListener("click", () => {
+        console.log("Clicked Interact with Artwork button"); // DEBUG
+        updateInteractWithArtworkPage();
+      });
+    } else {
+      console.warn("image-segmentation-button not found in the DOM!");
+    }
 
     // New event listeners for radio buttons
     const categoryRadios = document.querySelectorAll('input[name="category"]');
@@ -167,6 +173,45 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       radio.addEventListener('change', async () => {await updateSuggestionForm()});
     });
     await updateSuggestionForm();
+
+    // TODO: added temporarily for testing
+    /*
+    document.getElementById("image-segmentation-button").addEventListener("click", function() {
+      // Get the artwork detail page
+      const detailPage = id("segment-detail-page");
+      
+      // Manually set up an artwork image for testing
+      const imageElement = document.createElement("img");
+      imageElement.src = "img/1.jpg";  // Use any image from your img folder
+      imageElement.alt = "Test artwork";
+      
+      const imageContainer = detailPage.querySelector(".artwork-image-container");
+      if (imageContainer) {
+        imageContainer.innerHTML = '';
+        imageContainer.appendChild(imageElement);
+      }
+      
+      const titleElement = detailPage.querySelector("h1");
+      if (titleElement) {
+        titleElement.textContent = "Test Artwork";
+      }
+      
+      setTimeout(() => {
+        if (window.segmentation && typeof window.segmentation.init === 'function') {
+          window.segmentation.init("test-artwork", imageElement);
+        } else {
+          console.error("Segmentation module not loaded properly");
+        }
+      }, 500);
+    });
+    let button = document.getElementById("image-segmentation-button");
+    if (button) {
+      button.addEventListener("click", () => {
+        console.log("Clicked Interact with Artwork button");
+        updateInteractWithArtworkPage();
+      });
+    }
+    */
   }
 
   function processSearchResults(currentElement) {
@@ -265,6 +310,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   }
 
   function showPage(pageId) {
+    console.log("showPage called with:", pageId);
+    console.log("Before hiding pages, currentPageId is", currentPageId);
+
     const audio = document.querySelector("audio");
     if (audio) {
       audio.pause();
@@ -283,6 +331,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     const currentPage = id(pageId);
     currentPage.classList.remove("hidden");
+    console.log("After unhide, new current page is:", pageId);
   }
 
   function showPreviousPage() {
@@ -983,16 +1032,76 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   }
 
   function updateInteractWithArtworkPage() {
+    console.log("updateInteractWithArtworkPage called"); // DEBUG
+
     let title = id("artwork-detail-page").querySelector("h1").textContent;
+    console.log("Artwork title from detail page:", title);
+
     let data = ARTWORK[title];
+    console.log("Data for that title from ARTWORK object:", data);
+
     console.log(data);
+    
+    window.MATERIALS = MATERIALS;
+    window.COLORS = COLORS;
+    window.TEXTURES = TEXTURES;
+    window.ARTWORK = ARTWORK;
+    
+    // Setup segment detail page
+    const segmentDetailPage = id("segment-detail-page");
+    const titleElement = segmentDetailPage.querySelector("h1");
+    titleElement.innerHTML = `Interact with: <br> ${title}`;
+    
+    const detailPage = id("artwork-detail-page");
+    const artworkImage = detailPage.querySelector(".artwork-image-container img");
+    const canvasContainer = segmentDetailPage.querySelector(".canvas-container");
+    
+    if (canvasContainer && artworkImage) {
+      canvasContainer.innerHTML = ''; // Clear previous content
+      const imgCopy = document.createElement('img');
+      imgCopy.src = artworkImage.src;
+      imgCopy.alt = artworkImage.alt;
+      imgCopy.className = "segmentation-source-image";
+      canvasContainer.appendChild(imgCopy);
+    }
+
+    console.log("Navigating to segment-detail-page now");
     showPage("segment-detail-page");
+    
+    // Initialize segmentation after showing the page
+    setTimeout(() => {
+      const sourceImage = segmentDetailPage.querySelector(".segmentation-source-image") || artworkImage;
+      if (sourceImage) {
+        if (sourceImage.complete) {
+          window.segmentation.init(title, sourceImage);
+        } else {
+          sourceImage.onload = () => {
+            window.segmentation.init(title, sourceImage);
+          };
+        }
+      }
+    }, 100); // Short delay to ensure page is visible
   }
 
   function generateArtworkDetailPageContent(detailPage, artworkData, artworkName) {
+    console.log("Generating artwork detail page for:", artworkName);
+    console.log("Artwork data:", artworkData);
+    console.log("Detail page element:", detailPage);
+
     const title = detailPage.querySelector("h1");
     const artistYear = detailPage.querySelector("header > section > p");
-    const image = detailPage.querySelector(".artwork-image-container img");
+    
+    /*const image = detailPage.querySelector(".artwork-image-container img");
+    console.log("Image element found:", image);*/
+    const imageContainer = detailPage.querySelector(".artwork-image-container");
+    let image = imageContainer ? imageContainer.querySelector("img") : null;
+    if (!image && imageContainer) {
+      image = document.createElement("img");
+      imageContainer.appendChild(image);
+    }
+
+    console.log("Image element found or created:", image);
+
     const description = detailPage.querySelector(".artwork-about > section:nth-of-type(1) > p");
     const notesList = detailPage.querySelector(".artwork-about > section:nth-of-type(2) > ul");
     const audio = detailPage.querySelector(".artwork-about > section:nth-of-type(3) > audio");
@@ -1267,7 +1376,6 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   function createMaterialForm(formSection) {
 
     id("user-suggestion-form").dataset.type = "material";
-
 
     const suggestionSection = createInputSection("suggestion", "What are you suggesting?", "text", "Start typing to find an existing material or add a new one.", "material");
     formSection.appendChild(suggestionSection);
