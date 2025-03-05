@@ -336,7 +336,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     console.log("After unhide, new current page is:", pageId);
   }
 
-  function showPreviousPage() {
+  async function showPreviousPage() {
     if (pageHistory.length > 0) {
       const previousPage = pageHistory[currentPageIndex];
       // currentPageId = previousPage.id; // No need for a separate content object
@@ -348,6 +348,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
         const itemType = previousPage.data.itemType;
         const itemName = previousPage.data.itemName;
+
+        await getAllData();
 
         switch (itemType) {
           case "artworks":
@@ -536,7 +538,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     }
   }
 
-  function showDetailPage(event) {
+  async function showDetailPage(event) {
     const article = event.currentTarget;
     const itemType = article.dataset.itemType;
     const itemName = article.dataset.itemName;
@@ -544,6 +546,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     const detailPage = id(pageId);
 
     // console.log("show dp", article, itemType, itemName, pageId, detailPage);
+    await getAllData();
 
     switch (itemType) {
       case "color":
