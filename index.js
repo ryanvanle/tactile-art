@@ -208,7 +208,6 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   }
 
   async function updateSearchResults(searchQuery) {
-
     id("search-results-search").value = searchQuery;
     let searchResultsArray = await searchDataset(searchQuery);
     generateSearchResults(searchResultsArray);
@@ -238,65 +237,79 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     await getAllData();
     searchQuery = searchQuery.toLowerCase();
 
+    // Helper function to search within suggestions
+    function searchSuggestions(suggestions, query) {
+        if (!suggestions) return false;
+        return Object.values(suggestions).some(suggestion =>
+            (suggestion.itemTitle && suggestion.itemTitle.toLowerCase().includes(query)) ||
+            (suggestion.context && suggestion.context.toLowerCase().includes(query)) ||
+            (suggestion.category && suggestion.category.toLowerCase().includes(query))
+        );
+    }
+
     // Search through ARTWORK
     for (const artwork in ARTWORK) {
-      const artworkData = ARTWORK[artwork];
-      if (
-        artwork.toLowerCase().includes(searchQuery) ||
-        artworkData.alt.toLowerCase().includes(searchQuery) ||
-        artworkData.description.toLowerCase().includes(searchQuery) ||
-        artworkData.notes.artist.toLowerCase().includes(searchQuery) ||
-        artworkData.notes.medium.toLowerCase().includes(searchQuery) ||
-        artworkData.explore.some(item => item.toLowerCase().includes(searchQuery))
-      ) {
-        results.push({ type: 'artwork', name: artwork, data: artworkData });
-      }
+        const artworkData = ARTWORK[artwork];
+        if (
+            artwork.toLowerCase().includes(searchQuery) ||
+            artworkData.alt.toLowerCase().includes(searchQuery) ||
+            artworkData.description.toLowerCase().includes(searchQuery) ||
+            artworkData.notes.artist.toLowerCase().includes(searchQuery) ||
+            artworkData.notes.medium.toLowerCase().includes(searchQuery) ||
+            artworkData.explore.some(item => item.toLowerCase().includes(searchQuery)) ||
+            searchSuggestions(artworkData.suggestions, searchQuery)
+        ) {
+            results.push({ type: 'artwork', name: artwork, data: artworkData });
+        }
     }
 
     // Search through COLORS
     for (const color in COLORS) {
-      const colorData = COLORS[color];
-      if (
-        color.toLowerCase().includes(searchQuery) ||
-        colorData.description.toLowerCase().includes(searchQuery) ||
-        colorData.seen.toLowerCase().includes(searchQuery) ||
-        colorData.explore.some(item => item.toLowerCase().includes(searchQuery))
-      ) {
-        results.push({ type: 'color', name: color, data: colorData });
-      }
+        const colorData = COLORS[color];
+        if (
+            color.toLowerCase().includes(searchQuery) ||
+            colorData.description.toLowerCase().includes(searchQuery) ||
+            colorData.seen.toLowerCase().includes(searchQuery) ||
+            colorData.explore.some(item => item.toLowerCase().includes(searchQuery)) ||
+            searchSuggestions(colorData.suggestions, searchQuery)
+        ) {
+            results.push({ type: 'color', name: color, data: colorData });
+        }
     }
 
     // Search through TEXTURES
     for (const texture in TEXTURES) {
-      const textureData = TEXTURES[texture];
-      if (
-        texture.toLowerCase().includes(searchQuery) ||
-        textureData.blurb.toLowerCase().includes(searchQuery) ||
-        textureData.create.toLowerCase().includes(searchQuery) ||
-        textureData.explore.some(item => item.toLowerCase().includes(searchQuery))
-      ) {
-        results.push({ type: 'texture', name: texture, data: textureData });
-      }
+        const textureData = TEXTURES[texture];
+        if (
+            texture.toLowerCase().includes(searchQuery) ||
+            textureData.blurb.toLowerCase().includes(searchQuery) ||
+            textureData.create.toLowerCase().includes(searchQuery) ||
+            textureData.explore.some(item => item.toLowerCase().includes(searchQuery)) ||
+            searchSuggestions(textureData.suggestions, searchQuery)
+        ) {
+            results.push({ type: 'texture', name: texture, data: textureData });
+        }
     }
 
     // Search through MATERIALS
     for (const material in MATERIALS) {
-      const materialData = MATERIALS[material];
-      if (
-        material.toLowerCase().includes(searchQuery) ||
-        materialData.blurb.toLowerCase().includes(searchQuery) ||
-        materialData.description.toLowerCase().includes(searchQuery) ||
-        materialData.techniques.some(item => item.toLowerCase().includes(searchQuery)) ||
-        materialData.availability.toLowerCase().includes(searchQuery) ||
-        materialData.explore.some(item => item.toLowerCase().includes(searchQuery))
-      ) {
-        results.push({ type: 'material', name: material, data: materialData });
-      }
+        const materialData = MATERIALS[material];
+        if (
+            material.toLowerCase().includes(searchQuery) ||
+            materialData.blurb.toLowerCase().includes(searchQuery) ||
+            materialData.description.toLowerCase().includes(searchQuery) ||
+            materialData.techniques.some(item => item.toLowerCase().includes(searchQuery)) ||
+            materialData.availability.toLowerCase().includes(searchQuery) ||
+            materialData.explore.some(item => item.toLowerCase().includes(searchQuery)) ||
+            searchSuggestions(materialData.suggestions, searchQuery)
+        ) {
+            results.push({ type: 'material', name: material, data: materialData });
+        }
     }
 
     currentSearchResults = results;
     return results;
-  }
+}
 
   function showPage(pageId, isPrevious) {
     console.log("showPage called with:", pageId);
