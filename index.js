@@ -715,6 +715,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   }
 
   function showSuggestionPopupData(suggestionListElement, suggestionData, suggestionCard) {
+    console.log("fires show popup");
+    // debugger;
     let detailPage = suggestionListElement.parentElement.parentElement;
 
     let dialog = detailPage.querySelector("dialog");
@@ -776,6 +778,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     learnMoreButton.addEventListener("click", () =>{
       processLearnMoreButton(suggestionData);
       dialog.close();
+      dialog.remove();
     });
 
     // Populate the dialog with suggestionData
@@ -809,28 +812,37 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
         section.appendChild(descriptionP);
     }
 
-    const outsideDialogClickListener = (event) => {
-      if (dialog.open) {
-        const dialogRect = dialog.getBoundingClientRect();
+    // const outsideDialogClickListener = (event) => {
+    //   if (dialog.open) {
+    //     const dialogRect = dialog.getBoundingClientRect();
 
-        if (
-          event.clientX < dialogRect.left ||
-          event.clientX > dialogRect.right ||
-          event.clientY < dialogRect.top ||
-          event.clientY > dialogRect.bottom
-        ) {
-          dialog.close();
-          document.removeEventListener('click', outsideDialogClickListener);
-        }
-      }
-    };
+    //     console.log("outside dialog case")
+
+    //     if (
+    //       event.clientX < dialogRect.left ||
+    //       event.clientX > dialogRect.right ||
+    //       event.clientY < dialogRect.top ||
+    //       event.clientY > dialogRect.bottom
+    //     ) {
+    //       dialog.close();
+    //       document.removeEventListener('click', outsideDialogClickListener);
+    //       dialog.remove();
+    //     }
+    //   } else {
+    //     dialog.close();
+    //     document.removeEventListener('click', outsideDialogClickListener);
+    //     dialog.remove();
+    //   }
+    // };
+    // document.addEventListener('click', outsideDialogClickListener);
+
 
     // // Add event listener to close button
     dialog.querySelector(".close-button").addEventListener("click", () => {
       dialog.close();
+      dialog.remove();
     });
 
-    document.addEventListener('click', outsideDialogClickListener);
     dialog.showModal();
   }
 
@@ -1215,6 +1227,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     const communitySuggestionsList = id("artwork-detail-page").querySelector(".community-suggestions-list ul");
     generateSuggestionsList(communitySuggestionsList, artworkData.suggestions, artworkData);
+
+    generateExploreFurtherList(id("artwork-detail-page").querySelector(".artwork-content-card-list ul"), artworkData.explore);
   }
 
 
@@ -1667,13 +1681,13 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     likeAmountElement.textContent = Number(data.metadata.likes) - Number(data.metadata.dislikes);
 
     upvoteButton.addEventListener("click", (event) => {
-      handleUpvote(data, voteContainer, upvoteButton, downvoteButton);
       event.stopPropagation();
+      handleUpvote(data, voteContainer, upvoteButton, downvoteButton);
     });
 
     downvoteButton.addEventListener("click", (event) => {
-      handleDownvote(data, voteContainer, upvoteButton, downvoteButton);
       event.stopPropagation();
+      handleDownvote(data, voteContainer, upvoteButton, downvoteButton);
     });
 
     voteContainer.appendChild(upvoteButton);
