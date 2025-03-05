@@ -109,8 +109,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     const backButtons = document.querySelectorAll('.back-button');
     backButtons.forEach(button => {
-      button.addEventListener('click', (event) => {
-        showPreviousPage();
+      button.addEventListener('click', async (event) => {
+        await showPreviousPage();
       });
     });
 
@@ -134,13 +134,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       }
     });
 
-    const submitButton = id("user-suggestion-page-submit-button");
     const closeButton = id("user-suggestion-popup-close-button");
     const userSuggestionPopup = id("user-suggestion-popup");
-    submitButton.addEventListener('click', (event) => {
-      processSuggestionForm(event);
-      userSuggestionPopup.showModal();
-    });
 
     closeButton.addEventListener('click', () => {
       userSuggestionPopup.close();
@@ -1454,6 +1449,19 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     const explanationSection = createTextAreaSection("explanation", "How does this material appear to this section, or how did you recreate it?", "Describe how you think it was used, how you used it, or how it could be used to recreate an element. (150 words max)");
     formSection.appendChild(explanationSection);
+
+    const submitButton = document.createElement("button");
+    submitButton.type = "submit";
+    submitButton.textContent = "Submit";
+    submitButton.id = "user-suggestion-page-submit-button";
+    const userSuggestionPopup = id("user-suggestion-popup");
+
+    submitButton.addEventListener('click', (event) => {
+      processSuggestionForm(event);
+      userSuggestionPopup.showModal();
+    });
+
+    formSection.appendChild(submitButton);
   }
 
   function createTextureForm(formSection) {
@@ -1465,6 +1473,20 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     const explanationSection = createTextAreaSection("explanation", "How does this texture appear to this section, or how did you recreate it?", "Describe how the texture contributes to the artwork, or how you replicated it in a version. (150 words max)");
     formSection.appendChild(explanationSection);
+
+    const submitButton = document.createElement("button");
+    submitButton.type = "submit";
+    submitButton.textContent = "Submit";
+    submitButton.id = "user-suggestion-page-submit-button";
+
+    const userSuggestionPopup = id("user-suggestion-popup");
+    submitButton.addEventListener('click', (event) => {
+
+      processSuggestionForm(event);
+      userSuggestionPopup.showModal();
+    });
+
+    formSection.appendChild(submitButton);
   }
 
   function createArtworkForm(formSection) {
@@ -1476,6 +1498,19 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     const explanationSection = createTextAreaSection("explanation", "How does this artwork connect to this section?", "Describe how the suggested artwork connects thematically, stylistically, or historically. (150 words max)");
     formSection.appendChild(explanationSection);
+
+    const submitButton = document.createElement("button");
+    submitButton.type = "submit";
+    submitButton.textContent = "Submit";
+    submitButton.id = "user-suggestion-page-submit-button";
+
+    const userSuggestionPopup = id("user-suggestion-popup");
+    submitButton.addEventListener('click', (event) => {
+      processSuggestionForm(event);
+      userSuggestionPopup.showModal();
+    });
+
+    formSection.appendChild(submitButton);
   }
 
   function createInterpretationForm(formSection) {
@@ -1498,10 +1533,24 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       listItem.textContent = question;
       questionList.appendChild(listItem);
     });
+
     formSection.appendChild(questionList);
 
     const explanationSection = createTextAreaSection("explanation", "Use the guiding questions as an optional reference and answer below.", "Describe how the suggested artwork connects thematically, stylistically, or historically. (150 words max)");
     formSection.appendChild(explanationSection);
+
+    const submitButton = document.createElement("button");
+    submitButton.type = "submit";
+    submitButton.textContent = "Submit";
+    submitButton.id = "user-suggestion-page-submit-button";
+
+    const userSuggestionPopup = id("user-suggestion-popup");
+    submitButton.addEventListener('click', (event) => {
+      processSuggestionForm(event);
+      userSuggestionPopup.showModal();
+    });
+
+    formSection.appendChild(submitButton);
   }
 
   function createInputSection(id, labelText, type, placeholder, category) {
@@ -1517,6 +1566,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     input.type = type;
     input.id = id;
     input.placeholder = placeholder;
+    input.required = true;
     input.setAttribute("list", `${type}-suggestion-options`);
 
     const datalist = document.createElement("datalist");
@@ -1562,6 +1612,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     const textarea = document.createElement("textarea");
     textarea.id = id;
     textarea.placeholder = "Start typing here...";
+    textarea.required = true;
     section.appendChild(textarea);
 
     return section;
