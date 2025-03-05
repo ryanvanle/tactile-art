@@ -99,13 +99,14 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     id("colors-button").addEventListener("click", () => showPage("colors-page"));
     id("favorites-button").addEventListener("click", () => showPage("favorite-page"));
     id("search-button").addEventListener("click", () => processSearchResults(id("home-search")));
+    id("browse-button").addEventListener("click", () => processSearchResults(id("browse-button")));
     id("search-results-search-button").addEventListener("click", () => processSearchResults(id("search-results-search")));
 
 
-    id("upload-artwork-button").addEventListener("click", () => {
-      // TODO clear out the form page
-      showPage("upload-page");
-    });
+    // id("upload-artwork-button").addEventListener("click", () => {
+    //   // TODO clear out the form page
+    //   showPage("upload-page");
+    // });
 
     const backButtons = document.querySelectorAll('.back-button');
     backButtons.forEach(button => {
@@ -204,7 +205,12 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       showPage("search-result-page");
     }
 
-    updateSearchResults(currentElement.value);
+    if (currentElement.id === "browse-button") {
+      showPage("search-result-page");
+      updateSearchResults("");
+    } else {
+      updateSearchResults(currentElement.value);
+    }
   }
 
   async function updateSearchResults(searchQuery) {
