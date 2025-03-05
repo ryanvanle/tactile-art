@@ -138,6 +138,13 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     const closeButton = id("user-suggestion-popup-close-button");
     const userSuggestionPopup = id("user-suggestion-popup");
 
+    const suggestionsPopUpPreviousPageButton = id("user-suggestion-popup-previous-page-button");
+
+    suggestionsPopUpPreviousPageButton.addEventListener('click', () => {
+      userSuggestionPopup.close();
+      showPreviousPage();
+    });
+
     closeButton.addEventListener('click', () => {
       userSuggestionPopup.close();
     });
@@ -405,6 +412,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     searchResults.forEach(result => {
       const listItem = document.createElement("li");
       let resultCard = document.createElement("button");
+      resultCard.setAttribute("role", "link");
       resultCard.classList.add("selectable"); // Make the card selectable
       resultCard.dataset.itemType = result.type;
       resultCard.dataset.itemName = result.name;
@@ -903,7 +911,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     let listItem = document.createElement("li");
     let suggestionCard = document.createElement("section");
     suggestionCard.classList.add("selectable");
-    suggestionCard.setAttribute("role", "button");
+    suggestionCard.setAttribute("role", "link"); // might be better as link
+    suggestionCard.setAttribute("aria-description", `${data.category} suggestion`);
 
     let title = document.createElement("h3");
     title.textContent = data.itemTitle;
@@ -1338,7 +1347,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     article.dataset.itemName = colorName;
     article.dataset.pageId = "color-detail-page";
     article.addEventListener("click", showDetailPage);
-    article.setAttribute("role","button");
+    article.setAttribute("role","link");
     article.setAttribute("tabindex","0");
 
 
@@ -1361,7 +1370,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     article.dataset.itemName = itemName;
     article.dataset.pageId = `${itemType}-detail-page`;
     article.addEventListener("click", showDetailPage);
-    article.setAttribute("role","button");
+    article.setAttribute("role","link");
     article.setAttribute("tabindex","0");
 
 
@@ -1384,7 +1393,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     article.dataset.itemName = colorName;
     article.dataset.pageId = "color-detail-page";
     article.addEventListener("click", showDetailPage);
-    article.setAttribute("role","button");
+    article.setAttribute("role","link");
     article.setAttribute("tabindex","0");
 
 
@@ -1406,7 +1415,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     article.dataset.itemType = itemType;
     article.dataset.itemName = itemName;
     article.dataset.pageId = `${itemType}-detail-page`;
-    article.setAttribute("role","button");
+    article.setAttribute("role","link");
     article.setAttribute("tabindex","0");
 
 
@@ -1429,7 +1438,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   function createSmallArtworkCard(artworkName, artworkData) {
     const img = document.createElement('img');
     img.classList.add("selectable");
-    img.setAttribute("role","button");
+    img.setAttribute("role","link");
     img.setAttribute("tabindex","0");
 
 
