@@ -11,7 +11,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 (function() {
   let favorites = []; // Initialize an empty array to store favorites
 
-  const pageHistory = [];
+  let pageHistory = [];
+  let currentPageIndex = 0;
+
   let currentPageId = "search-page"; // Initialize with the default home page
 
   // Firebase Configuration this is fine to have here, we'll need to look into security rules though
@@ -113,23 +115,6 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     checkboxes.forEach(checkbox => {
       checkbox.addEventListener('change', filterSearchResults);
     });
-
-    // document.addEventListener('click', function(event) {
-    //   handleSelectableClick(event);
-    // });
-
-    // document.addEventListener('keydown', function(event) {
-    //   if (event.key === "Enter" || event.key === " ") {
-    //     handleSelectableClick(event);
-    //   }
-    // });
-
-    // function handleSelectableClick(event){
-    //   const selectable = event.currentTarget; // Use event.currentTarget here
-    //   if (selectable && !event.target.closest('.back-button')) {
-    //     showDetailPage(selectable);
-    //   }
-    // }
 
     // Event listener for save to favorites buttons (delegation)
     document.addEventListener('click', function(event) {
@@ -309,7 +294,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     return results;
   }
 
-  function showPage(pageId) {
+  function showPage(pageId, isPrevious) {
     console.log("showPage called with:", pageId);
     console.log("Before hiding pages, currentPageId is", currentPageId);
 
@@ -319,10 +304,27 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       audio.currentTime = 0;
     }
 
-    if (currentPageId !== pageId) { // Prevent pushing the same page multiple times
-      pageHistory.push(currentPageId); // Push current page onto the stack
-      currentPageId = pageId; // Update current page
-    }
+    let previousPageId = currentPageId; //store the previous page id before changing it.
+    currentPageId = pageId; //update the current page id first.
+
+    console.log(previousPageId);
+
+    if (!isPrevious) {
+      if (previousPageId.includes("detail-page")) {
+          pageHistory.push({"id": previousPageId, "data": JSON.parse(id(previousPageId).dataset.previous)});
+      } else {
+          pageHistory.push({"id": previousPageId});
+      }
+      currentPageIndex = pageHistory.length - 1;
+  } else {
+      currentPageIndex--;
+
+      // Trim the history array to the current index, removing "forward" history.
+      pageHistory = pageHistory.slice(0, currentPageIndex + 1);
+  }
+
+  console.log(pageHistory, currentPageIndex);
+
 
     const pages = document.querySelectorAll(".page");
     pages.forEach(page => {
@@ -335,20 +337,40 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   }
 
   function showPreviousPage() {
-    if (pageHistory.length > 1) { // Ensure there's a page to go back to
-      const previousPageId = pageHistory.pop(); // Get previous page from stack
-      currentPageId = pageHistory[pageHistory.length -1]; //update the current page ID to the last element of the history array.
-      showPage(previousPageId); // Show the previous page
-    } else if (pageHistory.length === 1) { //If on the inital page
-      const previousPageId = pageHistory[0]; //get the initial page.
-      currentPageId = previousPageId;
-      showPage(previousPageId);
-      pageHistory.pop(); //clear the history.
+    if (pageHistory.length > 0) {
+      const previousPage = pageHistory[currentPageIndex];
+      // currentPageId = previousPage.id; // No need for a separate content object
+
+      console.log("showPreviousPage", previousPage);
+
+      // Restore the content based on the page ID and dataset information
+      if (previousPage.id.includes('-detail-page')) {
+
+        const itemType = previousPage.data.itemType;
+        const itemName = previousPage.data.itemName;
+
+        switch (itemType) {
+          case "artworks":
+            generateArtworkDetailPageContent(id(previousPage.id), ARTWORK[itemName], itemName);
+            break;
+          case "colors":
+            generateColorDetailPageContent(id(previousPage.id), COLORS[itemName], itemName);
+            break;
+          case "materials":
+            generateMaterialDetailPageContent(id(previousPage.id), MATERIALS[itemName], itemName);
+            break;
+          case "textures":
+            generateTextureDetailPageContent(id(previousPage.id), TEXTURES[itemName], itemName);
+            break;
+        }
+      }
+
+      showPage(previousPage.id, true);
     } else {
-      // Optionally handle cases where there's no history (e.g., disable the back button)
       console.log("No history to go back to.");
     }
   }
+
 
   function generateSearchResults(searchResults) {
     const resultsList = document.querySelector("#search-result-page ul");
@@ -548,6 +570,17 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     const seen = detailPage.querySelector("#color-detail-page > section:nth-of-type(2) > p");
     const hexCode = detailPage.querySelector("#color-detail-page > section:nth-of-type(3) > p");
 
+    let previousData = {
+      id: detailPage.id,
+      itemName: detailPage.dataset.itemName || null,
+      itemType: detailPage.dataset.itemType || null,
+    }
+
+    detailPage.dataset.previous = JSON.stringify(previousData);
+    detailPage.dataset.itemName = colorName;
+    detailPage.dataset.itemType = "colors";
+
+
     title.textContent = colorName;
     swatch.style.backgroundColor = colorData.hex;
     hue.textContent = colorData.description;
@@ -568,6 +601,16 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     const description = detailPage.querySelectorAll("p");
     const techniquesList = detailPage.querySelector("ul");
     const availability = detailPage.querySelector("#material-detail-page > section:nth-of-type(3) > p");
+
+    let previousData = {
+      id: detailPage.id,
+      itemName: detailPage.dataset.itemName,
+      itemType: detailPage.dataset.itemType,
+    }
+
+    detailPage.dataset.previous = JSON.stringify(previousData);
+    detailPage.dataset.itemName = materialName;
+    detailPage.dataset.itemType = "materials";
 
     title.textContent = materialName;
     blurb.textContent = materialData.blurb;
@@ -598,6 +641,17 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     title.textContent = textureName;
     blurb.textContent = textureData.blurb;
     description.textContent = textureData.create;
+
+    let previousData = {
+      id: detailPage.id,
+      itemName: detailPage.dataset.itemName || null,
+      itemType: detailPage.dataset.itemType || null,
+    }
+
+    detailPage.dataset.previous = JSON.stringify(previousData);
+    detailPage.dataset.itemName = textureName;
+    detailPage.dataset.itemType = "textures";
+
 
     const communitySuggestionsList = id("texture-detail-page").querySelector(".community-suggestions-list ul");
     generateSuggestionsList(communitySuggestionsList, textureData.suggestions, textureData);
@@ -1081,6 +1135,17 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     console.log("Generating artwork detail page for:", artworkName);
     console.log("Artwork data:", artworkData);
     console.log("Detail page element:", detailPage);
+
+
+    let previousData = {
+      id: detailPage.id,
+      itemName: detailPage.dataset.itemName || null,
+      itemType: detailPage.dataset.itemType || null,
+    }
+
+    detailPage.dataset.previous = JSON.stringify(previousData);
+    detailPage.dataset.itemName = artworkName;
+    detailPage.dataset.itemType = "artworks";
 
     const title = detailPage.querySelector("h1");
     const artistYear = detailPage.querySelector("header > section > p");
