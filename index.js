@@ -179,23 +179,23 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     document.getElementById("image-segmentation-button").addEventListener("click", function() {
       // Get the artwork detail page
       const detailPage = id("segment-detail-page");
-      
+
       // Manually set up an artwork image for testing
       const imageElement = document.createElement("img");
       imageElement.src = "img/1.jpg";  // Use any image from your img folder
       imageElement.alt = "Test artwork";
-      
+
       const imageContainer = detailPage.querySelector(".artwork-image-container");
       if (imageContainer) {
         imageContainer.innerHTML = '';
         imageContainer.appendChild(imageElement);
       }
-      
+
       const titleElement = detailPage.querySelector("h1");
       if (titleElement) {
         titleElement.textContent = "Test Artwork";
       }
-      
+
       setTimeout(() => {
         if (window.segmentation && typeof window.segmentation.init === 'function') {
           window.segmentation.init("test-artwork", imageElement);
@@ -621,26 +621,43 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     let suggestionDataList = Object.values(suggestionDataObject);
 
     suggestionDataList.sort(function(a,b) {
-      let aScore = a.metadata.upvotes - a.metadata.downvotes;
-      let bScore = b.metadata.upvotes - b.metadata.downvotes;
+      let aScore = Number(a.metadata.likes) - Number(a.metadata.dislikes);
+      let bScore = Number(b.metadata.likes) - Number(b.metadata.dislikes);
       return bScore-aScore;
     });
 
     for (let suggestionData of suggestionDataList) {
       let card = generateSuggestionCard(suggestionData);
-      card.addEventListener("click", () => { showSuggestionPopupData(suggestionListElement, suggestionData) });
+      card.addEventListener("click", () => { showSuggestionPopupData(suggestionListElement, suggestionData, card) });
       suggestionListElement.appendChild(card);
     }
   }
 
-  function showSuggestionPopupData(suggestionListElement, suggestionData) {
+  function showSuggestionPopupData(suggestionListElement, suggestionData, suggestionCard) {
     let detailPage = suggestionListElement.parentElement.parentElement;
 
     let dialog = detailPage.querySelector("dialog");
+
+    let cardVoteContainer = suggestionCard.querySelector(".vote-container");
+    let cardUpvoteButton = suggestionCard.querySelector(".upvote-button");
+    let cardDownvoteButton = suggestionCard.querySelector(".downvote-button");
+
+
+    let dialogVoteContainer = suggestionCard.querySelector(".vote-container").cloneNode(true);
+    let dialogUpvoteButton = dialogVoteContainer.querySelector(".upvote-button");
+    let dialogDownvoteButton = dialogVoteContainer.querySelector(".downvote-button");
+
+    dialogUpvoteButton.addEventListener("click", () => {
+      handleUpvote(suggestionData, dialogVoteContainer, dialogUpvoteButton, dialogDownvoteButton, cardVoteContainer);
+    });
+
+    dialogDownvoteButton.addEventListener("click", () => {
+      handleDownvote(suggestionData, dialogVoteContainer, dialogUpvoteButton, dialogDownvoteButton, cardVoteContainer);
+    });
+
     if (dialog != null) {
       dialog.remove();
     }
-
 
     let newDialog = document.createElement("dialog");
     newDialog.classList.add("community-suggestion-popup");
@@ -651,11 +668,6 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     let closeButtonImg = document.createElement("img");
     let sectionNew = document.createElement("section");
     let learnMoreButton = document.createElement("button");
-    let voteContainer = document.createElement("section");
-    let upvoteButton = document.createElement("button");
-    let upvoteImg = document.createElement("img");
-    let downvoteButton = document.createElement("button");
-    let downvoteImg = document.createElement("img");
 
     // Set attributes and content
     closeButton.classList.add("close-button");
@@ -664,20 +676,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     learnMoreButton.classList.add("learn-more-button");
     learnMoreButton.textContent = "Learn More";
 
-    voteContainer.classList.add("vote-container");
-    upvoteButton.classList.add("upvote-button");
-    upvoteImg.src = "icons/upvote.svg";
-    upvoteImg.alt = "PLACEHOLDER";
-    downvoteButton.classList.add("downvote-button");
-    downvoteImg.src = "icons/downvote.svg";
-    downvoteImg.alt = "PLACEHOLDER";
-
-    // Assemble the elements
     closeButton.appendChild(closeButtonImg);
-    upvoteButton.appendChild(upvoteImg);
-    downvoteButton.appendChild(downvoteImg);
-    voteContainer.appendChild(upvoteButton);
-    voteContainer.appendChild(downvoteButton);
+
+    let voteContainerElement = dialogVoteContainer || generateVoteContainer(suggestionData);
 
     newDialog.appendChild(h2New);
     newDialog.appendChild(closeButton);
@@ -687,12 +688,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       newDialog.appendChild(learnMoreButton);
     }
 
-    newDialog.appendChild(voteContainer);
-
+    newDialog.appendChild(voteContainerElement);
     detailPage.appendChild(newDialog);
     dialog = newDialog;
-
-
 
     learnMoreButton.addEventListener("click", () =>{
       processLearnMoreButton(suggestionData);
@@ -730,11 +728,28 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
         section.appendChild(descriptionP);
     }
 
+    const outsideDialogClickListener = (event) => {
+      if (dialog.open) {
+        const dialogRect = dialog.getBoundingClientRect();
+
+        if (
+          event.clientX < dialogRect.left ||
+          event.clientX > dialogRect.right ||
+          event.clientY < dialogRect.top ||
+          event.clientY > dialogRect.bottom
+        ) {
+          dialog.close();
+          document.removeEventListener('click', outsideDialogClickListener);
+        }
+      }
+    };
+
     // // Add event listener to close button
     dialog.querySelector(".close-button").addEventListener("click", () => {
       dialog.close();
     });
 
+    document.addEventListener('click', outsideDialogClickListener);
     dialog.showModal();
   }
 
@@ -742,7 +757,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     let itemName = suggestionData.itemTitle;
     let category = suggestionData.category;
 
-    console.log(suggestionData);
+    // console.log(suggestionData);
 
     let data;
 
@@ -763,7 +778,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     const pageId = `${category}-detail-page`;
     const detailPage = id(pageId);
-    console.log(itemName);
+    // console.log(itemName);
     // console.log("show dp", article, itemType, itemName, pageId, detailPage);
 
     switch (category) {
@@ -780,7 +795,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
         generateArtworkDetailPageContent(detailPage, ARTWORK[itemName], itemName);
     }
 
-    console.log(pageId, detailPage);
+    // console.log(pageId, detailPage);
     checkFavoriteButtonState(detailPage, category, itemName);
     showPage(pageId);
 
@@ -806,26 +821,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     iconImg.alt = "placeholder";
     iconImg.classList.add("corner-icon");
 
-    let voteContainer = document.createElement("section");
-    voteContainer.classList.add("vote-container");
-    let upvoteButton = document.createElement("button");
-    upvoteButton.classList.add("upvote-button");
-    let upvoteImg = document.createElement("img");
-    upvoteImg.src = "icons/upvote.svg";
-    upvoteImg.alt = "PLACEHOLDER";
-    upvoteButton.appendChild(upvoteImg);
-
-    let downvoteButton = document.createElement("button");2
-    downvoteButton.classList.add("downvote-button");
-    let downvoteImg = document.createElement("img");
-    downvoteImg.src = "icons/downvote.svg";
-    downvoteImg.alt = "PLACEHOLDER";
-    downvoteButton.appendChild(downvoteImg);
-
-    voteContainer.appendChild(upvoteButton);
-    voteContainer.appendChild(downvoteButton);
-
-    console.log(data);
+    let voteContainer = generateVoteContainer(data);
 
     if (category === "material") {
         suggestionCard.classList.add("suggestion-card-material");
@@ -937,9 +933,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       suggestionData.context = textarea.value;
     }
 
-    console.log("suggestionData", suggestionData);
-    console.log("processSuggestionForm");
-    console.log("HI", input, textarea, suggestionCategory, recipientData);
+
 
     //submit data
 
@@ -1041,21 +1035,21 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     console.log("Data for that title from ARTWORK object:", data);
 
     console.log(data);
-    
+
     window.MATERIALS = MATERIALS;
     window.COLORS = COLORS;
     window.TEXTURES = TEXTURES;
     window.ARTWORK = ARTWORK;
-    
+
     // Setup segment detail page
     const segmentDetailPage = id("segment-detail-page");
     const titleElement = segmentDetailPage.querySelector("h1");
     titleElement.innerHTML = `Interact with: <br> ${title}`;
-    
+
     const detailPage = id("artwork-detail-page");
     const artworkImage = detailPage.querySelector(".artwork-image-container img");
     const canvasContainer = segmentDetailPage.querySelector(".canvas-container");
-    
+
     if (canvasContainer && artworkImage) {
       canvasContainer.innerHTML = ''; // Clear previous content
       const imgCopy = document.createElement('img');
@@ -1067,7 +1061,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     console.log("Navigating to segment-detail-page now");
     showPage("segment-detail-page");
-    
+
     // Initialize segmentation after showing the page
     setTimeout(() => {
       const sourceImage = segmentDetailPage.querySelector(".segmentation-source-image") || artworkImage;
@@ -1090,7 +1084,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     const title = detailPage.querySelector("h1");
     const artistYear = detailPage.querySelector("header > section > p");
-    
+
     /*const image = detailPage.querySelector(".artwork-image-container img");
     console.log("Image element found:", image);*/
     const imageContainer = detailPage.querySelector(".artwork-image-container");
@@ -1478,7 +1472,6 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     const section = document.createElement("section");
     section.classList.add("input-group");
 
-
     const questionElement = document.createElement("h3");
     questionElement.textContent = question;
     section.appendChild(questionElement);
@@ -1496,6 +1489,192 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     return section;
   }
 
+  function generateVoteContainer(data) {
+    let voteContainer = document.createElement("section");
+
+    let upvoteButton = document.createElement("button");
+    let upvoteImg = document.createElement("img");
+
+    let downvoteButton = document.createElement("button");
+    let downvoteImg = document.createElement("img");
+
+    let likeAmountElement = document.createElement("p");
+
+    voteContainer.classList.add("vote-container");
+
+    upvoteButton.classList.add("upvote-button");
+    upvoteImg.src = "icons/upvote.svg";
+    upvoteImg.alt = "PLACEHOLDER";
+
+    // check the state somehow?? TODO
+    // if already pressed
+
+    upvoteButton.setAttribute("aria-pressed", "false");
+
+
+    downvoteButton.classList.add("downvote-button");
+    downvoteImg.src = "icons/downvote.svg";
+    downvoteImg.alt = "PLACEHOLDER";
+
+    downvoteButton.setAttribute("aria-pressed", "false");
+
+    upvoteButton.appendChild(upvoteImg);
+    upvoteButton.appendChild(likeAmountElement);
+
+    downvoteButton.appendChild(downvoteImg);
+
+    likeAmountElement.textContent = Number(data.metadata.likes) - Number(data.metadata.dislikes);
+
+    upvoteButton.addEventListener("click", (event) => {
+      handleUpvote(data, voteContainer, upvoteButton, downvoteButton);
+      event.stopPropagation();
+    });
+
+    downvoteButton.addEventListener("click", (event) => {
+      handleDownvote(data, voteContainer, upvoteButton, downvoteButton);
+      event.stopPropagation();
+    });
+
+    voteContainer.appendChild(upvoteButton);
+    voteContainer.appendChild(downvoteButton);
+    return voteContainer;
+  }
+
+  async function handleUpvote(data, voteContainer, upvoteButton, downvoteButton, dialogVoteContainer) {
+    updateVoteButtonState(voteContainer, upvoteButton, downvoteButton, true);
+    updateVoteLikesDisplay(voteContainer, upvoteButton, downvoteButton);
+    updateVoteData(data, true, false);
+
+    if (dialogVoteContainer) {
+      updateVoteButtonState(dialogVoteContainer, dialogVoteContainer.querySelector(".upvote-button"), dialogVoteContainer.querySelector(".downvote-button"), true);
+      updateVoteLikesDisplay(dialogVoteContainer, dialogVoteContainer.querySelector(".upvote-button"), dialogVoteContainer.querySelector(".downvote-button"));
+    }
+  }
+
+  async function handleDownvote(data, voteContainer, upvoteButton, downvoteButton, dialogVoteContainer)  {
+    updateVoteButtonState(voteContainer, upvoteButton, downvoteButton, false);
+    updateVoteLikesDisplay(voteContainer, upvoteButton, downvoteButton);
+    updateVoteData(data, false, false);
+
+    if (dialogVoteContainer) {
+      updateVoteButtonState(dialogVoteContainer, dialogVoteContainer.querySelector(".upvote-button"), dialogVoteContainer.querySelector(".downvote-button"), false);
+      updateVoteLikesDisplay(dialogVoteContainer, dialogVoteContainer.querySelector(".upvote-button"), dialogVoteContainer.querySelector(".downvote-button"));
+    }
+  }
+
+  function updateVoteButtonState(voteContainer, upvoteButton, downvoteButton, isUpvote, likesDisplay) {
+    let buttonElement = isUpvote ? upvoteButton : downvoteButton;
+    let otherButton = isUpvote ? downvoteButton : upvoteButton;
+
+    let isCurrentlyPressed = buttonElement.dataset.pressed === 'true';
+    let newPressedState = isCurrentlyPressed ? 'false' : 'true';
+    let otherPressedState = otherButton.dataset.pressed === 'true';
+
+    let upvoteImage = upvoteButton.querySelector("img");
+    let downvoteImage = downvoteButton.querySelector("img");
+
+    if (isUpvote) {
+      upvoteImage.src = isCurrentlyPressed ? "icons/upvote.svg" : "icons/upvote-pressed.svg";
+      downvoteImage.src = otherPressedState ? "icons/downvote.svg" : "icons/downvote.svg";
+    } else {
+      downvoteImage.src = isCurrentlyPressed ? "icons/downvote.svg" : "icons/downvote-pressed.svg";
+      upvoteImage.src = otherPressedState ? "icons/upvote.svg" : "icons/upvote.svg";
+    }
+
+    voteContainer.classList.toggle("upvote-pressed", isUpvote && newPressedState === 'true');
+    voteContainer.classList.toggle("downvote-pressed", !isUpvote && newPressedState === 'true');
+
+    buttonElement.setAttribute('aria-pressed', newPressedState);
+    otherButton.setAttribute('aria-pressed', 'false');
+
+    buttonElement.dataset.pressed = newPressedState;
+    otherButton.dataset.pressed = 'false';
+  }
+
+  function updateVoteLikesDisplay(voteContainer, upvoteButton, downvoteButton) {
+    let likesDisplay = voteContainer.querySelector("p");
+    let upvotePressed = upvoteButton.getAttribute('aria-pressed') === 'true';
+    let downvotePressed = downvoteButton.getAttribute('aria-pressed') === 'true';
+    let currentLikes = parseInt(likesDisplay.textContent) || 0;
+
+    // Store the previous state in the voteContainer's dataset
+    let prevUpvotePressed = voteContainer.dataset.upvotePressed === 'true';
+    let prevDownvotePressed = voteContainer.dataset.downvotePressed === 'true';
+
+    if (upvotePressed && !prevUpvotePressed && !downvotePressed) {
+      likesDisplay.textContent = currentLikes + 1;
+    } else if (!upvotePressed && downvotePressed && !prevDownvotePressed) {
+      likesDisplay.textContent = currentLikes - 1;
+    } else if (!upvotePressed && !downvotePressed && (prevUpvotePressed || prevDownvotePressed)) {
+      // Resetting to the original state
+      likesDisplay.textContent = currentLikes - (prevUpvotePressed ? 1 : 0) + (prevDownvotePressed ? 1 : 0);
+    }
+
+    // Update the previous state
+    voteContainer.dataset.upvotePressed = upvotePressed;
+    voteContainer.dataset.downvotePressed = downvotePressed;
+  }
+
+  async function updateVoteData(data, isLiking, isUndoing) {
+
+    const recipientReference = doc(db, data.recipient.category, data.recipient.title);
+
+    try {
+      await runTransaction(db, async (transaction) => {
+        const recipientDoc = await transaction.get(recipientReference);
+        if (!recipientDoc.exists()) {
+          throw "Document does not exist!";
+        }
+
+        const suggestionsList = Object.values(recipientDoc.data().suggestions)
+
+        let timestamp = data.metadata.timestamp;
+
+        const suggestionIndex = suggestionsList.findIndex(
+          (suggestion) => suggestion.metadata && suggestion.metadata.timestamp === timestamp
+        );
+
+        if (suggestionIndex === -1) {
+          throw "Suggestion with provided timestamp not found!";
+        }
+
+
+        // ensuring fields exist
+        if (!suggestionsList[suggestionIndex].metadata.dislikes) {
+          suggestionsList[suggestionIndex].metadata.dislikes = 0;
+        }
+
+        if (!suggestionsList[suggestionIndex].metadata.likes) {
+          suggestionsList[suggestionIndex].metadata.likes = 0;
+        }
+
+        if (isLiking && !isUndoing) {
+          suggestionsList[suggestionIndex].metadata.likes++;
+        } else if (isLiking && isUndoing) {
+          suggestionsList[suggestionIndex].metadata.likes--;
+        }
+
+        if (!isLiking && !isUndoing) {
+          suggestionsList[suggestionIndex].metadata.dislikes++;
+        } else if (!isLiking && isUndoing) {
+          suggestionsList[suggestionIndex].metadata.dislikes--;
+        }
+
+        const suggestionObject = {};
+        suggestionsList.forEach((suggestion, index) => {
+          suggestionObject[index] = suggestion;
+        });
+
+        transaction.update(doc(db, data.recipient.category, data.recipient.title), { suggestions: suggestionObject });
+
+      });
+      console.log("Transaction successfully committed!");
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
+
+
+  }
 
   function id(idName) {
     return document.getElementById(idName);

@@ -47,12 +47,16 @@ h1 {
   width: 100%;
 }
 
-.selectable:hover, button:hover {
+.selectable:not(:has(.upvote-button:hover)):hover,
+.selectable:not(:has(.downvote-button:hover)):hover,
+button:hover {
   cursor: pointer;
   background-color: lightgray;
 }
 
-.selectable:active, button:active {
+.selectable:not(:has(.upvote-button:active)):active,
+.selectable:not(:has(.downvote-button:active)):active,
+button:active {
   background-color: gray;
 }
 
@@ -217,23 +221,53 @@ button {
   position: absolute;
   bottom: 0.25rem;
   right: 0.25rem;
-  /* gap: 1rem; */
+  border: solid black 1px;
+  border-radius: 5px;
+  height: 2.5rem;
+}
+
+.upvote-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  width: 60%;
+}
+
+.downvote-button {
+  width: 40%;
 }
 
 .vote-container button {
-  padding: 0;
-  margin: 0.15rem;
+  height: 100%;
+  padding: 5px;
   border: none;
   background-color: transparent;
 }
 
 .vote-container img {
-  width: 2.5rem;
+  /* width: 2.5rem; */
+  height: 100%;
+  object-fit: contain;
+}
+
+.upvote-pressed {
+  background-color: red;
+}
+
+.downvote-pressed {
+  background-color: blue;
+}
+
+
+
+.downvote-button {
+  border-left: solid black 1px !important;
 }
 
 .corner-icon {
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   object-fit: contain;
   /* background-color: red; */
 }
@@ -976,7 +1010,7 @@ hr {
 }
 
 .segment-list-item.drag-over {
-  background-color: rgba(200, 255, 200, 0.5); 
+  background-color: rgba(200, 255, 200, 0.5);
   border: 2px dashed #5cb85c;
 }
 
