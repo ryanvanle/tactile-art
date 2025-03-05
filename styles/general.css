@@ -252,11 +252,11 @@ button {
 }
 
 .upvote-pressed {
-  background-color: red;
+  background-color: #fc3f4f;
 }
 
 .downvote-pressed {
-  background-color: blue;
+  background-color: #298dff;
 }
 
 
