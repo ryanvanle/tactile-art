@@ -1063,3 +1063,11 @@ hr {
 .segment-labels-container {
   pointer-events: none !important;
 }
+
+#search-results-search {
+  width: 90%;
+}
+
+#search-results-search-button {
+  width: 10%;
+}

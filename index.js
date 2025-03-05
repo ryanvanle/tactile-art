@@ -99,6 +99,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     id("colors-button").addEventListener("click", () => showPage("colors-page"));
     id("favorites-button").addEventListener("click", () => showPage("favorite-page"));
     id("search-button").addEventListener("click", () => processSearchResults(id("home-search")));
+    id("search-results-search-button").addEventListener("click", () => processSearchResults(id("search-results-search")));
+
+
     id("upload-artwork-button").addEventListener("click", () => {
       // TODO clear out the form page
       showPage("upload-page");
@@ -122,9 +125,11 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     });
 
     document.addEventListener('keydown', function(event) {
-      if(event.key === "Enter" && document.activeElement === id("home-search")){
+      if(event.key === "Enter" && (document.activeElement === id("home-search"))) {
         processSearchResults(id("home-search"));
-      } else if (event.key === "Enter" || event.key === " ") { // Space or Enter
+      } else if (event.key === "Enter" && document.activeElement === id("search-results-search")) {
+        processSearchResults(id("search-results-search"));
+      }else if (event.key === "Enter" || event.key === " ") { // Space or Enter
         handleFavoritesClick(event);
       }
     });
@@ -200,14 +205,18 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   }
 
   function processSearchResults(currentElement) {
+    if (currentElement.id === "home-search") {
+      showPage("search-result-page");
+    }
+
     updateSearchResults(currentElement.value);
   }
 
   async function updateSearchResults(searchQuery) {
+
     id("search-results-search").value = searchQuery;
     let searchResultsArray = await searchDataset(searchQuery);
     generateSearchResults(searchResultsArray);
-    showPage("search-result-page");
   }
 
   function filterSearchResults() {
@@ -303,6 +312,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       audio.pause();
       audio.currentTime = 0;
     }
+
 
     let previousPageId = currentPageId; //store the previous page id before changing it.
     currentPageId = pageId; //update the current page id first.

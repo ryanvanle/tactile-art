@@ -41,10 +41,11 @@
           <img src="icons/back-button.svg" alt="back button arrow">
         </button>
         <h1>Search Results</h1>
-        <section class="search-box">
+        <section class="search-box" role="form">
           <img src="icons/search.svg" alt="Search icon of an magnifying glass" class="search-icon">
           <label for="search-results-search"></label>
           <input id="search-results-search" class="search-bar" placeholder="Search for artworks, materials, textures, colors, or keywords">
+          <button id="search-results-search-button" type="submit">Search</button>
         </section>
         <section id="search-result-filters">
           <h2>Filter By:</h2>
@@ -572,7 +573,9 @@
               <p>I used acrylic in layers to create a rough texture for her hair.</p>
               <i><img src="icons/material.svg" alt="placeholder" class="corner-icon"></i>
               <section class="vote-container">
-                <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
+                <button class="upvote-button">
+                  <img src="icons/upvote.svg" alt="PLACEHOLDER">
+                </button>
                 <p class="vote-upvote-amount">5</p>
                 <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
               </section>
