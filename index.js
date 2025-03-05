@@ -368,7 +368,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       console.log("showPreviousPage", previousPage);
 
       // Restore the content based on the page ID and dataset information
-      if (previousPage.id.includes('-detail-page')) {
+      if (previousPage.id.includes('detail-page')) {
 
         const itemType = previousPage.data.itemType;
         const itemName = previousPage.data.itemName;
@@ -692,6 +692,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     addSuggestionSection.classList.add("suggestion-card-add", "selectable");
     addSuggestionSection.addEventListener("click", () => showSuggestionForm(data));
 
+    addSuggestionSection.setAttribute("role", "button");
+
     const addSuggestionH3 = document.createElement("h3");
     addSuggestionH3.textContent = "Add your own suggestion";
     addSuggestionLi.appendChild(addSuggestionSection);
@@ -901,6 +903,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     let listItem = document.createElement("li");
     let suggestionCard = document.createElement("section");
     suggestionCard.classList.add("selectable");
+    suggestionCard.setAttribute("role", "button");
 
     let title = document.createElement("h3");
     title.textContent = data.itemTitle;
@@ -911,7 +914,6 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     let cornerIcon = document.createElement("i");
     let iconImg = document.createElement("img");
     cornerIcon.appendChild(iconImg);
-    iconImg.alt = "placeholder";
     iconImg.classList.add("corner-icon");
 
     let voteContainer = generateVoteContainer(data);
@@ -919,6 +921,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     if (category === "material") {
         suggestionCard.classList.add("suggestion-card-material");
         iconImg.src = "icons/material.svg";
+        iconImg.alt = "an cardboard box with a book and ruler inside icon"
     } else if (category === "color") {
         suggestionCard.classList.add("suggestion-card-color");
         let colorSwatch = document.createElement("span");
@@ -926,18 +929,21 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
         colorSwatch.style.backgroundColor = data.itemTitle;
         suggestionCard.appendChild(colorSwatch);
         iconImg.src = "icons/color.svg";
+        iconImg.alt = "an artist palette iron icon";
     } else if (category === "interpretation") {
         title.textContent = "Interpretation";
         suggestionCard.classList.add("suggestion-card-interpretation");
         iconImg.src = "icons/interpretation.svg";
+        iconImg.alt = "a cartoon turn-on lightbulb icon";
     } else if (category === "texture") {
         suggestionCard.classList.add("suggestion-card-texture");
         iconImg.src = "icons/texture.svg";
+        iconImg.alt = "a square with diagonal stripes icon";
     } else if (category === "artwork") {
         suggestionCard.classList.add("suggestion-card-artwork");
         let artworkData = ARTWORK[data.itemTitle];
         let artworkImg = document.createElement("img");
-        artworkImg.src = `img/${artworkData.image}` || "img/placeholder.jpg";
+        artworkImg.src = `img/${artworkData.image}`;
         artworkImg.alt = artworkData.alt;
         suggestionCard.appendChild(artworkImg);
 
@@ -945,6 +951,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
         artistPara.textContent = "by " + artworkData.notes.artist;
         suggestionCard.appendChild(artistPara);
         iconImg.src = "icons/artwork.svg";
+        iconImg.alt = "a landscape framed portrait icon";
     }
 
     suggestionCard.appendChild(title);
@@ -1659,7 +1666,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     upvoteButton.classList.add("upvote-button");
     upvoteImg.src = "icons/upvote.svg";
-    upvoteImg.alt = "PLACEHOLDER";
+    upvoteImg.alt = "Upvote";
+
+    upvoteButton.setAttribute
 
     // check the state somehow?? TODO
     // if already pressed
@@ -1669,7 +1678,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     downvoteButton.classList.add("downvote-button");
     downvoteImg.src = "icons/downvote.svg";
-    downvoteImg.alt = "PLACEHOLDER";
+    downvoteImg.alt = "Downvote";
 
     downvoteButton.setAttribute("aria-pressed", "false");
 
