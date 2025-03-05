@@ -962,8 +962,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   async function processSuggestionForm(event) {
     // console.log(event);
 
-    if (validateSuggestionForm()) {
-      // check form and display message
+    if (!validateSuggestionForm()) {
       return;
     }
 
@@ -994,6 +993,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     if (textarea) {
       suggestionData.context = textarea.value;
     }
+
+    const userSuggestionPopup = id("user-suggestion-popup");
+    userSuggestionPopup.showModal();
 
 
 
@@ -1029,7 +1031,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
   }
 
   function validateSuggestionForm() {
-    return false;
+    return id("user-suggestion-form").checkValidity();
   }
 
   function generateExploreFurtherList(exploreList, exploreItems) {
@@ -1454,11 +1456,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     submitButton.type = "submit";
     submitButton.textContent = "Submit";
     submitButton.id = "user-suggestion-page-submit-button";
-    const userSuggestionPopup = id("user-suggestion-popup");
 
     submitButton.addEventListener('click', (event) => {
       processSuggestionForm(event);
-      userSuggestionPopup.showModal();
     });
 
     formSection.appendChild(submitButton);
@@ -1479,12 +1479,9 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     submitButton.textContent = "Submit";
     submitButton.id = "user-suggestion-page-submit-button";
 
-    const userSuggestionPopup = id("user-suggestion-popup");
     submitButton.addEventListener('click', (event) => {
-
       processSuggestionForm(event);
-      userSuggestionPopup.showModal();
-    });
+    })
 
     formSection.appendChild(submitButton);
   }
@@ -1504,10 +1501,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     submitButton.textContent = "Submit";
     submitButton.id = "user-suggestion-page-submit-button";
 
-    const userSuggestionPopup = id("user-suggestion-popup");
     submitButton.addEventListener('click', (event) => {
       processSuggestionForm(event);
-      userSuggestionPopup.showModal();
     });
 
     formSection.appendChild(submitButton);
@@ -1544,10 +1539,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     submitButton.textContent = "Submit";
     submitButton.id = "user-suggestion-page-submit-button";
 
-    const userSuggestionPopup = id("user-suggestion-popup");
     submitButton.addEventListener('click', (event) => {
       processSuggestionForm(event);
-      userSuggestionPopup.showModal();
     });
 
     formSection.appendChild(submitButton);
@@ -1566,8 +1559,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     input.type = type;
     input.id = id;
     input.placeholder = placeholder;
-    input.required = true;
     input.setAttribute("list", `${type}-suggestion-options`);
+    input.required = true;
 
     const datalist = document.createElement("datalist");
     datalist.id = `${type}-suggestion-options`;
@@ -1612,8 +1605,8 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     const textarea = document.createElement("textarea");
     textarea.id = id;
     textarea.placeholder = "Start typing here...";
-    textarea.required = true;
     section.appendChild(textarea);
+    textarea.required = true;
 
     return section;
   }
