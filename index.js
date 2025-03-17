@@ -690,37 +690,37 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     generateSuggestionsList(communitySuggestionsList, textureData.suggestions, textureData);
   }
 
-  function generateSuggestionsList(suggestionListElement, suggestionDataObject, data) {
-    suggestionListElement.innerHTML = "";
+  // function generateSuggestionsList(suggestionListElement, suggestionDataObject, data) {
+  //   suggestionListElement.innerHTML = "";
 
-    const addSuggestionLi = document.createElement("li");
-    const addSuggestionSection = document.createElement("section");
-    addSuggestionSection.classList.add("suggestion-card-add", "selectable");
-    addSuggestionSection.addEventListener("click", () => showSuggestionForm(data));
+  //   const addSuggestionLi = document.createElement("li");
+  //   const addSuggestionSection = document.createElement("section");
+  //   addSuggestionSection.classList.add("suggestion-card-add", "selectable");
+  //   addSuggestionSection.addEventListener("click", () => showSuggestionForm(data));
 
-    addSuggestionSection.setAttribute("role", "button");
+  //   addSuggestionSection.setAttribute("role", "button");
 
-    const addSuggestionH3 = document.createElement("h3");
-    addSuggestionH3.textContent = "Add your own suggestion";
-    addSuggestionLi.appendChild(addSuggestionSection);
-    addSuggestionSection.appendChild(addSuggestionH3);
-    suggestionListElement.appendChild(addSuggestionLi);
+  //   const addSuggestionH3 = document.createElement("h3");
+  //   addSuggestionH3.textContent = "Add your own suggestion";
+  //   addSuggestionLi.appendChild(addSuggestionSection);
+  //   addSuggestionSection.appendChild(addSuggestionH3);
+  //   suggestionListElement.appendChild(addSuggestionLi);
 
-    // console.log(suggestionItems);
-    let suggestionDataList = Object.values(suggestionDataObject);
+  //   // console.log(suggestionItems);
+  //   let suggestionDataList = Object.values(suggestionDataObject);
 
-    suggestionDataList.sort(function(a,b) {
-      let aScore = Number(a.metadata.likes) - Number(a.metadata.dislikes);
-      let bScore = Number(b.metadata.likes) - Number(b.metadata.dislikes);
-      return bScore-aScore;
-    });
+  //   suggestionDataList.sort(function(a,b) {
+  //     let aScore = Number(a.metadata.likes) - Number(a.metadata.dislikes);
+  //     let bScore = Number(b.metadata.likes) - Number(b.metadata.dislikes);
+  //     return bScore-aScore;
+  //   });
 
-    for (let suggestionData of suggestionDataList) {
-      let card = generateSuggestionCard(suggestionData);
-      card.addEventListener("click", () => { showSuggestionPopupData(suggestionListElement, suggestionData, card) });
-      suggestionListElement.appendChild(card);
-    }
-  }
+  //   for (let suggestionData of suggestionDataList) {
+  //     let card = generateSuggestionCard(suggestionData);
+  //     card.addEventListener("click", () => { showSuggestionPopupData(suggestionListElement, suggestionData, card) });
+  //     suggestionListElement.appendChild(card);
+  //   }
+  // }
 
   function showSuggestionPopupData(suggestionListElement, suggestionData, suggestionCard) {
     console.log("fires show popup");
@@ -963,7 +963,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     suggestionCard.appendChild(title);
     suggestionCard.appendChild(context);
-    suggestionCard.appendChild(cornerIcon);
+    // suggestionCard.appendChild(cornerIcon);
     suggestionCard.appendChild(voteContainer);
 
     listItem.appendChild(suggestionCard);
@@ -1165,7 +1165,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     titleElement.innerHTML = `Interact with: <br> ${title}`;
 
     const detailPage = id("artwork-detail-page");
-    const artworkImage = detailPage.querySelector(".artwork-image-container img");
+    const artworkImage = detailPage.querySelector(".artwork-image-container-new img");
     const canvasContainer = segmentDetailPage.querySelector(".canvas-container");
 
     if (canvasContainer && artworkImage) {
@@ -1200,58 +1200,81 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     console.log("Artwork data:", artworkData);
     console.log("Detail page element:", detailPage);
 
-
     let previousData = {
-      id: detailPage.id,
-      itemName: detailPage.dataset.itemName || null,
-      itemType: detailPage.dataset.itemType || null,
+        id: detailPage.id,
+        itemName: detailPage.dataset.itemName || null,
+        itemType: detailPage.dataset.itemType || null,
     }
 
     detailPage.dataset.previous = JSON.stringify(previousData);
     detailPage.dataset.itemName = artworkName;
     detailPage.dataset.itemType = "artworks";
 
-    const title = detailPage.querySelector("h1");
-    const artistYear = detailPage.querySelector("header > section > p");
+    const title = detailPage.querySelector(".artwork-description-title h1");
+    const artistYear = detailPage.querySelector(".artwork-description-title p");
 
-    /*const image = detailPage.querySelector(".artwork-image-container img");
-    console.log("Image element found:", image);*/
-    const imageContainer = detailPage.querySelector(".artwork-image-container");
-    let image = imageContainer ? imageContainer.querySelector("img") : null;
-    if (!image && imageContainer) {
-      image = document.createElement("img");
-      imageContainer.appendChild(image);
-    }
+    const image = detailPage.querySelector(".artwork-image-container-new img");
 
-    console.log("Image element found or created:", image);
-
-    const description = detailPage.querySelector(".artwork-about > section:nth-of-type(1) > p");
-    const notesList = detailPage.querySelector(".artwork-about > section:nth-of-type(2) > ul");
-    const audio = detailPage.querySelector(".artwork-about > section:nth-of-type(3) > audio");
+    const audio = detailPage.querySelector(".artwork-about > section:nth-of-type(1) > audio");
     const credit = detailPage.querySelector("#audio-description-credit");
+    const description = detailPage.querySelector(".artwork-about > section:nth-of-type(2) > p");
+    const additionalDetailsList = detailPage.querySelector(".artwork-about > section:nth-of-type(3) > ul");
 
     title.textContent = artworkName;
-    artistYear.textContent = `${artworkData.notes.artist}, ${artworkData.notes.year}`;
+    artistYear.textContent = `Artist: ${artworkData.notes.artist}, ${artworkData.notes.year}`;
     image.src = `img/${artworkData.image}`;
     image.alt = artworkData.alt;
-    description.textContent = artworkData.description;
-
-    notesList.innerHTML = "";
-    for (const note in artworkData.notes) {
-      if (note!== "artist" && note!== "year") {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${note}: ${artworkData.notes[note]}`;
-        notesList.appendChild(listItem);
-      }
-    }
-
     audio.src = `audio/${artworkData.audio}`;
     credit.textContent = artworkData.credit;
+    description.textContent = artworkData.description;
+
+    additionalDetailsList.innerHTML = "";
+    for (const note in artworkData.notes) {
+        if (note !== "artist" && note !== "year") {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${note}: ${artworkData.notes[note]}`;
+            additionalDetailsList.appendChild(listItem);
+        }
+    }
 
     const communitySuggestionsList = id("artwork-detail-page").querySelector(".community-suggestions-list ul");
     generateSuggestionsList(communitySuggestionsList, artworkData.suggestions, artworkData);
 
     generateExploreFurtherList(id("artwork-detail-page").querySelector(".artwork-content-card-list ul"), artworkData.explore);
+}
+
+  function generateSuggestionsList(suggestionListElement, suggestionDataObject, data) {
+
+    suggestionListElement.innerHTML = "";
+
+    // const addSuggestionLi = document.createElement("li");
+    const addSuggestionSection = document.createElement("section");
+    addSuggestionSection.classList.add("suggestion-card-add", "selectable");
+    addSuggestionSection.addEventListener("click", () => showSuggestionForm(data));
+
+    addSuggestionSection.setAttribute("role", "button");
+
+    const addSuggestionH3 = document.createElement("h3");
+    addSuggestionH3.textContent = "Add your own suggestion";
+    // addSuggestionLi.appendChild(addSuggestionSection);
+    addSuggestionSection.appendChild(addSuggestionH3);
+
+    suggestionListElement.appendChild(addSuggestionSection);
+
+    // console.log(suggestionItems);
+    let suggestionDataList = Object.values(suggestionDataObject);
+
+    suggestionDataList.sort(function(a,b) {
+      let aScore = Number(a.metadata.likes) - Number(a.metadata.dislikes);
+      let bScore = Number(b.metadata.likes) - Number(b.metadata.dislikes);
+      return bScore-aScore;
+    });
+
+    for (let suggestionData of suggestionDataList) {
+      let card = generateSuggestionCard(suggestionData);
+      card.addEventListener("click", () => { showSuggestionPopupData(suggestionListElement, suggestionData, card) });
+      suggestionListElement.appendChild(card);
+    }
   }
 
 

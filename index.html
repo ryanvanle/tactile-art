@@ -118,7 +118,7 @@
 
       <section>
         <h2>Instructions</h2>
-        <p>Help others experience this <span class="user-suggestion-instructions-component">component</span> in new ways! Select a category below, then share your observation, interpretation, or creative suggestion. Your contribution will add to the community's understanding of this <span class="user-suggestion-instructions-medium">medium</span></p>
+        <p>Help others experience this <span id="user-suggestion-instructions-component">component</span> in new ways! Select a category below, then share your observation, interpretation, or creative suggestion. Your contribution will add to the community's understanding of this <span class="user-suggestion-instructions-medium">medium</span></p>
         <ol>
           <li>Choose a category: Select whether you're suggesting a Material, Texture, Related Artwork, or Interpretation.</li>
           <li>Answer the guiding questions: These will help you describe your suggestion with clarity.</li>
@@ -504,148 +504,165 @@
 
     <section id="artwork-detail-page" class="page detail-page hidden">
       <header>
-        <section>
-          <h1>The Scream</h1>
-          <p>Artist: Edvard Munch, 1893</p>
-        </section>
         <button class="back-button">
           <img src="icons/back-button.svg" alt="back button arrow">
         </button>
+        <!-- <section>
+          <h1>The Scream</h1>
+          <p>Artist: Edvard Munch, 1893</p>
+        </section> -->
         <section class="detail-page-button-container">
           <button id="image-segmentation-button" class="image-segmentation-button">Interact with Artwork</button>
           <button class="favorites-button" aria-live="assertive">Save to Favorites</button>
         </section>
       </header>
 
-      <section class="artwork-content-wrapper">
+      <section class="artwork-wrapper">
 
-        <section class="artwork-image-container">
-          <img src="img/2.jpg" alt="PLACEHOLDER">
+        <section class="artwork-content-container">
+          <section class="artwork-information-container">
+
+
+            <section class="artwork-description-title">
+              <h1>Mona Lisa</h1>
+              <p>Artist: Edvard Munch, 1893</p>
+            </section>
+
+            <section class="artwork-image-container-new">
+              <img src="img/2.jpg" alt="PLACEHOLDER">
+            </section>
+
+
+            <section class="artwork-about">
+              <section>
+                <h2>Audio Description</h2>
+                <audio controls src="audio/Matisse Dance I Verbal Description_FINAL.mp3"></audio>
+                <p>Provided by <span id="audio-description-credit">Museum of Modern Art (MoMA)</span> under Fair Use and Non-Commercial Purposes</p>
+              </section>
+              <section>
+                <h2>Description</h2>
+                <p>The Scream is a proto-expressionist artwork. The work is made with tempera paint and grease pencil on plate. It is ninety-one centimeters high and seventy-five centimeters wide. In the middle of the motif is a deformed human figure standing by a railing, simplified, who grabs around his own face with his hands and screams. The sky above the subject is dramatic in red and orange tones. On the horizon, ships can be seen on a dark, blue-green fjord, and by the railing where the main character stands, two people walk in the background.</p>
+              </section>
+              <section>
+                <h2>Additional Details</h2>
+                <ul>
+                  <li>Sizing</li>
+                  <li>Style of Painting</li>
+                </ul>
+              </section>
+
+            </section>
+          </section>
         </section>
 
-        <section class="artwork-about">
-          <section>
-            <h2>Description</h2>
-            <p>The Scream is a proto-expressionist artwork. The work is made with tempera paint and grease pencil on plate. It is ninety-one centimeters high and seventy-five centimeters wide. In the middle of the motif is a deformed human figure standing by a railing, simplified, who grabs around his own face with his hands and screams. The sky above the subject is dramatic in red and orange tones. On the horizon, ships can be seen on a dark, blue-green fjord, and by the railing where the main character stands, two people walk in the background.</p>
-          </section>
-          <section>
-            <h2>Additional Details</h2>
+        <section class="artwork-community-container">
+          <section class="artwork-content-card-list">
+            <h2>ARTWORK CONTENT</h2>
             <ul>
-              <li>Sizing</li>
-              <li>Style of Painting</li>
+              <li>
+                <article class="small-color-card selectable">
+                  <h3>Red</h3>
+                  <span class="color-swatch" style="background-color: red;"></span>
+                </article>
+              </li>
+              <li>
+                <article class="small-text-card selectable">
+                  <h3>Hard</h3>
+                  <p>Firm, unyielding surface with no give.</p>
+                </article>
+              </li>
+              <li>
+                <article class="small-color-card selectable">
+                  <h3>Blue</h3>
+                  <span class="color-swatch" style="background-color: blue;"></span>
+                </article>
+              </li>
+              <li>
+                <article class="small-text-card selectable">
+                  <h3>Aluminum Foil</h3>
+                  <p>Malleable, lightweight, good for beginners</p>
+                </article>
+              </li>
+              <li>
+                <article class="small-text-card selectable">
+                  <h3>Aluminum Foil</h3>
+                  <p>Malleable, lightweight, good for beginners </p>
+                </article>
+              </li>
             </ul>
           </section>
-          <section>
-            <h2>Audio Description</h2>
-            <audio controls src="audio/Matisse Dance I Verbal Description_FINAL.mp3"></audio>
-            <p>Provided by <span id="audio-description-credit">Museum of Modern Art (MoMA)</span> under Fair Use and Non-Commercial Purposes</p>
-          </section>
-        </section>
-      </section>
+          <section class="community-suggestions-list">
+            <h2>COMMUNITY SUGGESTIONS</h2>
 
-      <section class="artwork-content-card-list">
-        <h2>ARTWORK CONTENT</h2>
-        <ul>
-          <li>
-            <article class="small-color-card selectable">
-              <h3>Red</h3>
-              <span class="color-swatch" style="background-color: red;"></span>
-            </article>
-          </li>
-          <li>
-            <article class="small-text-card selectable">
-              <h3>Hard</h3>
-              <p>Firm, unyielding surface with no give.</p>
-            </article>
-          </li>
-          <li>
-            <article class="small-color-card selectable">
-              <h3>Blue</h3>
-              <span class="color-swatch" style="background-color: blue;"></span>
-            </article>
-          </li>
-          <li>
-            <article class="small-text-card selectable">
-              <h3>Aluminum Foil</h3>
-              <p>Malleable, lightweight, good for beginners</p>
-            </article>
-          </li>
-          <li>
-            <article class="small-text-card selectable">
-              <h3>Aluminum Foil</h3>
-              <p>Malleable, lightweight, good for beginners </p>
-            </article>
-          </li>
-        </ul>
-      </section>
-
-      <section class="community-suggestions-list">
-        <h2>COMMUNITY SUGGESTIONS</h2>
-        <ul>
-          <!-- <li>
-            <section class="suggestion-card-add selectable">
+            <!-- <section class="suggestion-card-add selectable">
               <h3>Add your own suggestion</h3>
-            </section>
-          </li>
-          <li>
-            <section class="suggestion-card-material selectable">
-              <h3>Acrylic Paint</h3>
-              <p>I used acrylic in layers to create a rough texture for her hair.</p>
-              <i><img src="icons/material.svg" alt="placeholder" class="corner-icon"></i>
-              <section class="vote-container">
-                <button class="upvote-button">
-                  <img src="icons/upvote.svg" alt="PLACEHOLDER">
-                </button>
-                <p class="vote-upvote-amount">5</p>
-                <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
+            </section> -->
+
+            <ul>
+              <li>
+                <section class="suggestion-card-material selectable">
+                  <h3>Acrylic Paint</h3>
+                  <p>I used acrylic in layers to create a rough texture for her hair.</p>
+                  <!-- <i><img src="icons/material.svg" alt="placeholder" class="corner-icon"></i> -->
+                  <section class="vote-container">
+                    <button class="upvote-button">
+                      <img src="icons/upvote.svg" alt="PLACEHOLDER">
+                    </button>
+                    <p class="vote-upvote-amount">5</p>
+                    <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
+                  </section>
+                </section>
+              </li>
+              <li>
+                <section class="suggestion-card-color selectable">
+                  <h3>Burnt Orange</h3>
+                  <span class="suggestion-color-swatch" style="background-color: blue;"></span>
+                  <!-- <i><img src="icons/color.svg" alt="placeholder" class="corner-icon"></i> -->
+                  <section class="vote-container">
+                    <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
+                    <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
+                  </section>
+                </section>
+              </li>
+              <li>
+                <section class="suggestion-card-interpretation selectable">
+                  <h3>Interpretation</h3>
+                  <p>The background trees are delicate, what if you used tissue paper?</p>
+                  <!-- <i><img src="icons/interpretation.svg" alt="placeholder" class="corner-icon"></i> -->
+                  <section class="vote-container">
+                    <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
+                    <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
+                  </section>
+                </section>
+              </li>
+              <li>
+                <section class="suggestion-card-texture selectable">
+                  <h3>Rough</h3>
+                  <p>The background trees are delicate, what if you used tissue paper? Maybe use something else idk this is some filler text for you ryan to deal with later gl lmao lololololol</p>
+                  <!-- <i><img src="icons/texture.svg" alt="placeholder" class="corner-icon"></i> -->
+                  <section class="vote-container">
+                    <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
+                    <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
+                  </section>
+                </section>
+              </li>
+              <section class="suggestion-card-artwork selectable">
+                <h3>Girl with the Earring</h3>
+                <p>by Johannes Vermeer</p>
+                <img src="img/4.jpg" alt="PLACEHOLDER">
+                <!-- <i><img src="icons/artwork.svg" alt="placeholder" class="corner-icon"></i> -->
+                <section class="vote-container">
+                  <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
+                  <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
+                </section>
               </section>
-            </section>
-          </li>
-          <li>
-            <section class="suggestion-card-color selectable">
-              <h3>Burnt Orange</h3>
-              <span class="suggestion-color-swatch" style="background-color: blue;"></span>
-              <i><img src="icons/color.svg" alt="placeholder" class="corner-icon"></i>
-              <section class="vote-container">
-                <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
-                <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
-              </section>
-            </section>
-          </li>
-          <li>
-            <section class="suggestion-card-interpretation selectable">
-              <h3>Interpretation</h3>
-              <p>The background trees are delicate, what if you used tissue paper?</p>
-              <i><img src="icons/interpretation.svg" alt="placeholder" class="corner-icon"></i>
-              <section class="vote-container">
-                <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
-                <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
-              </section>
-            </section>
-          </li>
-          <li>
-            <section class="suggestion-card-texture selectable">
-              <h3>Rough</h3>
-              <p>The background trees are delicate, what if you used tissue paper? Maybe use something else idk this is some filler text for you ryan to deal with later gl lmao lololololol</p>
-              <i><img src="icons/texture.svg" alt="placeholder" class="corner-icon"></i>
-              <section class="vote-container">
-                <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
-                <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
-              </section>
-            </section>
-          </li>
-          <section class="suggestion-card-artwork selectable">
-            <h3>Girl with the Earring</h3>
-            <p>by Johannes Vermeer</p>
-            <img src="img/4.jpg" alt="PLACEHOLDER">
-            <i><img src="icons/artwork.svg" alt="placeholder" class="corner-icon"></i>
-            <section class="vote-container">
-              <button class="upvote-button"><img src="icons/upvote.svg" alt="PLACEHOLDER"></button>
-              <button class="downvote-button"><img src="icons/downvote.svg" alt="PLACEHOLDER"></button>
-            </section>
-          </section> -->
-        </ul>
+            </ul>
+          </section>
+
+        </section>
+
       </section>
+
     </section>
 
     <section id="material-detail-page" class="page detail-page hidden">
