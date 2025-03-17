@@ -996,10 +996,19 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     // Update artwork data from the passed-in data parameter
     const artworkData = data;
+
+    console.log(artworkData);
     id("user-suggestion-form").dataset.data = JSON.stringify(data);
-    id("user-suggestion-title").textContent = artworkData.title; // You might need to adjust this if the artwork name is dynamic
-    id("user-suggestion-image").src = `img/${artworkData.image}`;
-    id("user-suggestion-image").alt = artworkData.alt;
+    id("user-suggestion-title").textContent = `${artworkData.title} (${artworkData.category})`; // You might need to adjust this if the artwork name is dynamic
+
+    if (artworkData.category == "artworks") {
+      id("user-suggestion-image").src = `img/${artworkData.image}`;
+      id("user-suggestion-image").alt = artworkData.alt;
+      id("user-suggestion-image").classList.remove("hidden");
+    } else {
+      id("user-suggestion-image").classList.add("hidden");
+    }
+
 
     showPage("user-suggestion-page");
   }
@@ -1471,19 +1480,19 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     // Update help text and form fields based on the selected category
     switch (selectedCategory) {
       case 'material':
-        helpText.textContent = "Help others understand the materials used in this artwork or share what you used to recreate it.";
+        helpText.textContent = "Describe how this material is used, its properties, or your experience working with it.";
         createMaterialForm(formSection);
         break;
       case 'texture':
-        helpText.textContent = "Help others understand the textures used in this artwork or share what you used to recreate it.";
+        helpText.textContent = "Describe how this texture appears, how to recreate it, or how it interacts with other techniques.";
         createTextureForm(formSection);
         break;
-      case 'idea': // Assuming 'idea' maps to 'artwork' in your comments
+      case 'artwork':
         helpText.textContent = "Help others explore artistic connections by suggesting a related artwork. Share how it connects, whether through style, theme, history, or technique.";
         createArtworkForm(formSection);
         break;
       case 'interpretation':
-        helpText.textContent = "Share your perspective on this section of the artwork. Whether it's symbolism, artistic choices, or a creative re-imagining, your insights can help others see it in new ways.";
+        helpText.textContent = "Share your perspective on how this artistic element is used, its meaning, or how you would reinterpret it.";
         createInterpretationForm(formSection);
         break;
     }
@@ -1505,7 +1514,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       new ComboboxAutocomplete(comboboxNode, buttonNode, listboxNode);
     }
 
-    const explanationSection = createTextAreaSection("explanation", "How does this material appear to this section, or how did you recreate it?", "Describe how you think it was used, how you used it, or how it could be used to recreate an element. (150 words max)");
+    const explanationSection = createTextAreaSection("explanation", "Use the guiding questions as an optional reference to explain how this material relates and answer below. (150 words max)");
     formSection.appendChild(explanationSection);
 
     const submitButton = document.createElement("button");
@@ -1538,7 +1547,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       new ComboboxAutocomplete(comboboxNode, buttonNode, listboxNode);
     }
 
-    const explanationSection = createTextAreaSection("explanation", "How does this texture appear to this section, or how did you recreate it?", "Describe how the texture contributes to the artwork, or how you replicated it in a version. (150 words max)");
+    const explanationSection = createTextAreaSection("explanation", "How does this texture appear to this section, or how did you recreate it?", "Use the guiding questions as an optional reference to explain how this texture relates and answer below. (150 words max)");
     formSection.appendChild(explanationSection);
 
     const submitButton = document.createElement("button");
@@ -1608,7 +1617,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
     formSection.appendChild(questionList);
 
-    const explanationSection = createTextAreaSection("explanation", "Use the guiding questions as an optional reference and answer below.", "Describe how the suggested artwork connects thematically, stylistically, or historically. (150 words max)");
+    const explanationSection = createTextAreaSection("explanation", "Use the guiding questions as an optional reference to explain how this interpretation relates and answer below. (150 words max)");
     formSection.appendChild(explanationSection);
 
     const submitButton = document.createElement("button");
