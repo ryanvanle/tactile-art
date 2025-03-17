@@ -1121,6 +1121,7 @@ hr {
   border: 1px solid gray;
   position: relative;
   cursor: pointer;
+  border-radius: 0;
 }
 
 .combobox input {
@@ -1146,15 +1147,15 @@ ul[role="listbox"] {
   margin: 0;
   padding: 0;
   position: absolute;
-  left: 4px;
-  top: 34px;
+  left: 20px;
+  top: 50px;
   list-style: none;
   background-color: white;
   display: none;
   box-sizing: border-box;
   border: 2px currentcolor solid;
   max-height: 250px;
-  width: 168px;
+  width: 90%;
   overflow: scroll;
   overflow-x: hidden;
   font-size: 87.5%;
@@ -1173,8 +1174,8 @@ ul[role="listbox"] li[role="option"] {
 
 .combobox .group.focus,
 .combobox .group:hover {
-  padding: 2px;
-  border: 2px solid currentcolor;
+  /* padding: 2px; */
+  /* border: 2px solid currentcolor; */
   border-radius: 4px;
 }
 
@@ -1192,9 +1193,9 @@ ul[role="listbox"] li[role="option"] {
 
 [role="listbox"].focus [role="option"][aria-selected="true"],
 [role="listbox"] [role="option"]:hover {
-  background-color: #def;
-  padding-top: 0;
-  padding-bottom: 0;
-  border-top: 2px solid currentcolor;
-  border-bottom: 2px solid currentcolor;
+  background-color: #def !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-top: 2px solid currentcolor !important;
+  border-bottom: 2px solid currentcolor !important;
 }

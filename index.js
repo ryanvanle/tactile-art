@@ -1699,7 +1699,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
     const listbox = document.createElement("ul");
     listbox.id = `${id}-listbox`;
     listbox.setAttribute("role", "listbox");
-    listbox.setAttribute("aria-label", labelText);
+    // listbox.setAttribute("aria-label", labelText);
 
     let options = [];
 
