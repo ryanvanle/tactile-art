@@ -548,7 +548,7 @@ button {
   margin: 1rem;
   margin-bottom: 0.75rem;
   /* margin-top: 1rem; */
-  color: #717171;
+  color: #515151;
 }
 
 .search-box {
@@ -579,6 +579,8 @@ button {
   min-height: 35px;
   font-size: 15pt;
   padding-left: 1rem;
+  color: #515151;
+
 
   text-align: justify;
   border-radius: 0 5px 5px 0px;
@@ -671,6 +673,10 @@ hr {
   margin-top: 0;
 }
 
+#search-result-page h1 {
+  margin-bottom: 0.5rem;
+}
+
 #search-result-filters {
   display: flex;
   align-items: center;
@@ -685,7 +691,7 @@ hr {
 }
 
 #search-result-filters label {
-  font-size: 14pt;
+  font-size: 16pt;
 }
 
 #search-result-page ul {
@@ -722,11 +728,13 @@ hr {
 .search-result-card-artwork h3, .search-result-card-text h3, .search-result-card-color h3  {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  font-size: 20pt;
 }
 
 .search-result-card-artwork p, .search-result-card-text p, .search-result-card-color p {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  font-size: 16pt;
 }
 
 .search-result-card-artwork img {
