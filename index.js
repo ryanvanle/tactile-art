@@ -1488,7 +1488,6 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
 
 
   async function updateSuggestionForm() {
-
     const selectedCategory = document.querySelector('input[name="category"]:checked').value;
     const formSection = document.querySelector('form');
     const suggestionCategorySpan = id("user-form-suggestion-category");
@@ -1537,7 +1536,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       new ComboboxAutocomplete(comboboxNode, buttonNode, listboxNode);
     }
 
-    const explanationSection = createTextAreaSection("explanation", "Use the guiding questions as an optional reference to explain how this material relates and answer below. (150 words max)");
+    const explanationSection = createTextAreaSection("explanation", "Describe how this material is used or could be used. Consider its cultural significance, sensory qualities, or personal connections in artistic interpretation. (150 words max)");
     formSection.appendChild(explanationSection);
 
     const submitButton = document.createElement("button");
@@ -1570,7 +1569,7 @@ import { getFirestore, collection, addDoc, doc, getDocs, setDoc, updateDoc, runT
       new ComboboxAutocomplete(comboboxNode, buttonNode, listboxNode);
     }
 
-    const explanationSection = createTextAreaSection("explanation", "How does this texture appear to this section, or how did you recreate it?", "Use the guiding questions as an optional reference to explain how this texture relates and answer below. (150 words max)");
+    const explanationSection = createTextAreaSection("explanation", "How does this texture appear to this section, or how did you recreate it?", "Describe how this component is used or could be used. Consider its cultural significance, sensory qualities, or personal connections in artistic interpretation. (150 words max)");
     formSection.appendChild(explanationSection);
 
     const submitButton = document.createElement("button");
